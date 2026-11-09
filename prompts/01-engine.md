@@ -22,7 +22,8 @@ You are building the classification engine for **AI Act Check** in the repo `AIw
 2. Validate answers: unknown question id, wrong type, or enum value not in `options` → id goes in `invalid`. Required questions (respecting `ask_if`) not answered → `missing`.
 3. Evaluate conditions as in contract 1.2 (`all`, `any`, nested, `is`, `in`; unanswered clause = false; `unless`).
 4. Tier and obligations exactly as contract section 2 (tier order from `rules.tier_order`, `stacks`, `gpai` never sets the tier, role filter with `both` = everything, de-dupe by text, `law` field from the rule id prefix, AI Act before GDPR, then by `applies_from`).
-5. Export a second helper `validate(answers)` returning `{ invalid, missing }` (the server calls it before asking for payment).
+5. Echo `answers.role` as `verdict.role` (`null` if not answered).
+6. Export a second helper `validate(answers)` returning `{ invalid, missing }` (the server calls it before asking for payment).
 
 **Done when:**
 - `npm install && npm test` passes.

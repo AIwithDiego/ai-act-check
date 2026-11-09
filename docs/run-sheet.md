@@ -14,7 +14,7 @@
 7. Tell Smith "Stripe is ready". Smith then runs a throwaway 402 test with your sandbox keys (outside the repo) so we know payments work before 13:00.
 
 **Smith**
-- Repo pack pushed: brief, contract, Hank's questions, rules and 12 test cases, three Devin prompts, this run sheet, the pitch.
+- Repo pack pushed: brief, contract, Hank's questions, rules and test cases (AI Act + GDPR), four Devin prompts, Allison's design system and live-screen mock, this run sheet, the pitch.
 - Sandbox check: a 20-line `mppx` server returns 402, `mppx validate` passes, `link-cli` pays once. Result goes in the Log below.
 - Packages pre-downloaded on the Mac so nothing waits on the venue Wi-Fi.
 
@@ -22,10 +22,10 @@
 
 | Time | Diego | Devin | Smith |
 |---|---|---|---|
-| 13:00 | Open three Devin sessions, paste `prompts/01`, `02`, `03` (one each) | Read and start | Watch the sessions, answer Devin's questions with Diego |
+| 13:00 | Open four Devin sessions, paste `prompts/01` to `04` (one each) | Read and start | Watch the sessions, answer Devin's questions with Diego |
 | 13:10 to 13:45 | Talk to people, follow along | Build, open PRs | Review each PR as it lands: read the diff, run `npm test`, check it against the contract. Say "merge" or what to fix |
 | 13:45 | Say "merge" for each PR Smith passes | Fix what review found | Swap the engine stub for the real engine, wire `.env` from the Keychain, `npm run dev` |
-| 13:55 | | | `npx mppx@0.17.1 validate http://localhost:4242`, then the three demo cases with Claude Code paying |
+| 13:55 | Put `localhost:4242/live` on the projector | | `npx mppx@0.17.1 validate http://localhost:4242`, then the three demo cases with Claude Code paying; each one lands on the live screen |
 | 14:05 | Rehearse the three cases once | (stretch: paid MCP tool, only if all green) | Fix anything that broke |
 | 14:15 | Demo | | Drive the second screen if needed |
 

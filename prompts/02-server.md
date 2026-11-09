@@ -10,12 +10,15 @@ You are building the paid HTTP server for **AI Act Check** in the repo `AIwithDi
 
 **Your job:** a Hono server on port 4242 that serves the free routes and charges `PRICE_USD` (default 0.50) per `POST /classify` over MPP, using `mppx` with Stripe.
 
+**Session 04 is building `src/live.ts` in parallel.** Until it lands, create `src/live-stub.ts` exporting `recordCheck` (no-op) and an empty Hono `live`, imported through one line in `src/server.ts`, and mount it with `app.route('/', live)` as contract 3.1 says.
+
 **Session 01 is building `src/engine.ts` in parallel.** Until it lands, create `src/engine-stub.ts` that exports `classify` and `validate` with the signatures in contract section 2 and returns a fixed `minimal` verdict. Import the engine through one line in `src/server.ts` so switching to the real one is a one-line change.
 
 **You own these files (create or edit only these):**
 - `src/server.ts` (the app: routes, MPP, receipts log; export `app` for tests and start listening only when run directly)
 - `src/payments.ts` (all `mppx` / Stripe setup in one place)
 - `src/engine-stub.ts`
+- `src/live-stub.ts`
 - `tests/server.test.ts`
 - `.env.example` (names only, from contract section 0)
 - `.gitignore` (add `node_modules/`, `out/`, `.env`, `dist/`)
@@ -36,17 +39,17 @@ You are building the paid HTTP server for **AI Act Check** in the repo `AIwithDi
    ```
 
    Add `depositAddresses: { tempo: TEMPO_DEPOSIT_ADDRESS }` only when that env var is set. Build the `mppx` instance lazily (first paid request) so tests can set env first. If env vars are missing, the server still starts and the free routes work; `POST /classify` returns 503 `{ error: "payments not configured" }`.
-2. Routes exactly as contract section 3. Order inside `POST /classify`: parse JSON (400 on failure) → `validate(answers)` (400 with `invalid` if any) → MPP charge (402 challenge if unpaid) → `classify` → append to `out/receipts.jsonl` (create `out/` if needed; fields from the contract only; never the answers or the use case) → return the verdict with the receipt.
+2. Routes exactly as contract section 3. Order inside `POST /classify`: parse JSON (400 on failure) → `validate(answers)` (400 with `invalid` if any) → MPP charge (402 challenge if unpaid) → `classify` → append to `out/receipts.jsonl` (create `out/` if needed; fields from the contract only; never the answers or the use case) → `recordCheck(...)` from `src/live.ts` → return the verdict with the receipt.
 3. `use_case` over 1000 chars → 400.
 4. `GET /llms.txt`: plain text, under 40 lines: what this is, price, the three steps (GET /questions, map your use case, POST /classify and pay over MPP), the response shape, the disclaimer.
-5. `GET /`: one small self-contained HTML page (no external assets): name, one-line description, price, link to /questions and /llms.txt, and a table of the last 10 receipts (time, tier, amount). Plain, readable, no framework.
+5. `GET /`: one small HTML page linking `/public/tokens.css` and using its classes (no external assets): name, one-line description, price, link to /questions and /llms.txt, and a table of the last 10 receipts (time, tier, amount). Plain, readable, no framework.
 
 **Done when:**
 - `npm test` passes with tests that use `app.request(...)` (no network, no real Stripe): free routes return 200; bad JSON → 400; invalid answers → 400 and **no** 402; valid body without payment → 402 with a `WWW-Authenticate: Payment ...` header (use a dummy `sk_test_` key and `profile_test_` id in the test env; no mock needed, the challenge is built offline); payments not configured → 503.
 - `npm run dev` starts on 4242 and `curl -i -X POST localhost:4242/classify -H 'content-type: application/json' -d '{"answers":{"role":"deployer"}}'` returns 402 when a sandbox key is set (you won't have one; the reviewer runs this).
 - README gets a "Run" section: `npm install`, copy `.env.example` to `.env`, `npm run dev`, then `npx mppx@0.17.1 validate http://localhost:4242`.
 
-**Do not:** touch `src/engine.ts`, `data/`, `fixtures/`; store request bodies anywhere; add a database, auth, or a frontend framework; use `latest` for any package.
+**Do not:** touch `src/engine.ts`, `src/live.ts`, `public/`, `data/`, `fixtures/`; store request bodies anywhere; add a database, auth, or a frontend framework; use `latest` for any package.
 
 **If stuck:** after two failed attempts at the same problem, stop and write what you tried and what failed in the PR description.
 

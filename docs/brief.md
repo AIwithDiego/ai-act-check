@@ -25,6 +25,10 @@ The classification is rule-based (`data/rules.json`, checked by Hank). Same answ
 | "A chatbot answers customer questions on our website" | **Limited** (Art. 50: tell people they're talking to an AI) |
 | "Software that reads our call-centre staff's emotions" | **Prohibited** (Art. 5(1)(f)) |
 
+## The live screen
+
+Projected next to the terminal: each paid check lands as it happens (tier, articles, obligations grouped AI Act / GDPR, the payment and receipt). Built to Allison's design system (`docs/design-system.html`), which uses the AIwithDiego website's look.
+
 ## Why it's interesting for this room
 
 - An agent paying for compliance at the moment it writes the code, not a human paying for a report afterwards.
@@ -33,7 +37,7 @@ The classification is rule-based (`data/rules.json`, checked by Hank). Same answ
 
 ## Out of scope tomorrow
 
-Hosting, accounts, free-text classification with an LLM, other laws beyond the AI Act and GDPR (Chile's Ley 21.719 comes later), any UI beyond the one status page.
+Hosting, accounts, free-text classification with an LLM, other laws beyond the AI Act and GDPR (Chile's Ley 21.719 comes later), any UI beyond the status page and the live screen for the room.
 
 ## Stretch (only if everything above works)
 

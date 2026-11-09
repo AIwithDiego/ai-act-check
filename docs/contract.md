@@ -89,6 +89,7 @@ The questionnaire an agent answers about one AI use case.
 export type Answers = Record<string, boolean | string>;
 export interface Verdict {
   tier: "prohibited" | "high" | "limited" | "minimal" | "incomplete";
+  role: string | null;        // the caller's answers.role, echoed (null if not answered)
   matched: { id: string; tier: string; title: string; article: string; note?: string }[];
   obligations: { law: "AI Act" | "GDPR"; text: string; article: string; role: string; applies_from: string }[];
   missing: string[];          // required question ids not answered (after ask_if)
@@ -113,6 +114,9 @@ export function classify(answers: Answers, rules?: Rules, questions?: Questions)
 | `GET /questions` | no | `data/questions.json` as is |
 | `GET /llms.txt` | no | Plain text: how an agent uses this API (free questions first, then paid classify) |
 | `POST /classify` | **yes, `PRICE_USD` per call** | `Verdict` JSON + MPP receipt |
+| `GET /live` | no | The live screen for the room (`public/live.html`, built to `docs/design-spec.md`) |
+| `GET /live/feed` | no | `{ "checks": LiveCheck[] }`, newest first, max 20 |
+| `GET /public/*` | no | Static files from `public/` (tokens.css, live.css, live.js) |
 
 `POST /classify` body:
 
@@ -123,6 +127,19 @@ export function classify(answers: Answers, rules?: Rules, questions?: Questions)
 - No payment → HTTP 402 challenge from `mppx.charge(...)`.
 - Body is checked **before** the 402: malformed JSON or `invalid` answers → HTTP 400 with the list, so an agent never pays for a request that can't be answered. `incomplete` is not checked before payment (the agent may want the list of what's missing); it returns 200 with `tier: "incomplete"`.
 - After a paid call, append one line to `out/receipts.jsonl`: `{ at, tier, rules_version, amount, receipt_id }`. No answers, no use case text.
+- After a paid call, also call `recordCheck({ at, amount, receipt_id, verdict })` from `src/live.ts`.
+
+### 3.1 Live screen (`src/live.ts`)
+
+```ts
+export interface LiveCheck { at: string; amount: string; receipt_id: string; verdict: Verdict }
+export function recordCheck(c: LiveCheck): void;   // keeps the last 20 in memory only; never written to disk
+export const live: Hono;                           // routes: GET /live, GET /live/feed, GET /public/*
+```
+
+- `src/server.ts` mounts `live` with `app.route('/', live)` and calls `recordCheck` after each paid call. That is the only coupling.
+- In memory only: a restart clears the screen. No use case text, no answers (the verdict holds neither).
+- The page polls `/live/feed` every 1.5 s and animates new checks in.
 
 ## 4. Demo cases (`fixtures/cases.json`)
 
