@@ -33,6 +33,14 @@
 
 **Freeze at 14:05.** After that only copy fixes and the rehearsal.
 
+## Say this in the demo (Hank, 9 Nov)
+
+- High-risk duties for CV screening and credit scoring apply from **2 Dec 2027** (AI Omnibus, Reg. (EU) 2026/1744, in force 27 Jul 2026). Bans, AI literacy, GPAI and Art. 50 transparency already apply. Delayed is not cancelled.
+- Emotion recognition at work has been banned since Feb 2025 (fines up to EUR 35M or 7% of turnover). The only way out is a real medical or safety reason; the driver-drowsiness case shows it (it comes out high-risk, not banned).
+- The verdict is only as good as the agent's answers: say "no profiling" falsely and CV screening comes back minimal. Say it out loud; it shows the rules are deterministic.
+- Not legal advice, on every response. Anything using the Art. 6(3) exception or police biometrics needs a lawyer.
+- If asked: Annex I products are simplified to one conservative question.
+
 ## If something fails
 
 - **Machine payments not approved yet:** the sandbox still returns the 402 challenge. Demo the 402, then show the verdict from the fixture run. Say so plainly: "Stripe's approval is pending; this is the exact challenge an agent pays."

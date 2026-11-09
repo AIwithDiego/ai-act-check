@@ -1,0 +1,401 @@
+[
+  {
+    "id": "cv-screening",
+    "use_case": "We run 12 cafés in Dublin and get hundreds of applications for barista jobs. We want to use an AI tool that reads every CV, scores each applicant and gives us a shortlist of the top 10 to interview.",
+    "answers": {
+      "role": "deployer",
+      "gpai_model": "no",
+      "manipulative_techniques": false,
+      "exploits_vulnerabilities": false,
+      "social_scoring": false,
+      "crime_prediction_profiling": false,
+      "facial_scraping": false,
+      "intimate_or_csam_generation": false,
+      "emotion_recognition": false,
+      "biometric_remote_id": false,
+      "biometric_categorisation": false,
+      "annex1_safety_component": false,
+      "critical_infrastructure": false,
+      "education": false,
+      "employment": true,
+      "essential_services": "none",
+      "law_enforcement": false,
+      "migration_border": false,
+      "justice_democracy": false,
+      "interacts_with_people": false,
+      "generates_synthetic_content": false,
+      "annex3_derogation": "none",
+      "profiling": true
+    },
+    "expect": {
+      "tier": "high",
+      "matched": [
+        "annex3-employment"
+      ]
+    }
+  },
+  {
+    "id": "website-chatbot",
+    "use_case": "We want a chatbot on our website that answers customer questions about opening hours, delivery and returns, and hands over to a person if it can't help. We're building it ourselves on the OpenAI API.",
+    "answers": {
+      "role": "both",
+      "gpai_model": "no",
+      "manipulative_techniques": false,
+      "exploits_vulnerabilities": false,
+      "social_scoring": false,
+      "crime_prediction_profiling": false,
+      "facial_scraping": false,
+      "intimate_or_csam_generation": false,
+      "emotion_recognition": false,
+      "biometric_remote_id": false,
+      "biometric_categorisation": false,
+      "annex1_safety_component": false,
+      "critical_infrastructure": false,
+      "education": false,
+      "employment": false,
+      "essential_services": "none",
+      "law_enforcement": false,
+      "migration_border": false,
+      "justice_democracy": false,
+      "interacts_with_people": true,
+      "generates_synthetic_content": true,
+      "deepfake": false,
+      "public_interest_text": false
+    },
+    "expect": {
+      "tier": "limited",
+      "matched": [
+        "art50-interaction"
+      ]
+    }
+  },
+  {
+    "id": "callcentre-emotion",
+    "use_case": "Our call centre wants software that listens to our agents' calls and flags when they sound stressed, frustrated or bored, so team leads can coach them and track mood scores.",
+    "answers": {
+      "role": "deployer",
+      "gpai_model": "no",
+      "manipulative_techniques": false,
+      "exploits_vulnerabilities": false,
+      "social_scoring": false,
+      "crime_prediction_profiling": false,
+      "facial_scraping": false,
+      "intimate_or_csam_generation": false,
+      "emotion_recognition": true,
+      "biometric_remote_id": false,
+      "biometric_categorisation": false,
+      "annex1_safety_component": false,
+      "critical_infrastructure": false,
+      "education": false,
+      "employment": false,
+      "essential_services": "none",
+      "law_enforcement": false,
+      "migration_border": false,
+      "justice_democracy": false,
+      "interacts_with_people": false,
+      "generates_synthetic_content": false,
+      "emotion_recognition_workplace": true,
+      "emotion_medical_or_safety": false,
+      "annex3_derogation": "none",
+      "profiling": true
+    },
+    "expect": {
+      "tier": "prohibited",
+      "matched": [
+        "art5-emotion-workplace"
+      ]
+    }
+  },
+  {
+    "id": "driver-safety-emotion",
+    "use_case": "A haulage company installs an in-cab camera that detects when a lorry driver is drowsy or highly stressed and sounds an alarm so they pull over.",
+    "answers": {
+      "role": "deployer",
+      "gpai_model": "no",
+      "manipulative_techniques": false,
+      "exploits_vulnerabilities": false,
+      "social_scoring": false,
+      "crime_prediction_profiling": false,
+      "facial_scraping": false,
+      "intimate_or_csam_generation": false,
+      "emotion_recognition": true,
+      "biometric_remote_id": false,
+      "biometric_categorisation": false,
+      "annex1_safety_component": false,
+      "critical_infrastructure": false,
+      "education": false,
+      "employment": false,
+      "essential_services": "none",
+      "law_enforcement": false,
+      "migration_border": false,
+      "justice_democracy": false,
+      "interacts_with_people": false,
+      "generates_synthetic_content": false,
+      "emotion_recognition_workplace": true,
+      "emotion_medical_or_safety": true,
+      "annex3_derogation": "none",
+      "profiling": false
+    },
+    "expect": {
+      "tier": "high",
+      "matched": [
+        "annex3-biometrics",
+        "art50-emotion-biometric-disclosure"
+      ]
+    }
+  },
+  {
+    "id": "credit-scoring",
+    "use_case": "We're a small consumer lender. We plan to use a vendor's AI model to score loan applicants' creditworthiness and decide who gets approved.",
+    "answers": {
+      "role": "deployer",
+      "gpai_model": "no",
+      "manipulative_techniques": false,
+      "exploits_vulnerabilities": false,
+      "social_scoring": false,
+      "crime_prediction_profiling": false,
+      "facial_scraping": false,
+      "intimate_or_csam_generation": false,
+      "emotion_recognition": false,
+      "biometric_remote_id": false,
+      "biometric_categorisation": false,
+      "annex1_safety_component": false,
+      "critical_infrastructure": false,
+      "education": false,
+      "employment": false,
+      "essential_services": "credit_scoring",
+      "law_enforcement": false,
+      "migration_border": false,
+      "justice_democracy": false,
+      "interacts_with_people": false,
+      "generates_synthetic_content": false,
+      "annex3_derogation": "none",
+      "profiling": true
+    },
+    "expect": {
+      "tier": "high",
+      "matched": [
+        "annex3-credit-insurance"
+      ]
+    }
+  },
+  {
+    "id": "spam-filter",
+    "use_case": "An AI spam filter that sorts incoming emails in our shared inbox into spam and not spam.",
+    "answers": {
+      "role": "deployer",
+      "gpai_model": "no",
+      "manipulative_techniques": false,
+      "exploits_vulnerabilities": false,
+      "social_scoring": false,
+      "crime_prediction_profiling": false,
+      "facial_scraping": false,
+      "intimate_or_csam_generation": false,
+      "emotion_recognition": false,
+      "biometric_remote_id": false,
+      "biometric_categorisation": false,
+      "annex1_safety_component": false,
+      "critical_infrastructure": false,
+      "education": false,
+      "employment": false,
+      "essential_services": "none",
+      "law_enforcement": false,
+      "migration_border": false,
+      "justice_democracy": false,
+      "interacts_with_people": false,
+      "generates_synthetic_content": false
+    },
+    "expect": {
+      "tier": "minimal",
+      "matched": [
+        "art4-ai-literacy"
+      ]
+    }
+  },
+  {
+    "id": "deepfake-marketing",
+    "use_case": "We want to use an AI video tool to make an ad where a realistic AI version of a famous footballer recommends our coffee.",
+    "answers": {
+      "role": "deployer",
+      "gpai_model": "no",
+      "manipulative_techniques": false,
+      "exploits_vulnerabilities": false,
+      "social_scoring": false,
+      "crime_prediction_profiling": false,
+      "facial_scraping": false,
+      "intimate_or_csam_generation": false,
+      "emotion_recognition": false,
+      "biometric_remote_id": false,
+      "biometric_categorisation": false,
+      "annex1_safety_component": false,
+      "critical_infrastructure": false,
+      "education": false,
+      "employment": false,
+      "essential_services": "none",
+      "law_enforcement": false,
+      "migration_border": false,
+      "justice_democracy": false,
+      "interacts_with_people": false,
+      "generates_synthetic_content": true,
+      "deepfake": true,
+      "public_interest_text": false
+    },
+    "expect": {
+      "tier": "limited",
+      "matched": [
+        "art50-deepfake"
+      ]
+    }
+  },
+  {
+    "id": "gpai-provider",
+    "use_case": "We are training and releasing our own open-weight large language model that other companies can download and build products on. Training compute is well under 10^25 FLOPs.",
+    "answers": {
+      "role": "provider",
+      "gpai_model": "yes",
+      "manipulative_techniques": false,
+      "exploits_vulnerabilities": false,
+      "social_scoring": false,
+      "crime_prediction_profiling": false,
+      "facial_scraping": false,
+      "intimate_or_csam_generation": false,
+      "emotion_recognition": false,
+      "biometric_remote_id": false,
+      "biometric_categorisation": false,
+      "annex1_safety_component": false,
+      "critical_infrastructure": false,
+      "education": false,
+      "employment": false,
+      "essential_services": "none",
+      "law_enforcement": false,
+      "migration_border": false,
+      "justice_democracy": false,
+      "interacts_with_people": false,
+      "generates_synthetic_content": false
+    },
+    "expect": {
+      "tier": "minimal",
+      "matched": [
+        "gpai-model"
+      ]
+    }
+  },
+  {
+    "id": "cv-formatting-derogation",
+    "use_case": "We sell a tool to recruiters that converts CVs from any format into one standard template and removes duplicates. It does not score, rank or reject anyone; recruiters read every CV.",
+    "answers": {
+      "role": "provider",
+      "gpai_model": "no",
+      "manipulative_techniques": false,
+      "exploits_vulnerabilities": false,
+      "social_scoring": false,
+      "crime_prediction_profiling": false,
+      "facial_scraping": false,
+      "intimate_or_csam_generation": false,
+      "emotion_recognition": false,
+      "biometric_remote_id": false,
+      "biometric_categorisation": false,
+      "annex1_safety_component": false,
+      "critical_infrastructure": false,
+      "education": false,
+      "employment": true,
+      "essential_services": "none",
+      "law_enforcement": false,
+      "migration_border": false,
+      "justice_democracy": false,
+      "interacts_with_people": false,
+      "generates_synthetic_content": false,
+      "annex3_derogation": "narrow_procedural_task",
+      "profiling": false
+    },
+    "expect": {
+      "tier": "minimal",
+      "matched": [
+        "art6-3-derogation"
+      ]
+    }
+  },
+  {
+    "id": "cv-formatting-with-profiling",
+    "use_case": "Same CV formatting tool, but it also adds a 'reliability score' per candidate based on job-hopping history.",
+    "answers": {
+      "role": "provider",
+      "gpai_model": "no",
+      "manipulative_techniques": false,
+      "exploits_vulnerabilities": false,
+      "social_scoring": false,
+      "crime_prediction_profiling": false,
+      "facial_scraping": false,
+      "intimate_or_csam_generation": false,
+      "emotion_recognition": false,
+      "biometric_remote_id": false,
+      "biometric_categorisation": false,
+      "annex1_safety_component": false,
+      "critical_infrastructure": false,
+      "education": false,
+      "employment": true,
+      "essential_services": "none",
+      "law_enforcement": false,
+      "migration_border": false,
+      "justice_democracy": false,
+      "interacts_with_people": false,
+      "generates_synthetic_content": false,
+      "annex3_derogation": "narrow_procedural_task",
+      "profiling": true
+    },
+    "expect": {
+      "tier": "high",
+      "matched": [
+        "annex3-employment"
+      ]
+    }
+  },
+  {
+    "id": "incomplete",
+    "use_case": "An AI that helps our sales team.",
+    "answers": {
+      "role": "deployer",
+      "employment": false,
+      "interacts_with_people": true
+    },
+    "expect": {
+      "tier": "incomplete",
+      "matched": []
+    }
+  },
+  {
+    "id": "cv-screening-vendor",
+    "use_case": "We build and sell the CV screening and ranking tool that cafés and shops use to shortlist job applicants.",
+    "answers": {
+      "role": "provider",
+      "gpai_model": "no",
+      "manipulative_techniques": false,
+      "exploits_vulnerabilities": false,
+      "social_scoring": false,
+      "crime_prediction_profiling": false,
+      "facial_scraping": false,
+      "intimate_or_csam_generation": false,
+      "emotion_recognition": false,
+      "biometric_remote_id": false,
+      "biometric_categorisation": false,
+      "annex1_safety_component": false,
+      "critical_infrastructure": false,
+      "education": false,
+      "employment": true,
+      "essential_services": "none",
+      "law_enforcement": false,
+      "migration_border": false,
+      "justice_democracy": false,
+      "interacts_with_people": false,
+      "generates_synthetic_content": false,
+      "annex3_derogation": "none",
+      "profiling": true
+    },
+    "expect": {
+      "tier": "high",
+      "matched": [
+        "annex3-employment"
+      ]
+    }
+  }
+]

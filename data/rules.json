@@ -1,0 +1,1906 @@
+{
+  "version": "2026-11-10",
+  "law": "Regulation (EU) 2024/1689 (AI Act), as amended by Regulation (EU) 2026/1744 (Digital Omnibus on AI)",
+  "checked_by": "Hank, 2026-11-09",
+  "disclaimer": "A first-pass classification from your answers, not legal advice.",
+  "tier_order": [
+    "prohibited",
+    "high",
+    "limited",
+    "minimal"
+  ],
+  "rules": [
+    {
+      "id": "art5-manipulation",
+      "tier": "prohibited",
+      "title": "Harmful manipulative or deceptive techniques",
+      "article": "Art. 5(1)(a)",
+      "when": {
+        "all": [
+          {
+            "q": "manipulative_techniques",
+            "is": true
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "all",
+          "text": "Do not place this on the market, put it into service or use it in the EU.",
+          "article": "Art. 5"
+        }
+      ],
+      "applies_from": "2025-02-02"
+    },
+    {
+      "id": "art5-vulnerabilities",
+      "tier": "prohibited",
+      "title": "Exploiting vulnerabilities",
+      "article": "Art. 5(1)(b)",
+      "when": {
+        "all": [
+          {
+            "q": "exploits_vulnerabilities",
+            "is": true
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "all",
+          "text": "Do not place this on the market, put it into service or use it in the EU.",
+          "article": "Art. 5"
+        }
+      ],
+      "applies_from": "2025-02-02"
+    },
+    {
+      "id": "art5-social-scoring",
+      "tier": "prohibited",
+      "title": "Social scoring",
+      "article": "Art. 5(1)(c)",
+      "when": {
+        "all": [
+          {
+            "q": "social_scoring",
+            "is": true
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "all",
+          "text": "Do not place this on the market, put it into service or use it in the EU.",
+          "article": "Art. 5"
+        }
+      ],
+      "applies_from": "2025-02-02"
+    },
+    {
+      "id": "art5-crime-prediction",
+      "tier": "prohibited",
+      "title": "Predicting crime from profiling alone",
+      "article": "Art. 5(1)(d)",
+      "when": {
+        "all": [
+          {
+            "q": "crime_prediction_profiling",
+            "is": true
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "all",
+          "text": "Do not place this on the market, put it into service or use it in the EU.",
+          "article": "Art. 5"
+        }
+      ],
+      "applies_from": "2025-02-02"
+    },
+    {
+      "id": "art5-facial-scraping",
+      "tier": "prohibited",
+      "title": "Untargeted scraping of facial images",
+      "article": "Art. 5(1)(e)",
+      "when": {
+        "all": [
+          {
+            "q": "facial_scraping",
+            "is": true
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "all",
+          "text": "Do not place this on the market, put it into service or use it in the EU.",
+          "article": "Art. 5"
+        }
+      ],
+      "applies_from": "2025-02-02"
+    },
+    {
+      "id": "art5-intimate-csam",
+      "tier": "prohibited",
+      "title": "Non-consensual intimate content or child sexual abuse material",
+      "article": "Art. 5(1)(ba)-(bb)",
+      "when": {
+        "all": [
+          {
+            "q": "intimate_or_csam_generation",
+            "is": true
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "all",
+          "text": "Do not place this on the market or use it in the EU; put safeguards in place that reliably prevent this output.",
+          "article": "Art. 5(1)(ba)-(bb), 5(1a)"
+        }
+      ],
+      "applies_from": "2026-12-02",
+      "note": "Added by Reg. (EU) 2026/1744 (in force 27 Jul 2026); applies from 2 Dec 2026. Covered only where this output is the intended purpose or a reproducible outcome without adequate safeguards."
+    },
+    {
+      "id": "art5-emotion-workplace",
+      "tier": "prohibited",
+      "title": "Emotion recognition at work or in education",
+      "article": "Art. 5(1)(f)",
+      "when": {
+        "all": [
+          {
+            "q": "emotion_recognition_workplace",
+            "is": true
+          }
+        ]
+      },
+      "unless": {
+        "any": [
+          {
+            "q": "emotion_medical_or_safety",
+            "is": true
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "all",
+          "text": "Do not place this on the market, put it into service or use it in the EU.",
+          "article": "Art. 5"
+        }
+      ],
+      "applies_from": "2025-02-02",
+      "note": "Exception for medical or safety reasons only."
+    },
+    {
+      "id": "art5-biometric-categorisation",
+      "tier": "prohibited",
+      "title": "Biometric categorisation by sensitive traits",
+      "article": "Art. 5(1)(g)",
+      "when": {
+        "all": [
+          {
+            "q": "biometric_categorisation_sensitive",
+            "is": true
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "all",
+          "text": "Do not place this on the market, put it into service or use it in the EU.",
+          "article": "Art. 5"
+        }
+      ],
+      "applies_from": "2025-02-02"
+    },
+    {
+      "id": "art5-realtime-rbi",
+      "tier": "prohibited",
+      "title": "Real-time remote biometric identification in public for law enforcement",
+      "article": "Art. 5(1)(h)",
+      "when": {
+        "all": [
+          {
+            "q": "realtime_rbi_public_law_enforcement",
+            "is": true
+          }
+        ]
+      },
+      "unless": {
+        "any": [
+          {
+            "q": "rbi_law_enforcement_exception",
+            "is": true
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "all",
+          "text": "Do not place this on the market, put it into service or use it in the EU.",
+          "article": "Art. 5"
+        }
+      ],
+      "applies_from": "2025-02-02",
+      "note": "Narrow exceptions (victims, imminent threats, serious-crime suspects) with prior authorisation; see art5-rbi-authorised."
+    },
+    {
+      "id": "art5-rbi-authorised",
+      "tier": "high",
+      "title": "Authorised real-time biometric identification for law enforcement",
+      "article": "Art. 5(2)-(7)",
+      "when": {
+        "all": [
+          {
+            "q": "realtime_rbi_public_law_enforcement",
+            "is": true
+          },
+          {
+            "q": "rbi_law_enforcement_exception",
+            "is": true
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "deployer",
+          "text": "Get prior authorisation from a judicial or independent administrative authority for each use.",
+          "article": "Art. 5(3)"
+        },
+        {
+          "role": "deployer",
+          "text": "Only use it where national law expressly allows it.",
+          "article": "Art. 5(5)"
+        },
+        {
+          "role": "deployer",
+          "text": "Complete a fundamental rights impact assessment and register the system before use.",
+          "article": "Art. 5(2)"
+        },
+        {
+          "role": "deployer",
+          "text": "Notify the market surveillance and data protection authorities of each use.",
+          "article": "Art. 5(4)"
+        }
+      ],
+      "applies_from": "2025-02-02",
+      "note": "Excepted uses are permitted under strict conditions and the system is also Annex III high-risk (point 1(a)). Requires counsel."
+    },
+    {
+      "id": "annex1-product-safety",
+      "tier": "high",
+      "title": "Safety component of a regulated product",
+      "article": "Art. 6(1), Annex I",
+      "when": {
+        "all": [
+          {
+            "q": "annex1_safety_component",
+            "is": true
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "provider",
+          "text": "Run a documented risk management process across the system's lifecycle.",
+          "article": "Art. 9"
+        },
+        {
+          "role": "provider",
+          "text": "Use relevant, representative training and test data and check it for bias.",
+          "article": "Art. 10"
+        },
+        {
+          "role": "provider",
+          "text": "Write technical documentation before release and keep it up to date.",
+          "article": "Art. 11, Annex IV"
+        },
+        {
+          "role": "provider",
+          "text": "Log events automatically so results can be traced.",
+          "article": "Art. 12"
+        },
+        {
+          "role": "provider",
+          "text": "Give deployers clear instructions for use.",
+          "article": "Art. 13"
+        },
+        {
+          "role": "provider",
+          "text": "Design it so a human can oversee it and stop it.",
+          "article": "Art. 14"
+        },
+        {
+          "role": "provider",
+          "text": "Make it accurate, robust and secure against attacks like data poisoning and prompt injection.",
+          "article": "Art. 15"
+        },
+        {
+          "role": "provider",
+          "text": "Run a quality management system.",
+          "article": "Art. 17"
+        },
+        {
+          "role": "provider",
+          "text": "Monitor it after release and report serious incidents.",
+          "article": "Arts. 72, 73"
+        },
+        {
+          "role": "provider",
+          "text": "Follow the product's own conformity assessment procedure, with the AI Act requirements checked as part of it.",
+          "article": "Art. 43(3)"
+        },
+        {
+          "role": "deployer",
+          "text": "Use it according to the provider's instructions.",
+          "article": "Art. 26(1)"
+        },
+        {
+          "role": "deployer",
+          "text": "Assign trained, competent people to oversee it.",
+          "article": "Art. 26(2)"
+        },
+        {
+          "role": "deployer",
+          "text": "Make sure the input data you control is relevant to the purpose.",
+          "article": "Art. 26(4)"
+        },
+        {
+          "role": "deployer",
+          "text": "Monitor it, and suspend it and tell the provider if it poses a risk.",
+          "article": "Art. 26(5)"
+        },
+        {
+          "role": "deployer",
+          "text": "Keep the logs it generates for at least six months.",
+          "article": "Art. 26(6)"
+        },
+        {
+          "role": "deployer",
+          "text": "Tell people when it is used to make or help make decisions about them.",
+          "article": "Art. 26(11)"
+        },
+        {
+          "role": "deployer",
+          "text": "Explain the decision to an affected person who asks.",
+          "article": "Art. 86"
+        }
+      ],
+      "applies_from": "2028-08-02",
+      "note": "Applies from 2 Aug 2028 (moved from 2 Aug 2027 by Reg. (EU) 2026/1744). Machinery now sits in Annex I Section B and is handled through the Machinery Regulation. Whether a product needs third-party assessment depends on its sectoral law; check it."
+    },
+    {
+      "id": "annex3-biometrics",
+      "tier": "high",
+      "title": "Biometrics (remote identification, categorisation, emotion recognition)",
+      "article": "Art. 6(2), Annex III point 1",
+      "when": {
+        "any": [
+          {
+            "q": "biometric_remote_id",
+            "is": true
+          },
+          {
+            "q": "biometric_categorisation",
+            "is": true
+          },
+          {
+            "q": "emotion_recognition",
+            "is": true
+          }
+        ]
+      },
+      "unless": {
+        "all": [
+          {
+            "q": "annex3_derogation",
+            "in": [
+              "narrow_procedural_task",
+              "improves_completed_human_work",
+              "detects_patterns_with_human_review",
+              "preparatory_task"
+            ]
+          },
+          {
+            "q": "profiling",
+            "is": false
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "provider",
+          "text": "Run a documented risk management process across the system's lifecycle.",
+          "article": "Art. 9"
+        },
+        {
+          "role": "provider",
+          "text": "Use relevant, representative training and test data and check it for bias.",
+          "article": "Art. 10"
+        },
+        {
+          "role": "provider",
+          "text": "Write technical documentation before release and keep it up to date.",
+          "article": "Art. 11, Annex IV"
+        },
+        {
+          "role": "provider",
+          "text": "Log events automatically so results can be traced.",
+          "article": "Art. 12"
+        },
+        {
+          "role": "provider",
+          "text": "Give deployers clear instructions for use.",
+          "article": "Art. 13"
+        },
+        {
+          "role": "provider",
+          "text": "Design it so a human can oversee it and stop it.",
+          "article": "Art. 14"
+        },
+        {
+          "role": "provider",
+          "text": "Make it accurate, robust and secure against attacks like data poisoning and prompt injection.",
+          "article": "Art. 15"
+        },
+        {
+          "role": "provider",
+          "text": "Run a quality management system.",
+          "article": "Art. 17"
+        },
+        {
+          "role": "provider",
+          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
+          "article": "Arts. 43, 47, 48"
+        },
+        {
+          "role": "provider",
+          "text": "Register the system in the EU database before release.",
+          "article": "Art. 49(1)"
+        },
+        {
+          "role": "provider",
+          "text": "Monitor it after release and report serious incidents.",
+          "article": "Arts. 72, 73"
+        },
+        {
+          "role": "deployer",
+          "text": "Use it according to the provider's instructions.",
+          "article": "Art. 26(1)"
+        },
+        {
+          "role": "deployer",
+          "text": "Assign trained, competent people to oversee it.",
+          "article": "Art. 26(2)"
+        },
+        {
+          "role": "deployer",
+          "text": "Make sure the input data you control is relevant to the purpose.",
+          "article": "Art. 26(4)"
+        },
+        {
+          "role": "deployer",
+          "text": "Monitor it, and suspend it and tell the provider if it poses a risk.",
+          "article": "Art. 26(5)"
+        },
+        {
+          "role": "deployer",
+          "text": "Keep the logs it generates for at least six months.",
+          "article": "Art. 26(6)"
+        },
+        {
+          "role": "deployer",
+          "text": "Tell people when it is used to make or help make decisions about them.",
+          "article": "Art. 26(11)"
+        },
+        {
+          "role": "deployer",
+          "text": "Explain the decision to an affected person who asks.",
+          "article": "Art. 86"
+        },
+        {
+          "role": "deployer",
+          "text": "If you are a public body or provide a public service, do a fundamental rights impact assessment before first use.",
+          "article": "Art. 27"
+        }
+      ],
+      "applies_from": "2027-12-02",
+      "note": "Annex III high-risk obligations apply from 2 Dec 2027 (moved from 2 Aug 2026 by Reg. (EU) 2026/1744, fixed date). Conservative: any emotion inference from biometric data is treated as Annex III 1(c). Biometrics often needs a notified body (Art. 43(1))."
+    },
+    {
+      "id": "annex3-critical-infrastructure",
+      "tier": "high",
+      "title": "Critical infrastructure",
+      "article": "Art. 6(2), Annex III point 2",
+      "when": {
+        "all": [
+          {
+            "q": "critical_infrastructure",
+            "is": true
+          }
+        ]
+      },
+      "unless": {
+        "all": [
+          {
+            "q": "annex3_derogation",
+            "in": [
+              "narrow_procedural_task",
+              "improves_completed_human_work",
+              "detects_patterns_with_human_review",
+              "preparatory_task"
+            ]
+          },
+          {
+            "q": "profiling",
+            "is": false
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "provider",
+          "text": "Run a documented risk management process across the system's lifecycle.",
+          "article": "Art. 9"
+        },
+        {
+          "role": "provider",
+          "text": "Use relevant, representative training and test data and check it for bias.",
+          "article": "Art. 10"
+        },
+        {
+          "role": "provider",
+          "text": "Write technical documentation before release and keep it up to date.",
+          "article": "Art. 11, Annex IV"
+        },
+        {
+          "role": "provider",
+          "text": "Log events automatically so results can be traced.",
+          "article": "Art. 12"
+        },
+        {
+          "role": "provider",
+          "text": "Give deployers clear instructions for use.",
+          "article": "Art. 13"
+        },
+        {
+          "role": "provider",
+          "text": "Design it so a human can oversee it and stop it.",
+          "article": "Art. 14"
+        },
+        {
+          "role": "provider",
+          "text": "Make it accurate, robust and secure against attacks like data poisoning and prompt injection.",
+          "article": "Art. 15"
+        },
+        {
+          "role": "provider",
+          "text": "Run a quality management system.",
+          "article": "Art. 17"
+        },
+        {
+          "role": "provider",
+          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
+          "article": "Arts. 43, 47, 48"
+        },
+        {
+          "role": "provider",
+          "text": "Register the system in the EU database before release.",
+          "article": "Art. 49(1)"
+        },
+        {
+          "role": "provider",
+          "text": "Monitor it after release and report serious incidents.",
+          "article": "Arts. 72, 73"
+        },
+        {
+          "role": "deployer",
+          "text": "Use it according to the provider's instructions.",
+          "article": "Art. 26(1)"
+        },
+        {
+          "role": "deployer",
+          "text": "Assign trained, competent people to oversee it.",
+          "article": "Art. 26(2)"
+        },
+        {
+          "role": "deployer",
+          "text": "Make sure the input data you control is relevant to the purpose.",
+          "article": "Art. 26(4)"
+        },
+        {
+          "role": "deployer",
+          "text": "Monitor it, and suspend it and tell the provider if it poses a risk.",
+          "article": "Art. 26(5)"
+        },
+        {
+          "role": "deployer",
+          "text": "Keep the logs it generates for at least six months.",
+          "article": "Art. 26(6)"
+        },
+        {
+          "role": "deployer",
+          "text": "Tell people when it is used to make or help make decisions about them.",
+          "article": "Art. 26(11)"
+        },
+        {
+          "role": "deployer",
+          "text": "Explain the decision to an affected person who asks.",
+          "article": "Art. 86"
+        }
+      ],
+      "applies_from": "2027-12-02",
+      "note": "Annex III high-risk obligations apply from 2 Dec 2027 (moved from 2 Aug 2026 by Reg. (EU) 2026/1744, fixed date)."
+    },
+    {
+      "id": "annex3-education",
+      "tier": "high",
+      "title": "Education and vocational training",
+      "article": "Art. 6(2), Annex III point 3",
+      "when": {
+        "all": [
+          {
+            "q": "education",
+            "is": true
+          }
+        ]
+      },
+      "unless": {
+        "all": [
+          {
+            "q": "annex3_derogation",
+            "in": [
+              "narrow_procedural_task",
+              "improves_completed_human_work",
+              "detects_patterns_with_human_review",
+              "preparatory_task"
+            ]
+          },
+          {
+            "q": "profiling",
+            "is": false
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "provider",
+          "text": "Run a documented risk management process across the system's lifecycle.",
+          "article": "Art. 9"
+        },
+        {
+          "role": "provider",
+          "text": "Use relevant, representative training and test data and check it for bias.",
+          "article": "Art. 10"
+        },
+        {
+          "role": "provider",
+          "text": "Write technical documentation before release and keep it up to date.",
+          "article": "Art. 11, Annex IV"
+        },
+        {
+          "role": "provider",
+          "text": "Log events automatically so results can be traced.",
+          "article": "Art. 12"
+        },
+        {
+          "role": "provider",
+          "text": "Give deployers clear instructions for use.",
+          "article": "Art. 13"
+        },
+        {
+          "role": "provider",
+          "text": "Design it so a human can oversee it and stop it.",
+          "article": "Art. 14"
+        },
+        {
+          "role": "provider",
+          "text": "Make it accurate, robust and secure against attacks like data poisoning and prompt injection.",
+          "article": "Art. 15"
+        },
+        {
+          "role": "provider",
+          "text": "Run a quality management system.",
+          "article": "Art. 17"
+        },
+        {
+          "role": "provider",
+          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
+          "article": "Arts. 43, 47, 48"
+        },
+        {
+          "role": "provider",
+          "text": "Register the system in the EU database before release.",
+          "article": "Art. 49(1)"
+        },
+        {
+          "role": "provider",
+          "text": "Monitor it after release and report serious incidents.",
+          "article": "Arts. 72, 73"
+        },
+        {
+          "role": "deployer",
+          "text": "Use it according to the provider's instructions.",
+          "article": "Art. 26(1)"
+        },
+        {
+          "role": "deployer",
+          "text": "Assign trained, competent people to oversee it.",
+          "article": "Art. 26(2)"
+        },
+        {
+          "role": "deployer",
+          "text": "Make sure the input data you control is relevant to the purpose.",
+          "article": "Art. 26(4)"
+        },
+        {
+          "role": "deployer",
+          "text": "Monitor it, and suspend it and tell the provider if it poses a risk.",
+          "article": "Art. 26(5)"
+        },
+        {
+          "role": "deployer",
+          "text": "Keep the logs it generates for at least six months.",
+          "article": "Art. 26(6)"
+        },
+        {
+          "role": "deployer",
+          "text": "Tell people when it is used to make or help make decisions about them.",
+          "article": "Art. 26(11)"
+        },
+        {
+          "role": "deployer",
+          "text": "Explain the decision to an affected person who asks.",
+          "article": "Art. 86"
+        },
+        {
+          "role": "deployer",
+          "text": "If you are a public body or provide a public service, do a fundamental rights impact assessment before first use.",
+          "article": "Art. 27"
+        }
+      ],
+      "applies_from": "2027-12-02",
+      "note": "Annex III high-risk obligations apply from 2 Dec 2027 (moved from 2 Aug 2026 by Reg. (EU) 2026/1744, fixed date)."
+    },
+    {
+      "id": "annex3-employment",
+      "tier": "high",
+      "title": "Employment and workers management",
+      "article": "Art. 6(2), Annex III point 4",
+      "when": {
+        "all": [
+          {
+            "q": "employment",
+            "is": true
+          }
+        ]
+      },
+      "unless": {
+        "all": [
+          {
+            "q": "annex3_derogation",
+            "in": [
+              "narrow_procedural_task",
+              "improves_completed_human_work",
+              "detects_patterns_with_human_review",
+              "preparatory_task"
+            ]
+          },
+          {
+            "q": "profiling",
+            "is": false
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "provider",
+          "text": "Run a documented risk management process across the system's lifecycle.",
+          "article": "Art. 9"
+        },
+        {
+          "role": "provider",
+          "text": "Use relevant, representative training and test data and check it for bias.",
+          "article": "Art. 10"
+        },
+        {
+          "role": "provider",
+          "text": "Write technical documentation before release and keep it up to date.",
+          "article": "Art. 11, Annex IV"
+        },
+        {
+          "role": "provider",
+          "text": "Log events automatically so results can be traced.",
+          "article": "Art. 12"
+        },
+        {
+          "role": "provider",
+          "text": "Give deployers clear instructions for use.",
+          "article": "Art. 13"
+        },
+        {
+          "role": "provider",
+          "text": "Design it so a human can oversee it and stop it.",
+          "article": "Art. 14"
+        },
+        {
+          "role": "provider",
+          "text": "Make it accurate, robust and secure against attacks like data poisoning and prompt injection.",
+          "article": "Art. 15"
+        },
+        {
+          "role": "provider",
+          "text": "Run a quality management system.",
+          "article": "Art. 17"
+        },
+        {
+          "role": "provider",
+          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
+          "article": "Arts. 43, 47, 48"
+        },
+        {
+          "role": "provider",
+          "text": "Register the system in the EU database before release.",
+          "article": "Art. 49(1)"
+        },
+        {
+          "role": "provider",
+          "text": "Monitor it after release and report serious incidents.",
+          "article": "Arts. 72, 73"
+        },
+        {
+          "role": "deployer",
+          "text": "Use it according to the provider's instructions.",
+          "article": "Art. 26(1)"
+        },
+        {
+          "role": "deployer",
+          "text": "Assign trained, competent people to oversee it.",
+          "article": "Art. 26(2)"
+        },
+        {
+          "role": "deployer",
+          "text": "Make sure the input data you control is relevant to the purpose.",
+          "article": "Art. 26(4)"
+        },
+        {
+          "role": "deployer",
+          "text": "Monitor it, and suspend it and tell the provider if it poses a risk.",
+          "article": "Art. 26(5)"
+        },
+        {
+          "role": "deployer",
+          "text": "Keep the logs it generates for at least six months.",
+          "article": "Art. 26(6)"
+        },
+        {
+          "role": "deployer",
+          "text": "Tell people when it is used to make or help make decisions about them.",
+          "article": "Art. 26(11)"
+        },
+        {
+          "role": "deployer",
+          "text": "Explain the decision to an affected person who asks.",
+          "article": "Art. 86"
+        },
+        {
+          "role": "deployer",
+          "text": "If you are a public body or provide a public service, do a fundamental rights impact assessment before first use.",
+          "article": "Art. 27"
+        },
+        {
+          "role": "deployer",
+          "text": "Before using it at work, inform workers' representatives and the affected workers.",
+          "article": "Art. 26(7)"
+        }
+      ],
+      "applies_from": "2027-12-02",
+      "note": "Annex III high-risk obligations apply from 2 Dec 2027 (moved from 2 Aug 2026 by Reg. (EU) 2026/1744, fixed date)."
+    },
+    {
+      "id": "annex3-essential-services",
+      "tier": "high",
+      "title": "Public benefits and emergency services",
+      "article": "Art. 6(2), Annex III point 5(a), 5(d)",
+      "when": {
+        "all": [
+          {
+            "q": "essential_services",
+            "in": [
+              "public_benefits",
+              "emergency_triage"
+            ]
+          }
+        ]
+      },
+      "unless": {
+        "all": [
+          {
+            "q": "annex3_derogation",
+            "in": [
+              "narrow_procedural_task",
+              "improves_completed_human_work",
+              "detects_patterns_with_human_review",
+              "preparatory_task"
+            ]
+          },
+          {
+            "q": "profiling",
+            "is": false
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "provider",
+          "text": "Run a documented risk management process across the system's lifecycle.",
+          "article": "Art. 9"
+        },
+        {
+          "role": "provider",
+          "text": "Use relevant, representative training and test data and check it for bias.",
+          "article": "Art. 10"
+        },
+        {
+          "role": "provider",
+          "text": "Write technical documentation before release and keep it up to date.",
+          "article": "Art. 11, Annex IV"
+        },
+        {
+          "role": "provider",
+          "text": "Log events automatically so results can be traced.",
+          "article": "Art. 12"
+        },
+        {
+          "role": "provider",
+          "text": "Give deployers clear instructions for use.",
+          "article": "Art. 13"
+        },
+        {
+          "role": "provider",
+          "text": "Design it so a human can oversee it and stop it.",
+          "article": "Art. 14"
+        },
+        {
+          "role": "provider",
+          "text": "Make it accurate, robust and secure against attacks like data poisoning and prompt injection.",
+          "article": "Art. 15"
+        },
+        {
+          "role": "provider",
+          "text": "Run a quality management system.",
+          "article": "Art. 17"
+        },
+        {
+          "role": "provider",
+          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
+          "article": "Arts. 43, 47, 48"
+        },
+        {
+          "role": "provider",
+          "text": "Register the system in the EU database before release.",
+          "article": "Art. 49(1)"
+        },
+        {
+          "role": "provider",
+          "text": "Monitor it after release and report serious incidents.",
+          "article": "Arts. 72, 73"
+        },
+        {
+          "role": "deployer",
+          "text": "Use it according to the provider's instructions.",
+          "article": "Art. 26(1)"
+        },
+        {
+          "role": "deployer",
+          "text": "Assign trained, competent people to oversee it.",
+          "article": "Art. 26(2)"
+        },
+        {
+          "role": "deployer",
+          "text": "Make sure the input data you control is relevant to the purpose.",
+          "article": "Art. 26(4)"
+        },
+        {
+          "role": "deployer",
+          "text": "Monitor it, and suspend it and tell the provider if it poses a risk.",
+          "article": "Art. 26(5)"
+        },
+        {
+          "role": "deployer",
+          "text": "Keep the logs it generates for at least six months.",
+          "article": "Art. 26(6)"
+        },
+        {
+          "role": "deployer",
+          "text": "Tell people when it is used to make or help make decisions about them.",
+          "article": "Art. 26(11)"
+        },
+        {
+          "role": "deployer",
+          "text": "Explain the decision to an affected person who asks.",
+          "article": "Art. 86"
+        },
+        {
+          "role": "deployer",
+          "text": "If you are a public body or provide a public service, do a fundamental rights impact assessment before first use.",
+          "article": "Art. 27"
+        }
+      ],
+      "applies_from": "2027-12-02",
+      "note": "Annex III high-risk obligations apply from 2 Dec 2027 (moved from 2 Aug 2026 by Reg. (EU) 2026/1744, fixed date)."
+    },
+    {
+      "id": "annex3-credit-insurance",
+      "tier": "high",
+      "title": "Credit scoring and life or health insurance pricing",
+      "article": "Art. 6(2), Annex III point 5(b)-(c)",
+      "when": {
+        "all": [
+          {
+            "q": "essential_services",
+            "in": [
+              "credit_scoring",
+              "life_health_insurance"
+            ]
+          }
+        ]
+      },
+      "unless": {
+        "all": [
+          {
+            "q": "annex3_derogation",
+            "in": [
+              "narrow_procedural_task",
+              "improves_completed_human_work",
+              "detects_patterns_with_human_review",
+              "preparatory_task"
+            ]
+          },
+          {
+            "q": "profiling",
+            "is": false
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "provider",
+          "text": "Run a documented risk management process across the system's lifecycle.",
+          "article": "Art. 9"
+        },
+        {
+          "role": "provider",
+          "text": "Use relevant, representative training and test data and check it for bias.",
+          "article": "Art. 10"
+        },
+        {
+          "role": "provider",
+          "text": "Write technical documentation before release and keep it up to date.",
+          "article": "Art. 11, Annex IV"
+        },
+        {
+          "role": "provider",
+          "text": "Log events automatically so results can be traced.",
+          "article": "Art. 12"
+        },
+        {
+          "role": "provider",
+          "text": "Give deployers clear instructions for use.",
+          "article": "Art. 13"
+        },
+        {
+          "role": "provider",
+          "text": "Design it so a human can oversee it and stop it.",
+          "article": "Art. 14"
+        },
+        {
+          "role": "provider",
+          "text": "Make it accurate, robust and secure against attacks like data poisoning and prompt injection.",
+          "article": "Art. 15"
+        },
+        {
+          "role": "provider",
+          "text": "Run a quality management system.",
+          "article": "Art. 17"
+        },
+        {
+          "role": "provider",
+          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
+          "article": "Arts. 43, 47, 48"
+        },
+        {
+          "role": "provider",
+          "text": "Register the system in the EU database before release.",
+          "article": "Art. 49(1)"
+        },
+        {
+          "role": "provider",
+          "text": "Monitor it after release and report serious incidents.",
+          "article": "Arts. 72, 73"
+        },
+        {
+          "role": "deployer",
+          "text": "Use it according to the provider's instructions.",
+          "article": "Art. 26(1)"
+        },
+        {
+          "role": "deployer",
+          "text": "Assign trained, competent people to oversee it.",
+          "article": "Art. 26(2)"
+        },
+        {
+          "role": "deployer",
+          "text": "Make sure the input data you control is relevant to the purpose.",
+          "article": "Art. 26(4)"
+        },
+        {
+          "role": "deployer",
+          "text": "Monitor it, and suspend it and tell the provider if it poses a risk.",
+          "article": "Art. 26(5)"
+        },
+        {
+          "role": "deployer",
+          "text": "Keep the logs it generates for at least six months.",
+          "article": "Art. 26(6)"
+        },
+        {
+          "role": "deployer",
+          "text": "Tell people when it is used to make or help make decisions about them.",
+          "article": "Art. 26(11)"
+        },
+        {
+          "role": "deployer",
+          "text": "Explain the decision to an affected person who asks.",
+          "article": "Art. 86"
+        },
+        {
+          "role": "deployer",
+          "text": "Do a fundamental rights impact assessment before first use.",
+          "article": "Art. 27"
+        }
+      ],
+      "applies_from": "2027-12-02",
+      "note": "Annex III high-risk obligations apply from 2 Dec 2027 (moved from 2 Aug 2026 by Reg. (EU) 2026/1744, fixed date). Every deployer must do a FRIA here, not just public bodies (Art. 27(1)). AI used only to detect financial fraud is excluded from 5(b)."
+    },
+    {
+      "id": "annex3-law-enforcement",
+      "tier": "high",
+      "title": "Law enforcement",
+      "article": "Art. 6(2), Annex III point 6",
+      "when": {
+        "all": [
+          {
+            "q": "law_enforcement",
+            "is": true
+          }
+        ]
+      },
+      "unless": {
+        "all": [
+          {
+            "q": "annex3_derogation",
+            "in": [
+              "narrow_procedural_task",
+              "improves_completed_human_work",
+              "detects_patterns_with_human_review",
+              "preparatory_task"
+            ]
+          },
+          {
+            "q": "profiling",
+            "is": false
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "provider",
+          "text": "Run a documented risk management process across the system's lifecycle.",
+          "article": "Art. 9"
+        },
+        {
+          "role": "provider",
+          "text": "Use relevant, representative training and test data and check it for bias.",
+          "article": "Art. 10"
+        },
+        {
+          "role": "provider",
+          "text": "Write technical documentation before release and keep it up to date.",
+          "article": "Art. 11, Annex IV"
+        },
+        {
+          "role": "provider",
+          "text": "Log events automatically so results can be traced.",
+          "article": "Art. 12"
+        },
+        {
+          "role": "provider",
+          "text": "Give deployers clear instructions for use.",
+          "article": "Art. 13"
+        },
+        {
+          "role": "provider",
+          "text": "Design it so a human can oversee it and stop it.",
+          "article": "Art. 14"
+        },
+        {
+          "role": "provider",
+          "text": "Make it accurate, robust and secure against attacks like data poisoning and prompt injection.",
+          "article": "Art. 15"
+        },
+        {
+          "role": "provider",
+          "text": "Run a quality management system.",
+          "article": "Art. 17"
+        },
+        {
+          "role": "provider",
+          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
+          "article": "Arts. 43, 47, 48"
+        },
+        {
+          "role": "provider",
+          "text": "Register the system in the EU database before release.",
+          "article": "Art. 49(1)"
+        },
+        {
+          "role": "provider",
+          "text": "Monitor it after release and report serious incidents.",
+          "article": "Arts. 72, 73"
+        },
+        {
+          "role": "deployer",
+          "text": "Use it according to the provider's instructions.",
+          "article": "Art. 26(1)"
+        },
+        {
+          "role": "deployer",
+          "text": "Assign trained, competent people to oversee it.",
+          "article": "Art. 26(2)"
+        },
+        {
+          "role": "deployer",
+          "text": "Make sure the input data you control is relevant to the purpose.",
+          "article": "Art. 26(4)"
+        },
+        {
+          "role": "deployer",
+          "text": "Monitor it, and suspend it and tell the provider if it poses a risk.",
+          "article": "Art. 26(5)"
+        },
+        {
+          "role": "deployer",
+          "text": "Keep the logs it generates for at least six months.",
+          "article": "Art. 26(6)"
+        },
+        {
+          "role": "deployer",
+          "text": "Tell people when it is used to make or help make decisions about them.",
+          "article": "Art. 26(11)"
+        },
+        {
+          "role": "deployer",
+          "text": "Explain the decision to an affected person who asks.",
+          "article": "Art. 86"
+        },
+        {
+          "role": "deployer",
+          "text": "If you are a public body or provide a public service, do a fundamental rights impact assessment before first use.",
+          "article": "Art. 27"
+        }
+      ],
+      "applies_from": "2027-12-02",
+      "note": "Annex III high-risk obligations apply from 2 Dec 2027 (moved from 2 Aug 2026 by Reg. (EU) 2026/1744, fixed date)."
+    },
+    {
+      "id": "annex3-migration",
+      "tier": "high",
+      "title": "Migration, asylum and border control",
+      "article": "Art. 6(2), Annex III point 7",
+      "when": {
+        "all": [
+          {
+            "q": "migration_border",
+            "is": true
+          }
+        ]
+      },
+      "unless": {
+        "all": [
+          {
+            "q": "annex3_derogation",
+            "in": [
+              "narrow_procedural_task",
+              "improves_completed_human_work",
+              "detects_patterns_with_human_review",
+              "preparatory_task"
+            ]
+          },
+          {
+            "q": "profiling",
+            "is": false
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "provider",
+          "text": "Run a documented risk management process across the system's lifecycle.",
+          "article": "Art. 9"
+        },
+        {
+          "role": "provider",
+          "text": "Use relevant, representative training and test data and check it for bias.",
+          "article": "Art. 10"
+        },
+        {
+          "role": "provider",
+          "text": "Write technical documentation before release and keep it up to date.",
+          "article": "Art. 11, Annex IV"
+        },
+        {
+          "role": "provider",
+          "text": "Log events automatically so results can be traced.",
+          "article": "Art. 12"
+        },
+        {
+          "role": "provider",
+          "text": "Give deployers clear instructions for use.",
+          "article": "Art. 13"
+        },
+        {
+          "role": "provider",
+          "text": "Design it so a human can oversee it and stop it.",
+          "article": "Art. 14"
+        },
+        {
+          "role": "provider",
+          "text": "Make it accurate, robust and secure against attacks like data poisoning and prompt injection.",
+          "article": "Art. 15"
+        },
+        {
+          "role": "provider",
+          "text": "Run a quality management system.",
+          "article": "Art. 17"
+        },
+        {
+          "role": "provider",
+          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
+          "article": "Arts. 43, 47, 48"
+        },
+        {
+          "role": "provider",
+          "text": "Register the system in the EU database before release.",
+          "article": "Art. 49(1)"
+        },
+        {
+          "role": "provider",
+          "text": "Monitor it after release and report serious incidents.",
+          "article": "Arts. 72, 73"
+        },
+        {
+          "role": "deployer",
+          "text": "Use it according to the provider's instructions.",
+          "article": "Art. 26(1)"
+        },
+        {
+          "role": "deployer",
+          "text": "Assign trained, competent people to oversee it.",
+          "article": "Art. 26(2)"
+        },
+        {
+          "role": "deployer",
+          "text": "Make sure the input data you control is relevant to the purpose.",
+          "article": "Art. 26(4)"
+        },
+        {
+          "role": "deployer",
+          "text": "Monitor it, and suspend it and tell the provider if it poses a risk.",
+          "article": "Art. 26(5)"
+        },
+        {
+          "role": "deployer",
+          "text": "Keep the logs it generates for at least six months.",
+          "article": "Art. 26(6)"
+        },
+        {
+          "role": "deployer",
+          "text": "Tell people when it is used to make or help make decisions about them.",
+          "article": "Art. 26(11)"
+        },
+        {
+          "role": "deployer",
+          "text": "Explain the decision to an affected person who asks.",
+          "article": "Art. 86"
+        },
+        {
+          "role": "deployer",
+          "text": "If you are a public body or provide a public service, do a fundamental rights impact assessment before first use.",
+          "article": "Art. 27"
+        }
+      ],
+      "applies_from": "2027-12-02",
+      "note": "Annex III high-risk obligations apply from 2 Dec 2027 (moved from 2 Aug 2026 by Reg. (EU) 2026/1744, fixed date)."
+    },
+    {
+      "id": "annex3-justice-democracy",
+      "tier": "high",
+      "title": "Administration of justice and democratic processes",
+      "article": "Art. 6(2), Annex III point 8",
+      "when": {
+        "all": [
+          {
+            "q": "justice_democracy",
+            "is": true
+          }
+        ]
+      },
+      "unless": {
+        "all": [
+          {
+            "q": "annex3_derogation",
+            "in": [
+              "narrow_procedural_task",
+              "improves_completed_human_work",
+              "detects_patterns_with_human_review",
+              "preparatory_task"
+            ]
+          },
+          {
+            "q": "profiling",
+            "is": false
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "provider",
+          "text": "Run a documented risk management process across the system's lifecycle.",
+          "article": "Art. 9"
+        },
+        {
+          "role": "provider",
+          "text": "Use relevant, representative training and test data and check it for bias.",
+          "article": "Art. 10"
+        },
+        {
+          "role": "provider",
+          "text": "Write technical documentation before release and keep it up to date.",
+          "article": "Art. 11, Annex IV"
+        },
+        {
+          "role": "provider",
+          "text": "Log events automatically so results can be traced.",
+          "article": "Art. 12"
+        },
+        {
+          "role": "provider",
+          "text": "Give deployers clear instructions for use.",
+          "article": "Art. 13"
+        },
+        {
+          "role": "provider",
+          "text": "Design it so a human can oversee it and stop it.",
+          "article": "Art. 14"
+        },
+        {
+          "role": "provider",
+          "text": "Make it accurate, robust and secure against attacks like data poisoning and prompt injection.",
+          "article": "Art. 15"
+        },
+        {
+          "role": "provider",
+          "text": "Run a quality management system.",
+          "article": "Art. 17"
+        },
+        {
+          "role": "provider",
+          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
+          "article": "Arts. 43, 47, 48"
+        },
+        {
+          "role": "provider",
+          "text": "Register the system in the EU database before release.",
+          "article": "Art. 49(1)"
+        },
+        {
+          "role": "provider",
+          "text": "Monitor it after release and report serious incidents.",
+          "article": "Arts. 72, 73"
+        },
+        {
+          "role": "deployer",
+          "text": "Use it according to the provider's instructions.",
+          "article": "Art. 26(1)"
+        },
+        {
+          "role": "deployer",
+          "text": "Assign trained, competent people to oversee it.",
+          "article": "Art. 26(2)"
+        },
+        {
+          "role": "deployer",
+          "text": "Make sure the input data you control is relevant to the purpose.",
+          "article": "Art. 26(4)"
+        },
+        {
+          "role": "deployer",
+          "text": "Monitor it, and suspend it and tell the provider if it poses a risk.",
+          "article": "Art. 26(5)"
+        },
+        {
+          "role": "deployer",
+          "text": "Keep the logs it generates for at least six months.",
+          "article": "Art. 26(6)"
+        },
+        {
+          "role": "deployer",
+          "text": "Tell people when it is used to make or help make decisions about them.",
+          "article": "Art. 26(11)"
+        },
+        {
+          "role": "deployer",
+          "text": "Explain the decision to an affected person who asks.",
+          "article": "Art. 86"
+        },
+        {
+          "role": "deployer",
+          "text": "If you are a public body or provide a public service, do a fundamental rights impact assessment before first use.",
+          "article": "Art. 27"
+        }
+      ],
+      "applies_from": "2027-12-02",
+      "note": "Annex III high-risk obligations apply from 2 Dec 2027 (moved from 2 Aug 2026 by Reg. (EU) 2026/1744, fixed date)."
+    },
+    {
+      "id": "art6-3-derogation",
+      "tier": "minimal",
+      "title": "Annex III area, but not high-risk under the Art. 6(3) derogation",
+      "article": "Art. 6(3)-(4)",
+      "when": {
+        "all": [
+          {
+            "any": [
+              {
+                "q": "biometric_remote_id",
+                "is": true
+              },
+              {
+                "q": "biometric_categorisation",
+                "is": true
+              },
+              {
+                "q": "emotion_recognition",
+                "is": true
+              },
+              {
+                "q": "critical_infrastructure",
+                "is": true
+              },
+              {
+                "q": "education",
+                "is": true
+              },
+              {
+                "q": "employment",
+                "is": true
+              },
+              {
+                "q": "essential_services",
+                "in": [
+                  "public_benefits",
+                  "credit_scoring",
+                  "life_health_insurance",
+                  "emergency_triage"
+                ]
+              },
+              {
+                "q": "law_enforcement",
+                "is": true
+              },
+              {
+                "q": "migration_border",
+                "is": true
+              },
+              {
+                "q": "justice_democracy",
+                "is": true
+              }
+            ]
+          },
+          {
+            "q": "annex3_derogation",
+            "in": [
+              "narrow_procedural_task",
+              "improves_completed_human_work",
+              "detects_patterns_with_human_review",
+              "preparatory_task"
+            ]
+          },
+          {
+            "q": "profiling",
+            "is": false
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "provider",
+          "text": "Write down why the system is not high-risk before you release it, and hand it to authorities on request.",
+          "article": "Art. 6(4)"
+        },
+        {
+          "role": "provider",
+          "text": "Register the system in the EU database even though it is not high-risk.",
+          "article": "Art. 49(2)"
+        }
+      ],
+      "applies_from": "2027-12-02",
+      "stacks": true,
+      "note": "Judgement call: the derogation fails if the system materially influences decisions about people; if in doubt treat it as high-risk. Date follows the Annex III timeline. Stacks so the documentation duty is never lost under another tier."
+    },
+    {
+      "id": "art50-interaction",
+      "tier": "limited",
+      "title": "AI that interacts with people",
+      "article": "Art. 50(1)",
+      "when": {
+        "all": [
+          {
+            "q": "interacts_with_people",
+            "is": true
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "provider",
+          "text": "Tell people they are interacting with an AI, at the latest at the first interaction, unless it is obvious.",
+          "article": "Art. 50(1), 50(5)"
+        },
+        {
+          "role": "deployer",
+          "text": "If the system runs under your own name or brand, you count as its provider: show the AI notice yourself.",
+          "article": "Art. 3(3), Art. 50(1)"
+        }
+      ],
+      "applies_from": "2026-08-02",
+      "stacks": true
+    },
+    {
+      "id": "art50-synthetic-marking",
+      "tier": "limited",
+      "title": "AI-generated or manipulated content",
+      "article": "Art. 50(2)",
+      "when": {
+        "all": [
+          {
+            "q": "generates_synthetic_content",
+            "is": true
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "provider",
+          "text": "Mark outputs in a machine-readable, detectable way as AI-generated (e.g. watermark or provenance metadata).",
+          "article": "Art. 50(2)"
+        }
+      ],
+      "applies_from": "2026-08-02",
+      "stacks": true,
+      "note": "Generative systems already on the market before 2 Aug 2026 have until 2 Dec 2026 (Art. 111(4) as amended)."
+    },
+    {
+      "id": "art50-emotion-biometric-disclosure",
+      "tier": "limited",
+      "title": "Emotion recognition or biometric categorisation disclosure",
+      "article": "Art. 50(3)",
+      "when": {
+        "any": [
+          {
+            "q": "emotion_recognition",
+            "is": true
+          },
+          {
+            "q": "biometric_categorisation",
+            "is": true
+          }
+        ]
+      },
+      "unless": {
+        "any": [
+          {
+            "all": [
+              {
+                "q": "emotion_recognition_workplace",
+                "is": true
+              },
+              {
+                "q": "emotion_medical_or_safety",
+                "is": false
+              }
+            ]
+          },
+          {
+            "q": "biometric_categorisation_sensitive",
+            "is": true
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "deployer",
+          "text": "Tell the people exposed that emotion recognition or biometric categorisation is in use, and process their data lawfully.",
+          "article": "Art. 50(3)"
+        }
+      ],
+      "applies_from": "2026-08-02",
+      "stacks": true,
+      "note": "Not returned when the use is prohibited under Art. 5(1)(f) or (g)."
+    },
+    {
+      "id": "art50-deepfake",
+      "tier": "limited",
+      "title": "Deepfakes",
+      "article": "Art. 50(4)",
+      "when": {
+        "all": [
+          {
+            "q": "deepfake",
+            "is": true
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "deployer",
+          "text": "Clearly disclose that the content is AI-generated or manipulated (lighter touch for evidently artistic or satirical work).",
+          "article": "Art. 50(4)"
+        }
+      ],
+      "applies_from": "2026-08-02",
+      "stacks": true
+    },
+    {
+      "id": "art50-public-text",
+      "tier": "limited",
+      "title": "AI text on matters of public interest",
+      "article": "Art. 50(4)",
+      "when": {
+        "all": [
+          {
+            "q": "public_interest_text",
+            "is": true
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "deployer",
+          "text": "Disclose that the text is AI-generated or manipulated.",
+          "article": "Art. 50(4)"
+        }
+      ],
+      "applies_from": "2026-08-02",
+      "stacks": true
+    },
+    {
+      "id": "art4-ai-literacy",
+      "tier": "minimal",
+      "title": "AI literacy",
+      "article": "Art. 4",
+      "when": {
+        "all": [
+          {
+            "q": "role",
+            "in": [
+              "provider",
+              "deployer",
+              "both"
+            ]
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "all",
+          "text": "Take measures to build the AI literacy of staff who run or use the system, and keep a record.",
+          "article": "Art. 4"
+        }
+      ],
+      "applies_from": "2025-02-02",
+      "stacks": true,
+      "note": "Applies to every provider and deployer. Wording softened by Reg. (EU) 2026/1744; no specific literacy level is required."
+    },
+    {
+      "id": "gpai-model",
+      "tier": "gpai",
+      "title": "General-purpose AI model provider",
+      "article": "Arts. 53, 54",
+      "when": {
+        "all": [
+          {
+            "q": "gpai_model",
+            "in": [
+              "yes",
+              "yes_systemic_risk"
+            ]
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "all",
+          "text": "Keep technical documentation of the model for the AI Office and authorities.",
+          "article": "Art. 53(1)(a), Annex XI"
+        },
+        {
+          "role": "all",
+          "text": "Give downstream providers the information they need to comply.",
+          "article": "Art. 53(1)(b), Annex XII"
+        },
+        {
+          "role": "all",
+          "text": "Have a copyright policy that respects text-and-data-mining opt-outs.",
+          "article": "Art. 53(1)(c)"
+        },
+        {
+          "role": "all",
+          "text": "Publish a summary of the training content using the Commission template.",
+          "article": "Art. 53(1)(d)"
+        },
+        {
+          "role": "all",
+          "text": "If you are outside the EU, appoint an authorised representative in the EU.",
+          "article": "Art. 54"
+        }
+      ],
+      "applies_from": "2025-08-02",
+      "stacks": true,
+      "note": "Models already on the market before 2 Aug 2025 must comply by 2 Aug 2027. Commission fines enforceable from 2 Aug 2026. Open-source models get partial relief (Art. 53(2)) unless systemic risk."
+    },
+    {
+      "id": "gpai-systemic-risk",
+      "tier": "gpai",
+      "title": "General-purpose AI model with systemic risk",
+      "article": "Arts. 52, 55",
+      "when": {
+        "all": [
+          {
+            "q": "gpai_model",
+            "is": "yes_systemic_risk"
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "all",
+          "text": "Notify the Commission when the model meets the systemic-risk threshold.",
+          "article": "Art. 52(1)"
+        },
+        {
+          "role": "all",
+          "text": "Evaluate the model, including adversarial testing, and assess and mitigate systemic risks.",
+          "article": "Art. 55(1)(a)-(b)"
+        },
+        {
+          "role": "all",
+          "text": "Report serious incidents to the AI Office without undue delay.",
+          "article": "Art. 55(1)(c)"
+        },
+        {
+          "role": "all",
+          "text": "Keep adequate cybersecurity for the model and its infrastructure.",
+          "article": "Art. 55(1)(d)"
+        }
+      ],
+      "applies_from": "2025-08-02",
+      "stacks": true
+    }
+  ]
+}
