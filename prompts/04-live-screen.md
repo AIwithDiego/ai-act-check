@@ -19,7 +19,8 @@ You are building the live screen for **AI Act Check** in the repo `AIwithDiego/a
 1. `src/live.ts`: an in-memory array, newest first, capped at 20. `recordCheck` pushes; nothing is ever written to disk. Serve `public/` with `serveStatic` from `@hono/node-server/serve-static` (add nothing else).
 2. `public/live.html` + `live.js`: plain HTML, CSS and vanilla JS, no framework, no build step. Poll `/live/feed` every 1.5 s. Render the newest check as the main verdict card and the older ones in the feed, exactly as in the mock. Animate only a newly arrived check (as the spec says), respect `prefers-reduced-motion`. States: idle (no checks yet), incomplete verdict, feed unreachable (status dot goes red, last screen stays).
 3. Obligations grouped by `law`, AI Act first, following the spec's rule for long lists (CV screening has ~22).
-4. Escape every string you put into the DOM (`textContent`, never `innerHTML` with data).
+4. Whose result is it: above the tier word, `Latest check · bought by an agent at HH:MM`; the strip says `Earlier checks`. The screen is the API owner's view, every check is a different customer (see the end of `docs/design-spec.md`).
+5. Escape every string you put into the DOM (`textContent`, never `innerHTML` with data).
 
 **Done when:**
 - `npm test` passes with `tests/live.test.ts`: `recordCheck` caps at 20 and orders newest first; `GET /live/feed` returns them; `GET /live` returns HTML; `GET /public/tokens.css` returns CSS.

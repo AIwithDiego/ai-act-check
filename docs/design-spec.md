@@ -9,7 +9,7 @@ For session 04. Target: `docs/live-screen-mock.html` (keys 1-6 switch state, R r
 ## Structure (copy the mock's markup)
 `header.ac-bar`: logo, `h1.ac-bar__product` "AI Act Check", `.ac-bar__end`: "Earned **X USD** from N checks" (sum of `amount` over the feed; none: "No checks yet") and `.ac-status` "Live".
 `main.ac-slide` > `.ac-slide__body` (hero, then todo) + `p.ac-disclaimer` (one line: `disclaimer` + " Rules version " + `rules_version`).
-`footer.ac-strip`: left `p.ac-strip__paid` = tick + `<span><b>Paid {amount} USD</b> · receipt {id} · {HH:MM}</span>`, id shortened to first 8 + "…" + last 4; none yet: "Paid checks line up here." Right `.ac-strip__earlier`: "Earlier" + `ul.ac-strip__pills` of up to 4 `li.ac-pill[data-tier]` (glyph, `b` tier word, `time` HH:MM), newest first.
+`footer.ac-strip`: left `p.ac-strip__paid` = tick + `<span><b>Paid {amount} USD</b> · receipt {id} · {HH:MM}</span>`, id shortened to first 8 + "…" + last 4; none yet: "Paid checks line up here." Right `.ac-strip__earlier`: "Earlier checks" + `ul.ac-strip__pills` of up to 4 `li.ac-pill[data-tier]` (glyph, `b` tier word, `time` HH:MM), newest first.
 
 ## Hero (`.ac-hero`)
 `h2.ac-answer[data-tier][style="--chars:…"] > span.ac-mark` word; `p.ac-meaning[data-tier]` glyph + sentence; `p.ac-why`.
@@ -52,3 +52,5 @@ Use-case text anywhere. `innerHTML` with data (`createElement` + `textContent`).
 
 ## Check before the PR
 Screenshots at 1920x1080, 1280x720 and 1550x1050 match the mock, with no empty band at any size. Run the CV-screening, chatbot, call-centre and `incomplete` verdicts through `recordCheck`.
+
+**Whose result is this:** the screen is the API owner's view (every check is a different customer). First line of `.ac-hero`: `p.ac-whose` = "Latest check · bought by an agent at {HH:MM}" (same style as `.ac-todo__head`). The top bar's "Earned {total} USD from {n} checks" is the owner's total.
