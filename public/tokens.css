@@ -68,9 +68,7 @@
   --t-slow:550ms;                      /* site .detail */
   --mark-per-char:34ms;                /* site MARK_MS_PER_CHAR */
   --mark-tilt:-.9deg;                  /* site tilt */
-  --arrive-paid:0ms;                   /* arrival order: paid, then the answer, then the duties */
-  --arrive-mark:160ms;
-  --arrive-rest:520ms;
+  --arrive-mark:120ms;                 /* the only arrival motion: the marker stroke */
 
   --u:1px;
 }
@@ -87,6 +85,13 @@
   --fs-body:calc(24 * var(--u));      /* obligation text; 24 is the floor for running text at 1080 */
   --fs-meta:calc(22 * var(--u));      /* articles, dates, receipt */
   --fs-min:calc(20 * var(--u));       /* smallest text on stage: disclaimer */
+  /* keynote screen */
+  --fs-stage:calc(230 * var(--u));    /* the tier word on the live screen */
+  --fs-idle:calc(180 * var(--u));     /* idle headline */
+  --fs-meaning:calc(56 * var(--u));   /* "Allowed, with strict duties." */
+  --fs-why:calc(36 * var(--u));       /* why / when line */
+  --fs-duty:calc(32 * var(--u));      /* key duties */
+  --fs-strip:calc(24 * var(--u));     /* bottom strip */
   --lh-cond:.86; --lh-head:1.05; --lh-body:1.28;
   --ls-cond:-.01em; --ls-head:-.025em; --ls-wide:.02em;
 
@@ -107,7 +112,7 @@
 }
 
 @media (prefers-reduced-motion:reduce){
-  :root{ --t-fast:1ms; --t-base:1ms; --t-slow:1ms; --mark-per-char:0ms; --arrive-mark:0ms; --arrive-rest:0ms; }
+  :root{ --t-fast:1ms; --t-base:1ms; --t-slow:1ms; --mark-per-char:0ms; --arrive-mark:0ms; }
 }
 
 /* ======================= Base ======================= */
@@ -234,44 +239,76 @@
 .ac-feed__meta b{color:var(--text);font-weight:600}
 .ac-feed__empty{grid-column:2 / -1;align-self:center;padding-inline:var(--s-6);font-size:var(--fs-meta);color:var(--text-2)}
 
-/* ======================= Screen layout (the live page) ======================= */
+/* ======================= Screen: keynote layout (the live page) ======================= */
+/* Sizes scale with the smaller axis (--u); the grid fills the whole viewport, any ratio:
+   extra height goes to the hero row, extra width to the gutters. Embedded copies (design
+   system) keep a fixed 16:9 box from their own --u. */
 html:has(body > .ac-screen){background:var(--stage-bg);height:100%}
-body:has(> .ac-screen){margin:0;height:100%;display:grid;place-items:center;background:var(--stage-bg);overflow:hidden}
-.ac-screen{--u:min(calc(100vw / 1920), calc(100vh / 1080));width:calc(1920 * var(--u));height:calc(1080 * var(--u));
-  display:grid;grid-template-rows:auto 1fr calc(140 * var(--u));overflow:hidden;position:relative}
+body:has(> .ac-screen){margin:0;height:100%;background:var(--stage-bg);overflow:hidden}
+.ac-screen{width:calc(1920 * var(--u));height:calc(1080 * var(--u));display:grid;grid-template-rows:auto minmax(0,1fr) auto;
+  overflow:hidden;position:relative;background:var(--stage-bg)}
+body > .ac-screen{--u:min(calc(100vw / 1920), calc(100vh / 1080));width:100vw;height:100vh;height:100dvh}
+
+.ac-slide{display:grid;grid-template-rows:minmax(0,1fr) auto;padding:var(--s-7) var(--s-8) var(--s-5);min-height:0}
+.ac-slide__body{display:flex;flex-direction:column;justify-content:safe center;min-height:0;overflow:hidden}
+.ac-slide .ac-disclaimer{max-width:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* hero */
+.ac-hero .ac-answer{font-size:min(var(--fs-stage), calc(1700 * var(--u) / (var(--chars) * .43)))}
+.ac-meaning{display:flex;align-items:center;gap:.3em;margin-top:var(--s-5);font-size:var(--fs-meaning);font-weight:700;
+  font-stretch:var(--w-head);letter-spacing:var(--ls-head);line-height:1.05}
+.ac-meaning .ac-glyph{color:var(--tier);width:.8em;height:.8em}
+.ac-why{margin-top:var(--s-4);font-size:var(--fs-why);font-weight:500;color:var(--text-2);line-height:1.2}
+
+/* what you must do: at most 3 key duties */
+.ac-todo{margin-top:var(--s-7)}
+.ac-todo__head{margin-bottom:var(--s-4);font-size:var(--fs-meta);font-stretch:var(--w-wide);font-weight:600;color:var(--text-2)}
+.ac-todo__list{display:grid;gap:var(--s-3)}
+.ac-todo__list li{display:grid;grid-template-columns:calc(44 * var(--u)) 1fr;font-size:var(--fs-duty);line-height:1.22;text-wrap:pretty}
+.ac-todo__list li::before{content:"";width:calc(22 * var(--u));height:calc(6 * var(--u));margin-top:.55em;background:var(--tier);border-radius:var(--r-chip)}
+.ac-gdpr{margin-top:var(--s-4);padding-left:calc(44 * var(--u));font-size:var(--fs-title);color:var(--text-2);line-height:1.25}
+.ac-gdpr b{color:var(--text);font-weight:700}
+.ac-todo .ac-more{margin-top:var(--s-2);padding-left:calc(44 * var(--u));font-size:var(--fs-body)}
+
+/* idle */
+.ac-idle-title{font-size:var(--fs-idle);font-stretch:var(--w-cond);font-weight:800;text-transform:uppercase;letter-spacing:var(--ls-cond);
+  line-height:.88;text-wrap:balance;max-width:calc(1500 * var(--u))}
+
+/* bottom strip: payment left, earlier checks right */
+.ac-strip{display:flex;align-items:center;justify-content:space-between;gap:var(--s-6);min-height:calc(76 * var(--u));padding:var(--s-3) var(--s-8);
+  background:var(--stage-deep);border-top:var(--rule-w) solid var(--rule);font-size:var(--fs-strip);color:var(--text-2);white-space:nowrap}
+.ac-strip__paid{display:flex;align-items:center;gap:var(--s-3);min-width:0}
+.ac-strip__paid b{color:var(--text);font-weight:700}
+.ac-strip .ac-paid__tick{grid-row:auto;width:calc(28 * var(--u));height:calc(28 * var(--u))}
+.ac-strip__earlier,.ac-strip__pills{display:flex;align-items:center;gap:var(--s-3)}
+.ac-pill{display:inline-flex;align-items:center;gap:.4em;padding:calc(6 * var(--u)) calc(12 * var(--u));border:var(--rule-w) solid var(--tier);
+  border-radius:var(--r-tag);font-size:var(--fs-strip);line-height:1;color:var(--text-2)}
+.ac-pill[data-tier="incomplete"]{border-style:dashed}
+.ac-pill .ac-glyph{color:var(--tier);width:.9em;height:.9em}
+.ac-pill b{color:var(--tier);font-size:1.1em;font-stretch:var(--w-cond);font-weight:800;text-transform:uppercase;letter-spacing:var(--ls-cond)}
+
+/* Library layout (v1 three-column verdict). Not used by the screen; kept for reference and the plain page. */
 .ac-main{display:grid;grid-template-columns:calc(560 * var(--u)) calc(820 * var(--u)) 1fr;column-gap:var(--s-7);
   padding:calc(28 * var(--u)) var(--s-8) var(--s-4);min-height:0}
 .ac-verdict{display:flex;flex-direction:column;align-items:flex-start;gap:var(--s-6);min-height:0}
 .ac-verdict .ac-disclaimer{margin-top:auto}
-.ac-col{min-height:0;display:flex;flex-direction:column;overflow:hidden}   /* live.js trims rows that do not fit, see spec */
+.ac-col{min-height:0;display:flex;flex-direction:column;overflow:hidden}
 .ac-main--wide{grid-template-columns:calc(560 * var(--u)) 1fr}
-
-/* idle */
-.ac-idle{grid-column:1 / -1;display:grid;grid-template-columns:calc(1000 * var(--u)) 1fr;column-gap:var(--s-8);align-content:center}
-.ac-idle__head{text-wrap:balance;font-size:var(--fs-hero);font-stretch:var(--w-cond);font-weight:800;text-transform:uppercase;letter-spacing:var(--ls-cond);line-height:.9}
-.ac-idle__sub{margin-top:var(--s-6);font-size:var(--fs-lead);font-weight:500;color:var(--text-2);line-height:1.2;max-width:22em}
-.ac-steps{counter-reset:s;display:grid;gap:0;align-self:center;border-top:var(--rule-w) solid var(--rule)}
+.ac-steps{counter-reset:s;display:grid;gap:0;border-top:var(--rule-w) solid var(--rule)}
 .ac-steps li{counter-increment:s;display:grid;grid-template-columns:calc(64 * var(--u)) 1fr;gap:var(--s-4);align-items:baseline;
   padding:var(--s-4) 0;border-bottom:var(--rule-w) solid var(--rule-soft);font-size:var(--fs-body)}
 .ac-steps li::before{content:counter(s);font-size:var(--fs-lead);font-stretch:var(--w-cond);font-weight:800;color:var(--text-3);line-height:1}
-.ac-steps li.is-paid::before{color:var(--ok)}
 .ac-steps b{font-weight:700}
 .ac-steps span{color:var(--text-2)}
-
-/* incomplete */
 .ac-missing{columns:2;column-gap:var(--s-7);margin-top:var(--s-5)}
 .ac-missing li{break-inside:avoid;padding:calc(7 * var(--u)) 0;border-bottom:var(--rule-w) solid var(--rule-soft);font-size:var(--fs-body)}
 
-/* ======================= Arrival (add .is-new to .ac-screen for one paint) ======================= */
-@keyframes ac-in{from{opacity:0}to{opacity:1}}
+/* ======================= Arrival: the highlighter stroke, nothing else ======================= */
+/* Add .is-new to .ac-screen for one paint when a new receipt arrives. */
 @keyframes ac-mark{from{transform:rotate(var(--mark-tilt)) scaleX(0)}to{transform:rotate(var(--mark-tilt)) scaleX(1)}}
-@keyframes ac-slide{from{opacity:0;transform:translateX(calc(-24 * var(--u)))}to{opacity:1;transform:none}}
-.is-new .ac-paid{animation:ac-in var(--t-base) var(--e) var(--arrive-paid) both}
 .is-new .ac-mark::before{animation:ac-mark calc(var(--chars) * var(--mark-per-char)) var(--e-mark) var(--arrive-mark) both}
-.is-new .ac-answer-line,.is-new .ac-rule,.is-new .ac-col,.is-new .ac-verdict > .ac-date{animation:ac-in var(--t-base) var(--e) var(--arrive-rest) both}
-.is-new .ac-feed__item:first-of-type{animation:ac-slide var(--t-slow) var(--e) var(--arrive-paid) both}
 @media (prefers-reduced-motion:reduce){
-  .is-new *,.is-new *::before{animation:none!important}
+  .is-new .ac-mark::before{animation:none!important}
 }
 
 /* ======================= Plain page (GET /) ======================= */

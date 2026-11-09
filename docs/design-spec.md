@@ -1,51 +1,54 @@
-# Design spec: live screen (`/live`)
+# Design spec: live screen (`/live`), v2 keynote layout
 
-For session 04. Target: `docs/live-screen-mock.html` (keys 1-6 switch state, R replays the arrival). Classes and tokens: `public/tokens.css`, documented in `docs/design-system.html` (section numbers below). Your job is to make the mock live: `live.js` builds the same markup from `/live/feed`; `live.css` should stay near empty.
+For session 04. Target: `docs/live-screen-mock.html` (keys 1-6 switch state, R replays the arrival). Classes and tokens: `public/tokens.css`, shown in `docs/design-system.html` (group "Screen"; the "Library" group is not on the screen). Make the mock live: `live.js` builds the same markup from `/live/feed`; `live.css` should stay near empty. The room reads it in 3 seconds from 10 m: a keynote slide, not a dashboard.
 
 ## Page
-- `live.html`: `<html lang="en">`, `<body class="ac-stage">`, one `<div class="ac-screen" id="screen" aria-live="polite">` as a **direct child of body**. Link Google Fonts Archivo exactly as the mock, then `/public/tokens.css`, then `/public/live.css`.
-- Copy the mock's `<style>:root{--logo:url("data:image/png;base64,…")}</style>` line as is (the site logo).
-- The screen is a fixed 1920x1080 canvas; `--u` scales it. Never add media queries or scrolling.
-- Fit guard: after render, if `.ac-answer` is wider than `.ac-verdict`, scale its `font-size` down to fit (only matters if the fallback font loads).
+- `<html lang="en">`, `<body class="ac-stage">`, one `<div class="ac-screen" id="screen" aria-live="polite">` as a **direct child of body**: it then fills any viewport (16:9 or not); type scales with the smaller axis. No media queries, no scrolling.
+- Link Archivo from Google Fonts exactly as the mock, then `/public/tokens.css`, then `/public/live.css`. Copy the mock's `<style>:root{--logo:url("data:…")}</style>` line as is.
 
-## Layout (design-system §24)
-`.ac-bar` (84) / `.ac-main` (3 columns: `.ac-verdict` 560, `.ac-col` AI Act 820, `.ac-col` GDPR rest) / `.ac-feed` (140).
-- Bar: logo, `h1.ac-bar__product` "AI Act Check", then `.ac-bar__end`: "**0.50 USD** per check", "Earned **X USD** from N checks" (sum of `amount` over the feed; none: "No checks yet"), `.ac-status` "Live".
-- Verdict column, in this order: `.ac-paid` (§14), `h2.ac-answer` (§11), `.ac-answer-line`, up to two `.ac-rule` (matched rules with `tier === verdict.tier`, articles split on ", " into `.ac-chip`), one `.ac-date` "Applies from …" (latest `applies_from` among AI Act duties), `.ac-disclaimer` (`disclaimer` + " Rules version " + `rules_version`).
-- AI Act column: `.ac-law[data-law="ai-act"]` with count "N duties" + " for the deployer" / " for the provider" / " for provider and deployer"; then one `.ac-when` per distinct `applies_from` (date tag + "N duties"), each followed by `ul.ac-obs` of `li.ac-ob`.
-- GDPR column: `.ac-law[data-law="gdpr"]` "N duties" (none: "None in this answer", nothing else; when the tier is `prohibited`: "Not checked: the use itself is banned."); one `.ac-when` (earliest date); one `li.ac-ob.ac-ob--rule.ac-ob--stack` per matched rule whose id starts with `gdpr-` (drop the "GDPR " / "GDPR: " prefixes, capitalise the first letter only); `p.ac-more` "All N are in the agent's answer."
-- Feed: newest check is the main card; the next 4 go in `.ac-feed` as `li.ac-feed__item` (newest left). Empty: `li.ac-feed__empty` "Paid checks line up here."
+## Structure (copy the mock's markup)
+`header.ac-bar`: logo, `h1.ac-bar__product` "AI Act Check", `.ac-bar__end`: "Earned **X USD** from N checks" (sum of `amount` over the feed; none: "No checks yet") and `.ac-status` "Live".
+`main.ac-slide` > `.ac-slide__body` (hero, then todo) + `p.ac-disclaimer` (one line: `disclaimer` + " Rules version " + `rules_version`).
+`footer.ac-strip`: left `p.ac-strip__paid` = tick + `<span><b>Paid {amount} USD</b> · receipt {id} · {HH:MM}</span>`, id shortened to first 8 + "…" + last 4; none yet: "Paid checks line up here." Right `.ac-strip__earlier`: "Earlier" + `ul.ac-strip__pills` of up to 4 `li.ac-pill[data-tier]` (glyph, `b` tier word, `time` HH:MM), newest first.
 
-## Long lists (22 obligations): AI Act in full, GDPR collapsed to its matched rules
-Why: the AI Act duties are what the agent paid for and change per tier; GDPR is the same baseline whenever personal data is used, so the room needs the names (DPIA, Art. 22), not 12 lines.
-Overflow: after render, while the AI Act `.ac-col` has `scrollHeight > clientHeight`, set `hidden` on its last visible `.ac-ob` and show `p.ac-more` "+ k more in the agent's answer". Rows are date-sorted, so in-force duties are never the ones cut. Never shrink type or scroll.
+## Hero (`.ac-hero`)
+`h2.ac-answer[data-tier][style="--chars:…"] > span.ac-mark` word; `p.ac-meaning[data-tier]` glyph + sentence; `p.ac-why`.
+- Why line = short title · short article · when, joined with " · ". From the first `matched` rule with `tier === verdict.tier`: short title = title cut at " (" then at " and " ("Employment and workers management" → "Employment"); short article = "Annex X" if the article has an Annex part ("Annex III"), else its first part ("Art. 5(1)(f)"). When = latest AI Act `applies_from`: "from 2 Dec 2027" if after today, else "since 2 Feb 2025".
+- Incomplete: why line "N questions unanswered".
 
-## Derived values
-- Role: `verdict.role` (provider / deployer / both; null = no role text). Show `.ac-ob__role` (inside `.ac-ob__art`, "Provider"/"Deployer") only when both.
-- Dates: `Intl.DateTimeFormat('en-IE',{day:'numeric',month:'short',year:'numeric'})` gives "2 Dec 2027". `.is-now` "In force since …" when `applies_from` ≤ today, else `.is-later` "From …". Times: `HH:MM:SS`, `timeZone:'Europe/Dublin'`, 24 h.
-- `data-tier` = `verdict.tier` on `.ac-answer`, `.ac-answer-line`, `.ac-tier`. `--chars` on `.ac-answer`: prohibited 10, high 9, limited 7, minimal 7.6, incomplete 11.4.
-- Feed key article: first article of the first winning-tier rule; incomplete: "N questions open". Duties: "N duty/duties".
+## What you must do (`section.ac-todo[data-tier]`)
+`h3.ac-todo__head` "What you must do", `ul.ac-todo__list` of at most 3 `li` (plain `text`, no article), then `p.ac-gdpr`, then `p.ac-more`.
+- Duties: obligations with `key: true` (max 3). If none are marked: the first 3 AI Act obligations whose `article` is not "Art. 4".
+- GDPR line, only if GDPR duties exist and tier is not prohibited: `<b>GDPR too:</b>` + short names of matched `gdpr-` rules, in `matched` order, joined with ", ".
+- `+N more in the agent's answer`, N = all obligations − duties shown; omit at 0.
+- Incomplete: head "Still to answer", first 3 `missing` ids (`_` → space), "+N more in the agent's answer".
+- Guard: if `.ac-slide__body` overflows (`scrollHeight > clientHeight`), drop the 3rd duty and add it to N. Never shrink type. Same for the fallback font: if `.ac-answer` is wider than the slide, scale its font-size down to fit.
 
-## Words (fixed microcopy; checked by Smith 9 Nov)
-| tier | `.ac-answer` | `.ac-answer-line` |
-|---|---|---|
-| prohibited | Prohibited | Banned in the EU. |
-| high | High-risk | Allowed, with strict duties. |
-| limited | Limited | Allowed if people know it's AI. |
-| minimal | Minimal | Allowed. Few AI Act duties. |
-| incomplete | Incomplete | Not enough answers to decide. |
-Paid: "Paid 0.50 USD" + `<span>over Stripe MPP</span>`; "Receipt " + id in full; time.
+## Words (fixed; Hank to confirm the five sentences)
+| tier | word | sentence | `--chars` |
+|---|---|---|---|
+| prohibited | Prohibited | Banned in the EU. | 10 |
+| high | High-risk | Allowed, with strict duties. | 9 |
+| limited | Limited | Allowed if people know it's AI. | 7 |
+| minimal | Minimal | Allowed. Few AI Act duties. | 7.6 |
+| incomplete | Incomplete | Not enough answers to decide. | 11.4 |
+
+| `gdpr-` rule id | short name |
+|---|---|
+| gdpr-basics | lawful basis and notice |
+| gdpr-processor | vendor contracts |
+| gdpr-dpia | impact assessment |
+| gdpr-automated-decisions | right to a human decision |
+| gdpr-special-category | sensitive data |
 
 ## States
-- Idle (no checks): mock state 5, markup as is (`.ac-idle`, `.ac-steps`). Status still "Live".
-- Incomplete: mock state 4. `.ac-main.ac-main--wide`; right side `.ac-law` "Still to answer" / "N questions", `ul.ac-missing` of `missing` ids with `_` → space, `p.ac-more` "The agent got this list back. It answers these and checks again."
-- Offline: after 2 failed polls in a row, replace `.ac-status` with the mock's `.ac-banner` ("Can't reach the server." / "Last check stays up."). Keep the last render. Next good poll restores "Live".
+Idle (no checks): `.ac-slide__body` holds `h2.ac-idle-title` "Waiting for an agent to pay" + `p.ac-why` "It reads the free questions, gets a 402, pays 0.50 USD over Stripe MPP, and the verdict lands here." Offline: after 2 failed polls in a row, swap `.ac-status` for the mock's `.ac-banner` ("Can't reach the server." / "Last check stays up."), keep the last render; the next good poll restores "Live".
 
-## Arrival (design-system §07)
-Track the newest `receipt_id`. When it changes: render, then `screen.classList.remove('is-new'); void screen.offsetWidth; screen.classList.add('is-new')`. tokens.css does the rest: paid line fades in (0 ms), marker sweeps the word (160 ms, 34 ms per letter), the rest fades (520 ms), the new feed cell slides in. Same receipt on the next poll: do not re-render, so nothing re-animates. Reduced motion is handled by tokens.css.
+## Arrival
+Only the highlighter moves. Track the newest `receipt_id`; when it changes, render, then `screen.classList.remove('is-new'); void screen.offsetWidth; screen.classList.add('is-new')`. Same receipt on the next poll: no re-render. Reduced motion is handled in tokens.css.
 
 ## Must not
-Use-case text anywhere. `innerHTML` with data (build with `createElement` + `textContent`). New colours, fonts or radii (add to `live.css` only if missing, and name it in the PR). Any idle animation, pulsing dot or per-row stagger.
+Use-case text anywhere. `innerHTML` with data (`createElement` + `textContent`). New colours, fonts or radii. Any other motion: no fades, slides, pulses or stagger. Article columns, chips or date tags on the screen.
 
 ## Check before the PR
-Screenshots at 1920x1080 and 1280x720 must match the mock (same picture, scaled). Run the CV-screening, chatbot and call-centre verdicts plus the `incomplete` fixture through `recordCheck`. All AI Act rows show for the deployer CV case; nothing overlaps the feed.
+Screenshots at 1920x1080, 1280x720 and 1550x1050 match the mock, with no empty band at any size. Run the CV-screening, chatbot, call-centre and `incomplete` verdicts through `recordCheck`.

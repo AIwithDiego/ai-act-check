@@ -26,8 +26,9 @@
       "obligations": [
         {
           "role": "all",
-          "text": "Do not place this on the market, put it into service or use it in the EU.",
-          "article": "Art. 5"
+          "text": "Do not sell, deploy or use this in the EU.",
+          "article": "Art. 5",
+          "key": true
         }
       ],
       "applies_from": "2025-02-02"
@@ -48,8 +49,9 @@
       "obligations": [
         {
           "role": "all",
-          "text": "Do not place this on the market, put it into service or use it in the EU.",
-          "article": "Art. 5"
+          "text": "Do not sell, deploy or use this in the EU.",
+          "article": "Art. 5",
+          "key": true
         }
       ],
       "applies_from": "2025-02-02"
@@ -70,8 +72,9 @@
       "obligations": [
         {
           "role": "all",
-          "text": "Do not place this on the market, put it into service or use it in the EU.",
-          "article": "Art. 5"
+          "text": "Do not sell, deploy or use this in the EU.",
+          "article": "Art. 5",
+          "key": true
         }
       ],
       "applies_from": "2025-02-02"
@@ -92,8 +95,9 @@
       "obligations": [
         {
           "role": "all",
-          "text": "Do not place this on the market, put it into service or use it in the EU.",
-          "article": "Art. 5"
+          "text": "Do not sell, deploy or use this in the EU.",
+          "article": "Art. 5",
+          "key": true
         }
       ],
       "applies_from": "2025-02-02"
@@ -114,8 +118,9 @@
       "obligations": [
         {
           "role": "all",
-          "text": "Do not place this on the market, put it into service or use it in the EU.",
-          "article": "Art. 5"
+          "text": "Do not sell, deploy or use this in the EU.",
+          "article": "Art. 5",
+          "key": true
         }
       ],
       "applies_from": "2025-02-02"
@@ -136,8 +141,9 @@
       "obligations": [
         {
           "role": "all",
-          "text": "Do not place this on the market or use it in the EU; put safeguards in place that reliably prevent this output.",
-          "article": "Art. 5(1)(ba)-(bb), 5(1a)"
+          "text": "Do not offer or use it; reliably block this output.",
+          "article": "Art. 5(1)(ba)-(bb), 5(1a)",
+          "key": true
         }
       ],
       "applies_from": "2026-12-02",
@@ -167,8 +173,9 @@
       "obligations": [
         {
           "role": "all",
-          "text": "Do not place this on the market, put it into service or use it in the EU.",
-          "article": "Art. 5"
+          "text": "Do not sell, deploy or use this in the EU.",
+          "article": "Art. 5",
+          "key": true
         }
       ],
       "applies_from": "2025-02-02",
@@ -190,8 +197,9 @@
       "obligations": [
         {
           "role": "all",
-          "text": "Do not place this on the market, put it into service or use it in the EU.",
-          "article": "Art. 5"
+          "text": "Do not sell, deploy or use this in the EU.",
+          "article": "Art. 5",
+          "key": true
         }
       ],
       "applies_from": "2025-02-02"
@@ -220,8 +228,9 @@
       "obligations": [
         {
           "role": "all",
-          "text": "Do not place this on the market, put it into service or use it in the EU.",
-          "article": "Art. 5"
+          "text": "Do not sell, deploy or use this in the EU.",
+          "article": "Art. 5",
+          "key": true
         }
       ],
       "applies_from": "2025-02-02",
@@ -247,13 +256,15 @@
       "obligations": [
         {
           "role": "deployer",
-          "text": "Get prior authorisation from a judicial or independent administrative authority for each use.",
-          "article": "Art. 5(3)"
+          "text": "Get prior judicial or independent authorisation for each use.",
+          "article": "Art. 5(3)",
+          "key": true
         },
         {
           "role": "deployer",
           "text": "Only use it where national law expressly allows it.",
-          "article": "Art. 5(5)"
+          "article": "Art. 5(5)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -262,8 +273,9 @@
         },
         {
           "role": "deployer",
-          "text": "Notify the market surveillance and data protection authorities of each use.",
-          "article": "Art. 5(4)"
+          "text": "Notify the market surveillance and data protection authorities.",
+          "article": "Art. 5(4)",
+          "key": true
         }
       ],
       "applies_from": "2025-02-02",
@@ -311,7 +323,8 @@
         {
           "role": "provider",
           "text": "Design it so a human can oversee it and stop it.",
-          "article": "Art. 14"
+          "article": "Art. 14",
+          "key": true
         },
         {
           "role": "provider",
@@ -330,8 +343,9 @@
         },
         {
           "role": "provider",
-          "text": "Follow the product's own conformity assessment procedure, with the AI Act requirements checked as part of it.",
-          "article": "Art. 43(3)"
+          "text": "Pass the product's conformity assessment, AI checks included.",
+          "article": "Art. 43(3)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -341,7 +355,8 @@
         {
           "role": "deployer",
           "text": "Assign trained, competent people to oversee it.",
-          "article": "Art. 26(2)"
+          "article": "Art. 26(2)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -360,7 +375,7 @@
         },
         {
           "role": "deployer",
-          "text": "Tell people when it is used to make or help make decisions about them.",
+          "text": "Tell people when AI helps make decisions about them.",
           "article": "Art. 26(11)"
         },
         {
@@ -453,8 +468,9 @@
         },
         {
           "role": "provider",
-          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
-          "article": "Arts. 43, 47, 48"
+          "text": "Pass conformity assessment and CE-mark it before release.",
+          "article": "Arts. 43, 47, 48",
+          "key": true
         },
         {
           "role": "provider",
@@ -474,7 +490,8 @@
         {
           "role": "deployer",
           "text": "Assign trained, competent people to oversee it.",
-          "article": "Art. 26(2)"
+          "article": "Art. 26(2)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -493,8 +510,9 @@
         },
         {
           "role": "deployer",
-          "text": "Tell people when it is used to make or help make decisions about them.",
-          "article": "Art. 26(11)"
+          "text": "Tell people when AI helps make decisions about them.",
+          "article": "Art. 26(11)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -583,8 +601,9 @@
         },
         {
           "role": "provider",
-          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
-          "article": "Arts. 43, 47, 48"
+          "text": "Pass conformity assessment and CE-mark it before release.",
+          "article": "Arts. 43, 47, 48",
+          "key": true
         },
         {
           "role": "provider",
@@ -604,7 +623,8 @@
         {
           "role": "deployer",
           "text": "Assign trained, competent people to oversee it.",
-          "article": "Art. 26(2)"
+          "article": "Art. 26(2)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -623,8 +643,9 @@
         },
         {
           "role": "deployer",
-          "text": "Tell people when it is used to make or help make decisions about them.",
-          "article": "Art. 26(11)"
+          "text": "Tell people when AI helps make decisions about them.",
+          "article": "Art. 26(11)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -708,8 +729,9 @@
         },
         {
           "role": "provider",
-          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
-          "article": "Arts. 43, 47, 48"
+          "text": "Pass conformity assessment and CE-mark it before release.",
+          "article": "Arts. 43, 47, 48",
+          "key": true
         },
         {
           "role": "provider",
@@ -729,7 +751,8 @@
         {
           "role": "deployer",
           "text": "Assign trained, competent people to oversee it.",
-          "article": "Art. 26(2)"
+          "article": "Art. 26(2)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -748,8 +771,9 @@
         },
         {
           "role": "deployer",
-          "text": "Tell people when it is used to make or help make decisions about them.",
-          "article": "Art. 26(11)"
+          "text": "Tell people when AI helps make decisions about them.",
+          "article": "Art. 26(11)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -838,8 +862,9 @@
         },
         {
           "role": "provider",
-          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
-          "article": "Arts. 43, 47, 48"
+          "text": "Pass conformity assessment and CE-mark it before release.",
+          "article": "Arts. 43, 47, 48",
+          "key": true
         },
         {
           "role": "provider",
@@ -859,7 +884,8 @@
         {
           "role": "deployer",
           "text": "Assign trained, competent people to oversee it.",
-          "article": "Art. 26(2)"
+          "article": "Art. 26(2)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -878,8 +904,9 @@
         },
         {
           "role": "deployer",
-          "text": "Tell people when it is used to make or help make decisions about them.",
-          "article": "Art. 26(11)"
+          "text": "Tell people when AI helps make decisions about them.",
+          "article": "Art. 26(11)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -976,8 +1003,9 @@
         },
         {
           "role": "provider",
-          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
-          "article": "Arts. 43, 47, 48"
+          "text": "Pass conformity assessment and CE-mark it before release.",
+          "article": "Arts. 43, 47, 48",
+          "key": true
         },
         {
           "role": "provider",
@@ -997,7 +1025,8 @@
         {
           "role": "deployer",
           "text": "Assign trained, competent people to oversee it.",
-          "article": "Art. 26(2)"
+          "article": "Art. 26(2)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -1016,8 +1045,9 @@
         },
         {
           "role": "deployer",
-          "text": "Tell people when it is used to make or help make decisions about them.",
-          "article": "Art. 26(11)"
+          "text": "Tell people when AI helps make decisions about them.",
+          "article": "Art. 26(11)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -1109,8 +1139,9 @@
         },
         {
           "role": "provider",
-          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
-          "article": "Arts. 43, 47, 48"
+          "text": "Pass conformity assessment and CE-mark it before release.",
+          "article": "Arts. 43, 47, 48",
+          "key": true
         },
         {
           "role": "provider",
@@ -1149,8 +1180,9 @@
         },
         {
           "role": "deployer",
-          "text": "Tell people when it is used to make or help make decisions about them.",
-          "article": "Art. 26(11)"
+          "text": "Tell people when AI helps make decisions about them.",
+          "article": "Art. 26(11)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -1160,7 +1192,8 @@
         {
           "role": "deployer",
           "text": "Do a fundamental rights impact assessment before first use.",
-          "article": "Art. 27"
+          "article": "Art. 27",
+          "key": true
         }
       ],
       "applies_from": "2027-12-02",
@@ -1239,8 +1272,9 @@
         },
         {
           "role": "provider",
-          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
-          "article": "Arts. 43, 47, 48"
+          "text": "Pass conformity assessment and CE-mark it before release.",
+          "article": "Arts. 43, 47, 48",
+          "key": true
         },
         {
           "role": "provider",
@@ -1260,7 +1294,8 @@
         {
           "role": "deployer",
           "text": "Assign trained, competent people to oversee it.",
-          "article": "Art. 26(2)"
+          "article": "Art. 26(2)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -1279,8 +1314,9 @@
         },
         {
           "role": "deployer",
-          "text": "Tell people when it is used to make or help make decisions about them.",
-          "article": "Art. 26(11)"
+          "text": "Tell people when AI helps make decisions about them.",
+          "article": "Art. 26(11)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -1369,8 +1405,9 @@
         },
         {
           "role": "provider",
-          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
-          "article": "Arts. 43, 47, 48"
+          "text": "Pass conformity assessment and CE-mark it before release.",
+          "article": "Arts. 43, 47, 48",
+          "key": true
         },
         {
           "role": "provider",
@@ -1390,7 +1427,8 @@
         {
           "role": "deployer",
           "text": "Assign trained, competent people to oversee it.",
-          "article": "Art. 26(2)"
+          "article": "Art. 26(2)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -1409,8 +1447,9 @@
         },
         {
           "role": "deployer",
-          "text": "Tell people when it is used to make or help make decisions about them.",
-          "article": "Art. 26(11)"
+          "text": "Tell people when AI helps make decisions about them.",
+          "article": "Art. 26(11)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -1499,8 +1538,9 @@
         },
         {
           "role": "provider",
-          "text": "Pass conformity assessment, sign the EU declaration of conformity and add CE marking.",
-          "article": "Arts. 43, 47, 48"
+          "text": "Pass conformity assessment and CE-mark it before release.",
+          "article": "Arts. 43, 47, 48",
+          "key": true
         },
         {
           "role": "provider",
@@ -1520,7 +1560,8 @@
         {
           "role": "deployer",
           "text": "Assign trained, competent people to oversee it.",
-          "article": "Art. 26(2)"
+          "article": "Art. 26(2)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -1539,8 +1580,9 @@
         },
         {
           "role": "deployer",
-          "text": "Tell people when it is used to make or help make decisions about them.",
-          "article": "Art. 26(11)"
+          "text": "Tell people when AI helps make decisions about them.",
+          "article": "Art. 26(11)",
+          "key": true
         },
         {
           "role": "deployer",
@@ -1630,13 +1672,15 @@
       "obligations": [
         {
           "role": "provider",
-          "text": "Write down why the system is not high-risk before you release it, and hand it to authorities on request.",
-          "article": "Art. 6(4)"
+          "text": "Document why it is not high-risk before release.",
+          "article": "Art. 6(4)",
+          "key": true
         },
         {
           "role": "provider",
-          "text": "Register the system in the EU database even though it is not high-risk.",
-          "article": "Art. 49(2)"
+          "text": "Register it in the EU database anyway.",
+          "article": "Art. 49(2)",
+          "key": true
         }
       ],
       "applies_from": "2027-12-02",
@@ -1659,13 +1703,15 @@
       "obligations": [
         {
           "role": "provider",
-          "text": "Tell people they are interacting with an AI, at the latest at the first interaction, unless it is obvious.",
-          "article": "Art. 50(1), 50(5)"
+          "text": "Tell people they are talking to an AI, from the first message.",
+          "article": "Art. 50(1), 50(5)",
+          "key": true
         },
         {
           "role": "deployer",
-          "text": "If the system runs under your own name or brand, you count as its provider: show the AI notice yourself.",
-          "article": "Art. 3(3), Art. 50(1)"
+          "text": "Under your own brand, you must show the AI notice yourself.",
+          "article": "Art. 3(3), Art. 50(1)",
+          "key": true
         }
       ],
       "applies_from": "2026-08-02",
@@ -1687,8 +1733,9 @@
       "obligations": [
         {
           "role": "provider",
-          "text": "Mark outputs in a machine-readable, detectable way as AI-generated (e.g. watermark or provenance metadata).",
-          "article": "Art. 50(2)"
+          "text": "Mark outputs as AI-generated in a machine-readable way.",
+          "article": "Art. 50(2)",
+          "key": true
         }
       ],
       "applies_from": "2026-08-02",
@@ -1735,8 +1782,9 @@
       "obligations": [
         {
           "role": "deployer",
-          "text": "Tell the people exposed that emotion recognition or biometric categorisation is in use, and process their data lawfully.",
-          "article": "Art. 50(3)"
+          "text": "Tell people emotion recognition or biometric sorting is in use.",
+          "article": "Art. 50(3)",
+          "key": true
         }
       ],
       "applies_from": "2026-08-02",
@@ -1759,8 +1807,9 @@
       "obligations": [
         {
           "role": "deployer",
-          "text": "Clearly disclose that the content is AI-generated or manipulated (lighter touch for evidently artistic or satirical work).",
-          "article": "Art. 50(4)"
+          "text": "Clearly disclose that the content is AI-generated or manipulated.",
+          "article": "Art. 50(4)",
+          "key": true
         }
       ],
       "applies_from": "2026-08-02",
@@ -1783,7 +1832,8 @@
         {
           "role": "deployer",
           "text": "Disclose that the text is AI-generated or manipulated.",
-          "article": "Art. 50(4)"
+          "article": "Art. 50(4)",
+          "key": true
         }
       ],
       "applies_from": "2026-08-02",
@@ -1809,8 +1859,9 @@
       "obligations": [
         {
           "role": "all",
-          "text": "Take measures to build the AI literacy of staff who run or use the system, and keep a record.",
-          "article": "Art. 4"
+          "text": "Train staff who run or use the AI, and keep a record.",
+          "article": "Art. 4",
+          "key": true
         }
       ],
       "applies_from": "2025-02-02",
@@ -1836,8 +1887,9 @@
       "obligations": [
         {
           "role": "all",
-          "text": "Keep technical documentation of the model for the AI Office and authorities.",
-          "article": "Art. 53(1)(a), Annex XI"
+          "text": "Keep technical documentation of the model.",
+          "article": "Art. 53(1)(a), Annex XI",
+          "key": true
         },
         {
           "role": "all",
@@ -1846,13 +1898,15 @@
         },
         {
           "role": "all",
-          "text": "Have a copyright policy that respects text-and-data-mining opt-outs.",
-          "article": "Art. 53(1)(c)"
+          "text": "Have a copyright policy that respects opt-outs from data mining.",
+          "article": "Art. 53(1)(c)",
+          "key": true
         },
         {
           "role": "all",
-          "text": "Publish a summary of the training content using the Commission template.",
-          "article": "Art. 53(1)(d)"
+          "text": "Publish a summary of the training content.",
+          "article": "Art. 53(1)(d)",
+          "key": true
         },
         {
           "role": "all",
@@ -1880,18 +1934,21 @@
       "obligations": [
         {
           "role": "all",
-          "text": "Notify the Commission when the model meets the systemic-risk threshold.",
-          "article": "Art. 52(1)"
+          "text": "Notify the Commission when it crosses the systemic-risk threshold.",
+          "article": "Art. 52(1)",
+          "key": true
         },
         {
           "role": "all",
-          "text": "Evaluate the model, including adversarial testing, and assess and mitigate systemic risks.",
-          "article": "Art. 55(1)(a)-(b)"
+          "text": "Test the model adversarially and mitigate systemic risks.",
+          "article": "Art. 55(1)(a)-(b)",
+          "key": true
         },
         {
           "role": "all",
-          "text": "Report serious incidents to the AI Office without undue delay.",
-          "article": "Art. 55(1)(c)"
+          "text": "Report serious incidents to the AI Office quickly.",
+          "article": "Art. 55(1)(c)",
+          "key": true
         },
         {
           "role": "all",
@@ -2005,7 +2062,8 @@
       ],
       "applies_from": "2018-05-25",
       "stacks": true,
-      "note": "GDPR applies alongside the AI Act (AI Act Art. 2(7)). The GDPR changes in the Digital Omnibus proposal COM(2025) 837 are not adopted; this follows the GDPR in force. Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+      "note": "GDPR applies alongside the AI Act (AI Act Art. 2(7)). The GDPR changes in the Digital Omnibus proposal COM(2025) 837 are not adopted; this follows the GDPR in force. Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use.",
+      "short": "lawful basis and notice"
     },
     {
       "id": "gdpr-processor",
@@ -2105,7 +2163,8 @@
       ],
       "applies_from": "2018-05-25",
       "stacks": true,
-      "note": "A provider that uses customer data beyond the customer's instructions becomes a controller for that processing (Art. 28(10)). Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+      "note": "A provider that uses customer data beyond the customer's instructions becomes a controller for that processing (Art. 28(10)). Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use.",
+      "short": "vendor contracts and transfers"
     },
     {
       "id": "gdpr-dpia",
@@ -2264,7 +2323,8 @@
       ],
       "applies_from": "2018-05-25",
       "stacks": true,
-      "note": "Conservative: triggered by any AI Act high-risk area, profiling, solely automated significant decisions, or special-category data (Art. 35(3) and the DPC's list of high-risk processing). A FRIA can reuse the DPIA (AI Act Art. 27(4)). Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+      "note": "Conservative: triggered by any AI Act high-risk area, profiling, solely automated significant decisions, or special-category data (Art. 35(3) and the DPC's list of high-risk processing). A FRIA can reuse the DPIA (AI Act Art. 27(4)). Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use.",
+      "short": "impact assessment"
     },
     {
       "id": "gdpr-automated-decisions",
@@ -2359,7 +2419,8 @@
       ],
       "applies_from": "2018-05-25",
       "stacks": true,
-      "note": "Easiest fix is often real human review of each decision, which takes it out of Art. 22. Special-category data in these decisions needs explicit consent or substantial public interest (Art. 22(4)). Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+      "note": "Easiest fix is often real human review of each decision, which takes it out of Art. 22. Special-category data in these decisions needs explicit consent or substantial public interest (Art. 22(4)). Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use.",
+      "short": "right to a human decision"
     },
     {
       "id": "gdpr-special-category",
@@ -2449,7 +2510,8 @@
       ],
       "applies_from": "2018-05-25",
       "stacks": true,
-      "note": "Biometric data counts as special category only when used to uniquely identify someone; emotion recognition alone may not be. Treat as special if unsure. Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+      "note": "Biometric data counts as special category only when used to uniquely identify someone; emotion recognition alone may not be. Treat as special if unsure. Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use.",
+      "short": "sensitive data condition"
     }
   ]
 }

@@ -79,6 +79,8 @@ The questionnaire an agent answers about one AI use case.
 
 #### 1.3 Obligations
 
+- An obligation may carry `"key": true` (at most 3 per rule): the ones the live screen shows. The engine passes `key` through.
+- A `gdpr-` rule has a `short` name (2-4 words) for the screen's one GDPR line.
 - `role` is `provider`, `deployer` or `all`. The engine returns obligations for the caller's `role` (`both` gets everything).
 - `stacks` (optional, boolean, default false) on a rule: its obligations are added even when a more severe tier wins (e.g. Art. 50 transparency on top of high-risk, GPAI obligations on top of anything).
 - A rule can have tier `gpai`. GPAI is not on the tier ladder: it never sets the tier, it always stacks.
@@ -91,7 +93,8 @@ export interface Verdict {
   tier: "prohibited" | "high" | "limited" | "minimal" | "incomplete";
   role: string | null;        // the caller's answers.role, echoed (null if not answered)
   matched: { id: string; tier: string; title: string; article: string; note?: string }[];
-  obligations: { law: "AI Act" | "GDPR"; text: string; article: string; role: string; applies_from: string }[];
+  obligations: { law: "AI Act" | "GDPR"; text: string; article: string; role: string; applies_from: string; key?: boolean }[];
+  gdpr_short: string[];       // the `short` names of matched gdpr- rules, for the one-line GDPR summary
   missing: string[];          // required question ids not answered (after ask_if)
   invalid: string[];          // answered ids that are unknown or have a wrong type/option
   rules_version: string;
