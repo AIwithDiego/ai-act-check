@@ -5,10 +5,9 @@
 **Diego**
 1. ~~Stripe sandbox, profile, secret key in the Keychain~~ (done 9 Nov).
 2. ~~Link login~~ dropped: Link's agent connection is not available in Ireland. The agent pays with a Tempo testnet wallet instead (`mppx`, free test money).
-3. Crypto is not in the sandbox's payment methods: outside the US it needs Stripe's approval. Send the drafted email to machine-payments@stripe.com (Gmail draft, account ID included). If it isn't approved by 13:00, the demo still works: the agent pays on Tempo testnet and gets the verdict with a receipt; only the Stripe dashboard won't list the payment. Ask the Stripe people in the room, they can likely switch it on.
+3. ~~Crypto in the dashboard~~ skipped (needs Stripe approval outside the US; not needed for a demo). The agent pays on Tempo testnet and gets the verdict with a receipt; the Stripe dashboard won't list the payment, and that's fine.
 4. Merge PR #1.
 5. Devin: make sure the Devin GitHub app can see `AIwithDiego/ai-act-check` (Devin → Settings → Integrations → GitHub → repository access).
-6. When Stripe approves, tell Smith "crypto is on". Smith reruns the sandbox payment and checks it shows under Payments.
 
 **Smith**
 - Repo pack pushed: brief, contract, Hank's questions, rules and test cases (AI Act + GDPR), four Devin prompts, Allison's design system and live-screen mock, this run sheet, the pitch.
@@ -49,4 +48,4 @@
 - 9 Nov: pack written; Hank writing rules and cases.
 - 9 Nov: spike with mppx 0.17.1 returns a 402 offline with a dummy key (card + link methods). Stripe's guide is behind: `stripe.create` needs `store: Store.memory()` and `defaultMethods()` must be awaited. Prompt 02 updated. Real sandbox payment still to test (needs Diego's keys).
 - 9 Nov, 15:35: real sandbox payment works end to end with Diego's keys: 402 → `demo-agent` pays 0.50 on Tempo testnet → 200 with receipt. Link is not available in Ireland, so the demo pays over Tempo, not card. Sandbox deposit address saved to the Keychain as `stripe-sandbox-tempo-address`. Open: Stripe couldn't record the payment ("payment method type crypto is invalid") until Crypto is turned on in the sandbox.
-- 9 Nov: Crypto/stablecoin payments need approval outside the US (docs: email machine-payments@stripe.com with the account ID). Draft written for Diego.
+- 9 Nov: Crypto/stablecoin payments need approval outside the US (docs: email machine-payments@stripe.com with the account ID). Diego: not needed for a demo, skipped.
