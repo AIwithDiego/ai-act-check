@@ -3,19 +3,16 @@
 ## Before (today and tomorrow morning)
 
 **Diego**
-1. Stripe: log in (or sign up) at dashboard.stripe.com and switch to a **sandbox**.
-2. In the sandbox, create a Stripe profile (Settings → Business → Profile). Its ID starts with `profile_test_`.
-3. Request machine payments access (the sign-up form linked from docs.stripe.com/payments/machine). Do this first: we don't know how long approval takes.
-4. Put the two values in the Keychain, typed by you, never in chat. Run these in the terminal; each one asks for the value:
-   - `security add-generic-password -a diego -s stripe-sandbox-secret -w` (the `sk_test_...` key from Developers → API keys)
-   - `security add-generic-password -a diego -s stripe-sandbox-profile -w` (the `profile_test_...` ID)
-5. Link for the paying agent: `npx @stripe/link-cli@1.3.0 auth login` and follow the login. This is the wallet Claude Code pays from in the demo.
-6. Devin: make sure the Devin GitHub app can see `AIwithDiego/ai-act-check` (Devin → Settings → Integrations → GitHub → repository access).
-7. Tell Smith "Stripe is ready". Smith then runs a throwaway 402 test with your sandbox keys (outside the repo) so we know payments work before 13:00.
+1. ~~Stripe sandbox, profile, secret key in the Keychain~~ (done 9 Nov).
+2. ~~Link login~~ dropped: Link's agent connection is not available in Ireland. The agent pays with a Tempo testnet wallet instead (`mppx`, free test money).
+3. Turn on the **Crypto** payment method in the sandbox: dashboard.stripe.com/test/settings/payment_methods → Crypto → Turn on (request access if it asks). Without it the payment still works but Stripe doesn't record it under Payments.
+4. Merge PR #1.
+5. Devin: make sure the Devin GitHub app can see `AIwithDiego/ai-act-check` (Devin → Settings → Integrations → GitHub → repository access).
+6. Tell Smith "crypto is on". Smith reruns the sandbox payment and checks it shows under Payments.
 
 **Smith**
 - Repo pack pushed: brief, contract, Hank's questions, rules and test cases (AI Act + GDPR), four Devin prompts, Allison's design system and live-screen mock, this run sheet, the pitch.
-- Sandbox check: a 20-line `mppx` server returns 402, `mppx validate` passes, `link-cli` pays once. Result goes in the Log below.
+- Sandbox check: done 9 Nov, see Log. Paying wallet = `mppx` account `demo-agent` on Tempo testnet (in the Mac Keychain, funded from the faucet; refill with `npx mppx@0.17.1 account fund -a demo-agent --network testnet`).
 - Packages pre-downloaded on the Mac so nothing waits on the venue Wi-Fi.
 
 ## During (90 minutes)
@@ -51,3 +48,4 @@
 
 - 9 Nov: pack written; Hank writing rules and cases.
 - 9 Nov: spike with mppx 0.17.1 returns a 402 offline with a dummy key (card + link methods). Stripe's guide is behind: `stripe.create` needs `store: Store.memory()` and `defaultMethods()` must be awaited. Prompt 02 updated. Real sandbox payment still to test (needs Diego's keys).
+- 9 Nov, 15:35: real sandbox payment works end to end with Diego's keys: 402 → `demo-agent` pays 0.50 on Tempo testnet → 200 with receipt. Link is not available in Ireland, so the demo pays over Tempo, not card. Sandbox deposit address saved to the Keychain as `stripe-sandbox-tempo-address`. Open: Stripe couldn't record the payment ("payment method type crypto is invalid") until Crypto is turned on in the sandbox.
