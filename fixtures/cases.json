@@ -24,13 +24,19 @@
       "justice_democracy": false,
       "interacts_with_people": false,
       "generates_synthetic_content": false,
+      "personal_data": true,
       "annex3_derogation": "none",
-      "profiling": true
+      "profiling": true,
+      "solely_automated_decision": true,
+      "special_category_data": false
     },
     "expect": {
       "tier": "high",
       "matched": [
-        "annex3-employment"
+        "annex3-employment",
+        "gdpr-basics",
+        "gdpr-dpia",
+        "gdpr-automated-decisions"
       ]
     }
   },
@@ -59,13 +65,18 @@
       "justice_democracy": false,
       "interacts_with_people": true,
       "generates_synthetic_content": true,
+      "personal_data": true,
       "deepfake": false,
-      "public_interest_text": false
+      "public_interest_text": false,
+      "solely_automated_decision": false,
+      "special_category_data": false
     },
     "expect": {
       "tier": "limited",
       "matched": [
-        "art50-interaction"
+        "art50-interaction",
+        "gdpr-basics",
+        "gdpr-processor"
       ]
     }
   },
@@ -94,10 +105,13 @@
       "justice_democracy": false,
       "interacts_with_people": false,
       "generates_synthetic_content": false,
+      "personal_data": true,
       "emotion_recognition_workplace": true,
       "emotion_medical_or_safety": false,
       "annex3_derogation": "none",
-      "profiling": true
+      "profiling": true,
+      "solely_automated_decision": false,
+      "special_category_data": false
     },
     "expect": {
       "tier": "prohibited",
@@ -131,16 +145,20 @@
       "justice_democracy": false,
       "interacts_with_people": false,
       "generates_synthetic_content": false,
+      "personal_data": true,
       "emotion_recognition_workplace": true,
       "emotion_medical_or_safety": true,
       "annex3_derogation": "none",
-      "profiling": false
+      "profiling": false,
+      "solely_automated_decision": false,
+      "special_category_data": false
     },
     "expect": {
       "tier": "high",
       "matched": [
         "annex3-biometrics",
-        "art50-emotion-biometric-disclosure"
+        "art50-emotion-biometric-disclosure",
+        "gdpr-dpia"
       ]
     }
   },
@@ -169,13 +187,18 @@
       "justice_democracy": false,
       "interacts_with_people": false,
       "generates_synthetic_content": false,
+      "personal_data": true,
       "annex3_derogation": "none",
-      "profiling": true
+      "profiling": true,
+      "solely_automated_decision": true,
+      "special_category_data": false
     },
     "expect": {
       "tier": "high",
       "matched": [
-        "annex3-credit-insurance"
+        "annex3-credit-insurance",
+        "gdpr-dpia",
+        "gdpr-automated-decisions"
       ]
     }
   },
@@ -203,12 +226,16 @@
       "migration_border": false,
       "justice_democracy": false,
       "interacts_with_people": false,
-      "generates_synthetic_content": false
+      "generates_synthetic_content": false,
+      "personal_data": true,
+      "solely_automated_decision": false,
+      "special_category_data": false
     },
     "expect": {
       "tier": "minimal",
       "matched": [
-        "art4-ai-literacy"
+        "art4-ai-literacy",
+        "gdpr-basics"
       ]
     }
   },
@@ -237,13 +264,17 @@
       "justice_democracy": false,
       "interacts_with_people": false,
       "generates_synthetic_content": true,
+      "personal_data": true,
       "deepfake": true,
-      "public_interest_text": false
+      "public_interest_text": false,
+      "solely_automated_decision": false,
+      "special_category_data": false
     },
     "expect": {
       "tier": "limited",
       "matched": [
-        "art50-deepfake"
+        "art50-deepfake",
+        "gdpr-basics"
       ]
     }
   },
@@ -271,12 +302,16 @@
       "migration_border": false,
       "justice_democracy": false,
       "interacts_with_people": false,
-      "generates_synthetic_content": false
+      "generates_synthetic_content": false,
+      "personal_data": true,
+      "solely_automated_decision": false,
+      "special_category_data": false
     },
     "expect": {
       "tier": "minimal",
       "matched": [
-        "gpai-model"
+        "gpai-model",
+        "gdpr-basics"
       ]
     }
   },
@@ -305,13 +340,18 @@
       "justice_democracy": false,
       "interacts_with_people": false,
       "generates_synthetic_content": false,
+      "personal_data": true,
       "annex3_derogation": "narrow_procedural_task",
-      "profiling": false
+      "profiling": false,
+      "solely_automated_decision": false,
+      "special_category_data": false
     },
     "expect": {
       "tier": "minimal",
       "matched": [
-        "art6-3-derogation"
+        "art6-3-derogation",
+        "gdpr-processor",
+        "gdpr-dpia"
       ]
     }
   },
@@ -340,13 +380,17 @@
       "justice_democracy": false,
       "interacts_with_people": false,
       "generates_synthetic_content": false,
+      "personal_data": true,
       "annex3_derogation": "narrow_procedural_task",
-      "profiling": true
+      "profiling": true,
+      "solely_automated_decision": false,
+      "special_category_data": false
     },
     "expect": {
       "tier": "high",
       "matched": [
-        "annex3-employment"
+        "annex3-employment",
+        "gdpr-dpia"
       ]
     }
   },
@@ -388,13 +432,90 @@
       "justice_democracy": false,
       "interacts_with_people": false,
       "generates_synthetic_content": false,
+      "personal_data": true,
       "annex3_derogation": "none",
-      "profiling": true
+      "profiling": true,
+      "solely_automated_decision": true,
+      "special_category_data": false
     },
     "expect": {
       "tier": "high",
       "matched": [
-        "annex3-employment"
+        "annex3-employment",
+        "gdpr-processor",
+        "gdpr-automated-decisions"
+      ]
+    }
+  },
+  {
+    "id": "email-triage",
+    "use_case": "An AI that reads incoming customer emails in our shop's inbox and tags each one by topic and urgency, so the right person picks it up. Staff write every reply themselves.",
+    "answers": {
+      "role": "deployer",
+      "gpai_model": "no",
+      "manipulative_techniques": false,
+      "exploits_vulnerabilities": false,
+      "social_scoring": false,
+      "crime_prediction_profiling": false,
+      "facial_scraping": false,
+      "intimate_or_csam_generation": false,
+      "emotion_recognition": false,
+      "biometric_remote_id": false,
+      "biometric_categorisation": false,
+      "annex1_safety_component": false,
+      "critical_infrastructure": false,
+      "education": false,
+      "employment": false,
+      "essential_services": "none",
+      "law_enforcement": false,
+      "migration_border": false,
+      "justice_democracy": false,
+      "interacts_with_people": false,
+      "generates_synthetic_content": false,
+      "personal_data": true,
+      "solely_automated_decision": false,
+      "special_category_data": false
+    },
+    "expect": {
+      "tier": "minimal",
+      "matched": [
+        "gdpr-basics",
+        "gdpr-processor",
+        "art4-ai-literacy"
+      ]
+    }
+  },
+  {
+    "id": "bakery-forecast-no-personal-data",
+    "use_case": "An AI that forecasts how many croissants each of our cafés should bake tomorrow, from past sales totals and the weather forecast.",
+    "answers": {
+      "role": "deployer",
+      "gpai_model": "no",
+      "manipulative_techniques": false,
+      "exploits_vulnerabilities": false,
+      "social_scoring": false,
+      "crime_prediction_profiling": false,
+      "facial_scraping": false,
+      "intimate_or_csam_generation": false,
+      "emotion_recognition": false,
+      "biometric_remote_id": false,
+      "biometric_categorisation": false,
+      "annex1_safety_component": false,
+      "critical_infrastructure": false,
+      "education": false,
+      "employment": false,
+      "essential_services": "none",
+      "law_enforcement": false,
+      "migration_border": false,
+      "justice_democracy": false,
+      "interacts_with_people": false,
+      "generates_synthetic_content": false,
+      "personal_data": false
+    },
+    "expect": {
+      "tier": "minimal",
+      "matched": [
+        "art4-ai-literacy"
       ]
     }
   }

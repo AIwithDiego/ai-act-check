@@ -388,6 +388,43 @@
           }
         ]
       }
+    },
+    {
+      "id": "personal_data",
+      "text": "Does it process personal data, i.e. any information about an identifiable person (names, emails, CVs, voices, faces, account or order history)?",
+      "type": "boolean",
+      "help": "GDPR Art. 4(1), Art. 2. Personal data in prompts, inputs, outputs or training data all count.",
+      "required": true
+    },
+    {
+      "id": "solely_automated_decision",
+      "text": "Does it make decisions about people that have legal or similarly significant effects (e.g. rejecting a job applicant, refusing a loan) without a person meaningfully reviewing each decision?",
+      "type": "boolean",
+      "help": "GDPR Art. 22. A person who rubber-stamps the output is not meaningful review.",
+      "required": true,
+      "ask_if": {
+        "all": [
+          {
+            "q": "personal_data",
+            "is": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "special_category_data",
+      "text": "Does it process health, genetic or biometric data used to identify people, or data revealing racial or ethnic origin, political opinions, religious beliefs, trade union membership, sex life or sexual orientation?",
+      "type": "boolean",
+      "help": "GDPR Art. 9(1).",
+      "required": true,
+      "ask_if": {
+        "all": [
+          {
+            "q": "personal_data",
+            "is": true
+          }
+        ]
+      }
     }
   ]
 }

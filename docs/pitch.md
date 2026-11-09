@@ -13,6 +13,8 @@ Three things we cared about:
 - The verdict is rule-based and cites the article, so what you pay for is checkable.
 - We store nothing about your use case. The log has the tier and the receipt, that's it.
 
-Next: the same check as a paid MCP tool, and other laws, starting with GDPR and Chile's new data law.
+And because it's people's data, the same call gives you the GDPR side: the impact assessment, the right not to be decided about by a machine alone. One payment, both laws.
+
+Next: the same check as a paid MCP tool, and Chile's new data law.
 
 Not legal advice. A first pass that costs less than a coffee.

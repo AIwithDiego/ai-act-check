@@ -1,6 +1,6 @@
 {
   "version": "2026-11-10",
-  "law": "Regulation (EU) 2024/1689 (AI Act), as amended by Regulation (EU) 2026/1744 (Digital Omnibus on AI)",
+  "law": "Regulation (EU) 2024/1689 (AI Act), as amended by Regulation (EU) 2026/1744 (Digital Omnibus on AI); Regulation (EU) 2016/679 (GDPR) as stacking overlap obligations",
   "checked_by": "Hank, 2026-11-09",
   "disclaimer": "A first-pass classification from your answers, not legal advice.",
   "tier_order": [
@@ -1901,6 +1901,555 @@
       ],
       "applies_from": "2025-08-02",
       "stacks": true
+    },
+    {
+      "id": "gdpr-basics",
+      "tier": "minimal",
+      "title": "GDPR: lawful basis, transparency and security",
+      "article": "GDPR Arts. 5, 6, 13, 14, 32",
+      "when": {
+        "all": [
+          {
+            "q": "personal_data",
+            "is": true
+          }
+        ]
+      },
+      "unless": {
+        "any": [
+          {
+            "q": "manipulative_techniques",
+            "is": true
+          },
+          {
+            "q": "exploits_vulnerabilities",
+            "is": true
+          },
+          {
+            "q": "social_scoring",
+            "is": true
+          },
+          {
+            "q": "crime_prediction_profiling",
+            "is": true
+          },
+          {
+            "q": "facial_scraping",
+            "is": true
+          },
+          {
+            "q": "intimate_or_csam_generation",
+            "is": true
+          },
+          {
+            "all": [
+              {
+                "q": "emotion_recognition_workplace",
+                "is": true
+              },
+              {
+                "q": "emotion_medical_or_safety",
+                "is": false
+              }
+            ]
+          },
+          {
+            "q": "biometric_categorisation_sensitive",
+            "is": true
+          },
+          {
+            "all": [
+              {
+                "q": "realtime_rbi_public_law_enforcement",
+                "is": true
+              },
+              {
+                "q": "rbi_law_enforcement_exception",
+                "is": false
+              }
+            ]
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "deployer",
+          "text": "Pick and record a lawful basis for using the personal data.",
+          "article": "GDPR Art. 6"
+        },
+        {
+          "role": "deployer",
+          "text": "Tell people what data you use, why, for how long, and that AI is involved.",
+          "article": "GDPR Arts. 13, 14"
+        },
+        {
+          "role": "deployer",
+          "text": "Use only the personal data you need, and keep it no longer than needed.",
+          "article": "GDPR Art. 5(1)(c), (e)"
+        },
+        {
+          "role": "deployer",
+          "text": "Let people access, correct and delete their data, and object.",
+          "article": "GDPR Arts. 15-21"
+        },
+        {
+          "role": "all",
+          "text": "Keep the personal data secure (access control, encryption, logging).",
+          "article": "GDPR Art. 32"
+        },
+        {
+          "role": "provider",
+          "text": "If you use the data for your own purposes, such as training or improving the model, you are a controller for that and need your own lawful basis and notice.",
+          "article": "GDPR Arts. 4(7), 6, 13, 14"
+        }
+      ],
+      "applies_from": "2018-05-25",
+      "stacks": true,
+      "note": "GDPR applies alongside the AI Act (AI Act Art. 2(7)). The GDPR changes in the Digital Omnibus proposal COM(2025) 837 are not adopted; this follows the GDPR in force. Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+    },
+    {
+      "id": "gdpr-processor",
+      "tier": "minimal",
+      "title": "GDPR: AI vendors as processors",
+      "article": "GDPR Arts. 28, 44-46",
+      "when": {
+        "all": [
+          {
+            "q": "personal_data",
+            "is": true
+          }
+        ]
+      },
+      "unless": {
+        "any": [
+          {
+            "q": "manipulative_techniques",
+            "is": true
+          },
+          {
+            "q": "exploits_vulnerabilities",
+            "is": true
+          },
+          {
+            "q": "social_scoring",
+            "is": true
+          },
+          {
+            "q": "crime_prediction_profiling",
+            "is": true
+          },
+          {
+            "q": "facial_scraping",
+            "is": true
+          },
+          {
+            "q": "intimate_or_csam_generation",
+            "is": true
+          },
+          {
+            "all": [
+              {
+                "q": "emotion_recognition_workplace",
+                "is": true
+              },
+              {
+                "q": "emotion_medical_or_safety",
+                "is": false
+              }
+            ]
+          },
+          {
+            "q": "biometric_categorisation_sensitive",
+            "is": true
+          },
+          {
+            "all": [
+              {
+                "q": "realtime_rbi_public_law_enforcement",
+                "is": true
+              },
+              {
+                "q": "rbi_law_enforcement_exception",
+                "is": false
+              }
+            ]
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "deployer",
+          "text": "Have a data processing agreement with every AI vendor that handles the personal data for you.",
+          "article": "GDPR Art. 28(3)"
+        },
+        {
+          "role": "deployer",
+          "text": "If the data leaves the EEA (e.g. a US model API), use a transfer tool such as the EU-US Data Privacy Framework or SCCs.",
+          "article": "GDPR Arts. 44-46"
+        },
+        {
+          "role": "provider",
+          "text": "When you run the system on a customer's personal data, act only on their documented instructions under a data processing agreement.",
+          "article": "GDPR Art. 28(3)(a)"
+        },
+        {
+          "role": "provider",
+          "text": "Get the customer's approval for sub-processors (e.g. your model API) and flow the same terms down.",
+          "article": "GDPR Art. 28(2), (4)"
+        },
+        {
+          "role": "provider",
+          "text": "Help the customer with data subject requests, breaches and DPIAs, and delete or return the data at the end.",
+          "article": "GDPR Art. 28(3)(e)-(g)"
+        }
+      ],
+      "applies_from": "2018-05-25",
+      "stacks": true,
+      "note": "A provider that uses customer data beyond the customer's instructions becomes a controller for that processing (Art. 28(10)). Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+    },
+    {
+      "id": "gdpr-dpia",
+      "tier": "minimal",
+      "title": "GDPR: data protection impact assessment",
+      "article": "GDPR Art. 35",
+      "when": {
+        "all": [
+          {
+            "q": "personal_data",
+            "is": true
+          },
+          {
+            "any": [
+              {
+                "any": [
+                  {
+                    "q": "biometric_remote_id",
+                    "is": true
+                  },
+                  {
+                    "q": "biometric_categorisation",
+                    "is": true
+                  },
+                  {
+                    "q": "emotion_recognition",
+                    "is": true
+                  },
+                  {
+                    "q": "critical_infrastructure",
+                    "is": true
+                  },
+                  {
+                    "q": "education",
+                    "is": true
+                  },
+                  {
+                    "q": "employment",
+                    "is": true
+                  },
+                  {
+                    "q": "essential_services",
+                    "in": [
+                      "public_benefits",
+                      "credit_scoring",
+                      "life_health_insurance",
+                      "emergency_triage"
+                    ]
+                  },
+                  {
+                    "q": "law_enforcement",
+                    "is": true
+                  },
+                  {
+                    "q": "migration_border",
+                    "is": true
+                  },
+                  {
+                    "q": "justice_democracy",
+                    "is": true
+                  }
+                ]
+              },
+              {
+                "q": "annex1_safety_component",
+                "is": true
+              },
+              {
+                "q": "profiling",
+                "is": true
+              },
+              {
+                "q": "solely_automated_decision",
+                "is": true
+              },
+              {
+                "q": "special_category_data",
+                "is": true
+              }
+            ]
+          }
+        ]
+      },
+      "unless": {
+        "any": [
+          {
+            "q": "manipulative_techniques",
+            "is": true
+          },
+          {
+            "q": "exploits_vulnerabilities",
+            "is": true
+          },
+          {
+            "q": "social_scoring",
+            "is": true
+          },
+          {
+            "q": "crime_prediction_profiling",
+            "is": true
+          },
+          {
+            "q": "facial_scraping",
+            "is": true
+          },
+          {
+            "q": "intimate_or_csam_generation",
+            "is": true
+          },
+          {
+            "all": [
+              {
+                "q": "emotion_recognition_workplace",
+                "is": true
+              },
+              {
+                "q": "emotion_medical_or_safety",
+                "is": false
+              }
+            ]
+          },
+          {
+            "q": "biometric_categorisation_sensitive",
+            "is": true
+          },
+          {
+            "all": [
+              {
+                "q": "realtime_rbi_public_law_enforcement",
+                "is": true
+              },
+              {
+                "q": "rbi_law_enforcement_exception",
+                "is": false
+              }
+            ]
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "deployer",
+          "text": "Do a data protection impact assessment before you start, and review it when the system changes.",
+          "article": "GDPR Art. 35"
+        },
+        {
+          "role": "deployer",
+          "text": "If high risk remains after mitigation, consult the data protection authority before starting.",
+          "article": "GDPR Art. 36"
+        },
+        {
+          "role": "provider",
+          "text": "Give deployers the information about the system they need for their DPIA.",
+          "article": "GDPR Art. 28(3)(f); AI Act Art. 26(9)"
+        }
+      ],
+      "applies_from": "2018-05-25",
+      "stacks": true,
+      "note": "Conservative: triggered by any AI Act high-risk area, profiling, solely automated significant decisions, or special-category data (Art. 35(3) and the DPC's list of high-risk processing). A FRIA can reuse the DPIA (AI Act Art. 27(4)). Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+    },
+    {
+      "id": "gdpr-automated-decisions",
+      "tier": "minimal",
+      "title": "GDPR: solely automated decisions with significant effects",
+      "article": "GDPR Art. 22",
+      "when": {
+        "all": [
+          {
+            "q": "solely_automated_decision",
+            "is": true
+          }
+        ]
+      },
+      "unless": {
+        "any": [
+          {
+            "q": "manipulative_techniques",
+            "is": true
+          },
+          {
+            "q": "exploits_vulnerabilities",
+            "is": true
+          },
+          {
+            "q": "social_scoring",
+            "is": true
+          },
+          {
+            "q": "crime_prediction_profiling",
+            "is": true
+          },
+          {
+            "q": "facial_scraping",
+            "is": true
+          },
+          {
+            "q": "intimate_or_csam_generation",
+            "is": true
+          },
+          {
+            "all": [
+              {
+                "q": "emotion_recognition_workplace",
+                "is": true
+              },
+              {
+                "q": "emotion_medical_or_safety",
+                "is": false
+              }
+            ]
+          },
+          {
+            "q": "biometric_categorisation_sensitive",
+            "is": true
+          },
+          {
+            "all": [
+              {
+                "q": "realtime_rbi_public_law_enforcement",
+                "is": true
+              },
+              {
+                "q": "rbi_law_enforcement_exception",
+                "is": false
+              }
+            ]
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "deployer",
+          "text": "Only make these decisions if needed for a contract, allowed by law, or with explicit consent.",
+          "article": "GDPR Art. 22(2)"
+        },
+        {
+          "role": "deployer",
+          "text": "Let people get a human to review the decision, give their view and contest it.",
+          "article": "GDPR Art. 22(3)"
+        },
+        {
+          "role": "deployer",
+          "text": "Explain the logic involved and the likely consequences to the people affected.",
+          "article": "GDPR Arts. 13(2)(f), 15(1)(h)"
+        },
+        {
+          "role": "provider",
+          "text": "Build in a way for a human to review and overturn individual decisions.",
+          "article": "GDPR Art. 22(3); AI Act Art. 14"
+        }
+      ],
+      "applies_from": "2018-05-25",
+      "stacks": true,
+      "note": "Easiest fix is often real human review of each decision, which takes it out of Art. 22. Special-category data in these decisions needs explicit consent or substantial public interest (Art. 22(4)). Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+    },
+    {
+      "id": "gdpr-special-category",
+      "tier": "minimal",
+      "title": "GDPR: special-category data",
+      "article": "GDPR Art. 9",
+      "when": {
+        "all": [
+          {
+            "q": "special_category_data",
+            "is": true
+          }
+        ]
+      },
+      "unless": {
+        "any": [
+          {
+            "q": "manipulative_techniques",
+            "is": true
+          },
+          {
+            "q": "exploits_vulnerabilities",
+            "is": true
+          },
+          {
+            "q": "social_scoring",
+            "is": true
+          },
+          {
+            "q": "crime_prediction_profiling",
+            "is": true
+          },
+          {
+            "q": "facial_scraping",
+            "is": true
+          },
+          {
+            "q": "intimate_or_csam_generation",
+            "is": true
+          },
+          {
+            "all": [
+              {
+                "q": "emotion_recognition_workplace",
+                "is": true
+              },
+              {
+                "q": "emotion_medical_or_safety",
+                "is": false
+              }
+            ]
+          },
+          {
+            "q": "biometric_categorisation_sensitive",
+            "is": true
+          },
+          {
+            "all": [
+              {
+                "q": "realtime_rbi_public_law_enforcement",
+                "is": true
+              },
+              {
+                "q": "rbi_law_enforcement_exception",
+                "is": false
+              }
+            ]
+          }
+        ]
+      },
+      "obligations": [
+        {
+          "role": "deployer",
+          "text": "Have an Art. 9(2) condition (e.g. explicit consent) on top of your Art. 6 lawful basis.",
+          "article": "GDPR Art. 9(2)"
+        },
+        {
+          "role": "all",
+          "text": "Apply stronger safeguards to this data: restricted access, encryption, short retention.",
+          "article": "GDPR Arts. 9, 32"
+        },
+        {
+          "role": "provider",
+          "text": "Only use special-category data to detect and correct bias under the strict AI Act conditions.",
+          "article": "AI Act Art. 4a"
+        }
+      ],
+      "applies_from": "2018-05-25",
+      "stacks": true,
+      "note": "Biometric data counts as special category only when used to uniquely identify someone; emotion recognition alone may not be. Treat as special if unsure. Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
     }
   ]
 }

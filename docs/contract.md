@@ -90,7 +90,7 @@ export type Answers = Record<string, boolean | string>;
 export interface Verdict {
   tier: "prohibited" | "high" | "limited" | "minimal" | "incomplete";
   matched: { id: string; tier: string; title: string; article: string; note?: string }[];
-  obligations: { text: string; article: string; role: string; applies_from: string }[];
+  obligations: { law: "AI Act" | "GDPR"; text: string; article: string; role: string; applies_from: string }[];
   missing: string[];          // required question ids not answered (after ask_if)
   invalid: string[];          // answered ids that are unknown or have a wrong type/option
   rules_version: string;
@@ -102,7 +102,7 @@ export function classify(answers: Answers, rules?: Rules, questions?: Questions)
 - Pure function, no I/O beyond loading the two JSON files at import.
 - `missing` non-empty → `tier: "incomplete"`, no obligations.
 - Tier = most severe matched tier by `tier_order`; nothing matched → `minimal`.
-- Obligations: from all matched rules of the winning tier, plus every matched rule with `stacks: true`, filtered by role, de-duplicated by `text`, ordered by `applies_from`.
+- Obligations: from all matched rules of the winning tier, plus every matched rule with `stacks: true`, filtered by role, de-duplicated by `text`. Each gets `law`: `"GDPR"` when its rule id starts with `gdpr-`, else `"AI Act"`. Order: AI Act first, then GDPR; within each, by `applies_from`.
 
 ## 3. HTTP API (`src/server.ts`)
 
