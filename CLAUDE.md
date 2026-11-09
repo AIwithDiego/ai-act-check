@@ -3,8 +3,8 @@
 **What:** A pay-per-call API (Stripe Machine Payments Protocol) that tells an AI agent where an AI use case sits under the EU AI Act: tier, articles, obligations by role, dates. Rule-based, no LLM.
 **Who:** Diego (demos it) · built by Devin during the MPP Hackathon Dublin (Stripe, Tue 10 Nov 2026, 13:00 to 14:30) · Smith reviews every PR · Hank owns the legal content.
 **Type:** lab (hackathon)
-**Status:** Prep pack written 9 Nov: brief, contract, three Devin prompts, run sheet, pitch. Hank writing questions, rules and test cases. Repo AIwithDiego/ai-act-check (private) to be created once the pack is complete.
-**Next:** Diego sets up the Stripe sandbox (run sheet, Before). Smith runs the sandbox 402 check, pushes the pack. Build tomorrow.
+**Status:** Prep pack complete 9 Nov on PR #1 (docs/prep-pack), waiting on Diego's merge: brief, contract, three Devin prompts, run sheet, pitch, Hank's 30 questions, 29 rules, 12 cases (all pass). mppx 0.17.1 402 verified offline.
+**Next:** Diego merges PR #1 and sets up the Stripe sandbox (run sheet, Before). Smith then runs a real sandbox payment with link-cli. Build tomorrow 13:00.
 
 **Truth lives in:** tickets = `tickets.md` · plan = `docs/run-sheet.md` · the fixed spec = `docs/contract.md` · legal content = `data/` (Hank only).
 
