@@ -1,0 +1,430 @@
+{
+  "version": "2026-11-10",
+  "questions": [
+    {
+      "id": "role",
+      "text": "Are you the provider (you build the AI system or put it out under your own name or brand) or the deployer (you use someone else's AI system in your work)?",
+      "type": "enum",
+      "options": [
+        "provider",
+        "deployer",
+        "both"
+      ],
+      "help": "Art. 3(3) provider, Art. 3(4) deployer. If you build on a model API and offer the result under your name, you are the provider of that system.",
+      "required": true
+    },
+    {
+      "id": "gpai_model",
+      "text": "Are you releasing a general-purpose AI model itself (a model others build on, like a foundation or large language model), as opposed to an app that uses one?",
+      "type": "enum",
+      "options": [
+        "no",
+        "yes",
+        "yes_systemic_risk"
+      ],
+      "help": "Art. 3(63), Art. 53. Choose yes_systemic_risk if training compute is above 10^25 FLOPs or the Commission has designated the model (Art. 51). Using Claude, GPT or Gemini through an API is 'no'.",
+      "required": true
+    },
+    {
+      "id": "manipulative_techniques",
+      "text": "Does it use subliminal, manipulative or deceptive techniques that can distort someone's decisions in a way likely to cause them significant harm?",
+      "type": "boolean",
+      "help": "Art. 5(1)(a). Ordinary persuasion and lawful advertising are not caught; the test is material distortion plus significant harm.",
+      "required": true
+    },
+    {
+      "id": "exploits_vulnerabilities",
+      "text": "Does it exploit people's vulnerabilities due to age, disability or a difficult social or economic situation, in a way likely to cause them significant harm?",
+      "type": "boolean",
+      "help": "Art. 5(1)(b).",
+      "required": true
+    },
+    {
+      "id": "social_scoring",
+      "text": "Does it score or rank people on their social behaviour or personal traits, leading to unfair or disproportionate treatment, or to treatment in an unrelated context?",
+      "type": "boolean",
+      "help": "Art. 5(1)(c). Applies to public and private actors.",
+      "required": true
+    },
+    {
+      "id": "crime_prediction_profiling",
+      "text": "Does it predict whether a person will commit a crime based only on profiling or personality traits (not as support to a human assessment grounded in objective, verifiable facts)?",
+      "type": "boolean",
+      "help": "Art. 5(1)(d). Supporting a human assessment already based on objective facts linked to criminal activity is excluded.",
+      "required": true
+    },
+    {
+      "id": "facial_scraping",
+      "text": "Does it build or expand a facial recognition database by untargeted scraping of face images from the internet or CCTV?",
+      "type": "boolean",
+      "help": "Art. 5(1)(e).",
+      "required": true
+    },
+    {
+      "id": "intimate_or_csam_generation",
+      "text": "Can it generate or edit realistic sexual or intimate images, video or audio of an identifiable real person without their explicit consent, or any child sexual abuse material, either by design or reproducibly without adequate safeguards?",
+      "type": "boolean",
+      "help": "Art. 5(1)(ba)-(bb) and 5(1a), added by Reg. (EU) 2026/1744, apply from 2 Dec 2026. Answer yes if safeguards cannot reliably prevent it.",
+      "required": true
+    },
+    {
+      "id": "emotion_recognition",
+      "text": "Does it infer people's emotions or intentions (e.g. anger, stress, happiness) from their face, voice, body or other biometric data?",
+      "type": "boolean",
+      "help": "Annex III point 1(c); Art. 3(39). Reading physical states like fatigue or pain only is not emotion recognition; answer yes if in doubt.",
+      "required": true
+    },
+    {
+      "id": "emotion_recognition_workplace",
+      "text": "Is the emotion recognition used on people at work or in an education setting (staff, students, applicants)?",
+      "type": "boolean",
+      "help": "Art. 5(1)(f).",
+      "required": true,
+      "ask_if": {
+        "all": [
+          {
+            "q": "emotion_recognition",
+            "is": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "emotion_medical_or_safety",
+      "text": "Is that use strictly for medical or safety reasons (e.g. detecting a driver or machine operator in danger, therapeutic use)?",
+      "type": "boolean",
+      "help": "Art. 5(1)(f) exception. Productivity, customer satisfaction or performance monitoring are not safety reasons.",
+      "required": true,
+      "ask_if": {
+        "all": [
+          {
+            "q": "emotion_recognition_workplace",
+            "is": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "biometric_remote_id",
+      "text": "Does it identify people from a distance by their face, voice, gait or other biometrics (not just checking that someone is who they claim to be, e.g. phone unlock)?",
+      "type": "boolean",
+      "help": "Annex III point 1(a). One-to-one verification is excluded.",
+      "required": true
+    },
+    {
+      "id": "realtime_rbi_public_law_enforcement",
+      "text": "Is that identification done in real time, in publicly accessible spaces, for law enforcement?",
+      "type": "boolean",
+      "help": "Art. 5(1)(h).",
+      "required": true,
+      "ask_if": {
+        "all": [
+          {
+            "q": "biometric_remote_id",
+            "is": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "rbi_law_enforcement_exception",
+      "text": "Is it strictly limited to searching for specific victims or missing persons, preventing an imminent threat to life or a terrorist attack, or locating suspects of serious crimes listed in Annex II, with prior judicial or independent authorisation under national law?",
+      "type": "boolean",
+      "help": "Art. 5(1)(h)(i)-(iii), Art. 5(2)-(7).",
+      "required": true,
+      "ask_if": {
+        "all": [
+          {
+            "q": "realtime_rbi_public_law_enforcement",
+            "is": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "biometric_categorisation",
+      "text": "Does it sort people into groups by sensitive or protected traits (e.g. age, gender, ethnicity) inferred from their biometric data?",
+      "type": "boolean",
+      "help": "Annex III point 1(b).",
+      "required": true
+    },
+    {
+      "id": "biometric_categorisation_sensitive",
+      "text": "Does it infer race, political opinions, trade union membership, religious or philosophical beliefs, sex life or sexual orientation (other than labelling or filtering lawfully acquired biometric datasets for law enforcement)?",
+      "type": "boolean",
+      "help": "Art. 5(1)(g).",
+      "required": true,
+      "ask_if": {
+        "all": [
+          {
+            "q": "biometric_categorisation",
+            "is": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "annex1_safety_component",
+      "text": "Is the AI a safety component of, or itself, a product covered by EU product-safety law that needs third-party conformity assessment (e.g. medical devices, in vitro diagnostics, toys, lifts, radio equipment, personal protective equipment)?",
+      "type": "boolean",
+      "help": "Art. 6(1), Annex I. Since Reg. (EU) 2026/1744, AI used only for user assistance, performance, efficiency, convenience or quality control is not a safety component (Art. 6(1a)-(1c)).",
+      "required": true
+    },
+    {
+      "id": "critical_infrastructure",
+      "text": "Is it a safety component in managing or operating critical digital infrastructure, road traffic, or the supply of water, gas, heating or electricity?",
+      "type": "boolean",
+      "help": "Annex III point 2.",
+      "required": true
+    },
+    {
+      "id": "education",
+      "text": "Is it used in education or vocational training to decide admission, evaluate learning outcomes, decide what level of education someone gets, or monitor students for cheating during tests?",
+      "type": "boolean",
+      "help": "Annex III point 3(a)-(d).",
+      "required": true
+    },
+    {
+      "id": "employment",
+      "text": "Is it used to recruit or select people (job ads targeting, filtering or ranking CVs, evaluating candidates) or to make decisions about workers (promotion, termination, task allocation by behaviour or traits, monitoring or evaluating performance)?",
+      "type": "boolean",
+      "help": "Annex III point 4(a)-(b).",
+      "required": true
+    },
+    {
+      "id": "essential_services",
+      "text": "Is it used for any of these essential services? Pick the one that applies, or none.",
+      "type": "enum",
+      "options": [
+        "none",
+        "public_benefits",
+        "credit_scoring",
+        "life_health_insurance",
+        "emergency_triage"
+      ],
+      "help": "Annex III point 5: (a) eligibility for public benefits and services, (b) creditworthiness or credit scoring of people (fraud detection excluded), (c) risk assessment and pricing for life or health insurance, (d) evaluating or triaging emergency calls and dispatch.",
+      "required": true
+    },
+    {
+      "id": "law_enforcement",
+      "text": "Is it used by or for law enforcement to assess a person's risk of becoming a victim or offender, as a polygraph, to evaluate evidence, or to profile people in investigations?",
+      "type": "boolean",
+      "help": "Annex III point 6(a)-(e).",
+      "required": true
+    },
+    {
+      "id": "migration_border",
+      "text": "Is it used by or for public authorities in migration, asylum or border control (e.g. risk assessment of travellers, examining applications, identifying people)?",
+      "type": "boolean",
+      "help": "Annex III point 7(a)-(d).",
+      "required": true
+    },
+    {
+      "id": "justice_democracy",
+      "text": "Is it used to help a court or dispute-resolution body research, interpret or apply facts and law, or to influence the outcome of an election or referendum or people's voting behaviour?",
+      "type": "boolean",
+      "help": "Annex III point 8(a)-(b). Tools that only organise or optimise campaigns behind the scenes, without direct exposure to voters, are excluded.",
+      "required": true
+    },
+    {
+      "id": "annex3_derogation",
+      "text": "Which of these best describes the system's role? Pick none unless one clearly fits and the system does not materially influence the outcome of decisions about people.",
+      "type": "enum",
+      "options": [
+        "none",
+        "narrow_procedural_task",
+        "improves_completed_human_work",
+        "detects_patterns_with_human_review",
+        "preparatory_task"
+      ],
+      "help": "Art. 6(3): narrow procedural task; improves the result of a human activity already completed; detects decision patterns or deviations without replacing or influencing the human assessment, which must be properly reviewed; or a preparatory task to an assessment. If unsure, pick none.",
+      "required": true,
+      "ask_if": {
+        "any": [
+          {
+            "q": "biometric_remote_id",
+            "is": true
+          },
+          {
+            "q": "biometric_categorisation",
+            "is": true
+          },
+          {
+            "q": "emotion_recognition",
+            "is": true
+          },
+          {
+            "q": "critical_infrastructure",
+            "is": true
+          },
+          {
+            "q": "education",
+            "is": true
+          },
+          {
+            "q": "employment",
+            "is": true
+          },
+          {
+            "q": "essential_services",
+            "in": [
+              "public_benefits",
+              "credit_scoring",
+              "life_health_insurance",
+              "emergency_triage"
+            ]
+          },
+          {
+            "q": "law_enforcement",
+            "is": true
+          },
+          {
+            "q": "migration_border",
+            "is": true
+          },
+          {
+            "q": "justice_democracy",
+            "is": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "profiling",
+      "text": "Does it profile people, i.e. automatically evaluate personal aspects such as work performance, economic situation, health, preferences, interests, reliability, behaviour or location?",
+      "type": "boolean",
+      "help": "Art. 6(3) last subparagraph; GDPR Art. 4(4). An Annex III system that profiles people is always high-risk.",
+      "required": true,
+      "ask_if": {
+        "any": [
+          {
+            "q": "biometric_remote_id",
+            "is": true
+          },
+          {
+            "q": "biometric_categorisation",
+            "is": true
+          },
+          {
+            "q": "emotion_recognition",
+            "is": true
+          },
+          {
+            "q": "critical_infrastructure",
+            "is": true
+          },
+          {
+            "q": "education",
+            "is": true
+          },
+          {
+            "q": "employment",
+            "is": true
+          },
+          {
+            "q": "essential_services",
+            "in": [
+              "public_benefits",
+              "credit_scoring",
+              "life_health_insurance",
+              "emergency_triage"
+            ]
+          },
+          {
+            "q": "law_enforcement",
+            "is": true
+          },
+          {
+            "q": "migration_border",
+            "is": true
+          },
+          {
+            "q": "justice_democracy",
+            "is": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "interacts_with_people",
+      "text": "Does it interact directly with people (e.g. a chatbot, voice agent or AI that replies to messages)?",
+      "type": "boolean",
+      "help": "Art. 50(1). Not needed where it is obvious to a reasonably well-informed person that they are talking to an AI.",
+      "required": true
+    },
+    {
+      "id": "generates_synthetic_content",
+      "text": "Does it generate or substantially alter text, images, audio or video (beyond standard editing assistance like spell-check or minor retouching)?",
+      "type": "boolean",
+      "help": "Art. 50(2).",
+      "required": true
+    },
+    {
+      "id": "deepfake",
+      "text": "Is it used to produce or alter images, audio or video that look like real people, places or events and could falsely appear authentic (a deepfake)?",
+      "type": "boolean",
+      "help": "Art. 50(4) first subparagraph. Lighter disclosure for evidently artistic, satirical or fictional work.",
+      "required": true,
+      "ask_if": {
+        "all": [
+          {
+            "q": "generates_synthetic_content",
+            "is": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "public_interest_text",
+      "text": "Is AI-generated or AI-altered text published to inform the public on matters of public interest, without human review and editorial responsibility?",
+      "type": "boolean",
+      "help": "Art. 50(4) second subparagraph. Exempt if a person reviews it and someone holds editorial responsibility.",
+      "required": true,
+      "ask_if": {
+        "all": [
+          {
+            "q": "generates_synthetic_content",
+            "is": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "personal_data",
+      "text": "Does it process personal data, i.e. any information about an identifiable person (names, emails, CVs, voices, faces, account or order history)?",
+      "type": "boolean",
+      "help": "GDPR Art. 4(1), Art. 2. Personal data in prompts, inputs, outputs or training data all count.",
+      "required": true
+    },
+    {
+      "id": "solely_automated_decision",
+      "text": "Does it make decisions about people that have legal or similarly significant effects (e.g. rejecting a job applicant, refusing a loan) without a person meaningfully reviewing each decision?",
+      "type": "boolean",
+      "help": "GDPR Art. 22. A person who rubber-stamps the output is not meaningful review.",
+      "required": true,
+      "ask_if": {
+        "all": [
+          {
+            "q": "personal_data",
+            "is": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "special_category_data",
+      "text": "Does it process health, genetic or biometric data used to identify people, or data revealing racial or ethnic origin, political opinions, religious beliefs, trade union membership, sex life or sexual orientation?",
+      "type": "boolean",
+      "help": "GDPR Art. 9(1).",
+      "required": true,
+      "ask_if": {
+        "all": [
+          {
+            "q": "personal_data",
+            "is": true
+          }
+        ]
+      }
+    }
+  ]
+}
