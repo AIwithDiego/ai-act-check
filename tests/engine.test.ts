@@ -176,6 +176,20 @@ describe("tier and obligations", () => {
     expect(new Set(texts).size).toBe(texts.length);
   });
 
+  it("a duty shared by several rules keeps the earliest applies_from and its key flag", () => {
+    const v = classify({ ...byId("cv-screening-vendor").answers, role: "both", annex1_safety_component: true });
+    const annex1 = defaultRules.rules.find((r) => r.id === "annex1-product-safety")!;
+    const annex3 = defaultRules.rules.find((r) => r.id === "annex3-employment")!;
+    const shared = annex3.obligations.filter((o) => annex1.obligations.some((a) => a.text === o.text));
+    expect(shared.length).toBeGreaterThan(0);
+    for (const o of shared) {
+      const out = v.obligations.find((x) => x.text === o.text)!;
+      expect(out.applies_from).toBe(annex3.applies_from);
+      const key = Boolean(o.key || annex1.obligations.find((a) => a.text === o.text)?.key);
+      expect(Boolean(out.key)).toBe(key);
+    }
+  });
+
   it("stacking rules add obligations on top of the winning tier; gpai never sets the tier", () => {
     const v = classify({ ...byId("cv-screening").answers, gpai_model: "yes", interacts_with_people: true });
     expect(v.tier).toBe("high");

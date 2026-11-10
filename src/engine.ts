@@ -117,24 +117,32 @@ export function classify(
     ...(r.note !== undefined ? { note: r.note } : {}),
   }));
 
-  const seen = new Set<string>();
-  const obligations: Obligation[] = [];
+  const byText = new Map<string, Obligation>();
   for (const rule of matchedRules) {
     if (rule.tier !== tier && !rule.stacks && rule.tier !== "gpai") continue;
     const law = rule.id.startsWith("gdpr-") ? "GDPR" : "AI Act";
     for (const o of rule.obligations) {
-      if (!roleAllows(role, o.role) || seen.has(o.text)) continue;
-      seen.add(o.text);
-      obligations.push({
+      if (!roleAllows(role, o.role)) continue;
+      const next: Obligation = {
         law,
         text: o.text,
         article: o.article,
         role: o.role,
         applies_from: o.applies_from ?? rule.applies_from,
         ...(o.key !== undefined ? { key: o.key } : {}),
-      });
+      };
+      const prev = byText.get(o.text);
+      if (!prev) {
+        byText.set(o.text, next);
+        continue;
+      }
+      // Same duty from several rules: keep the earliest date and any key flag.
+      const kept = next.applies_from < prev.applies_from ? next : prev;
+      const key = prev.key || next.key;
+      byText.set(o.text, { ...kept, ...(key ? { key } : {}) });
     }
   }
+  const obligations = [...byText.values()];
   const lawRank = (law: Obligation["law"]) => (law === "AI Act" ? 0 : 1);
   obligations.sort(
     (a, b) => lawRank(a.law) - lawRank(b.law) || a.applies_from.localeCompare(b.applies_from),
