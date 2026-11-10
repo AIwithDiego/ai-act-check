@@ -62,12 +62,11 @@ describe("GET /openapi.json", () => {
     process.env.PRICE_USD = "0.75";
     const doc = await json(await app.request("/openapi.json"));
     expect(doc.openapi).toBe("3.1.0");
-    expect(doc.paths["/classify"].post["x-payment-info"]).toEqual({
-      price: "0.75",
-      currency: "USD",
-      protocol: "mpp",
-      description: "EU AI Act tier, articles, obligations by role, GDPR duties, receipt",
-    });
+    const offers = doc.paths["/classify"].post["x-payment-info"].offers;
+    expect(offers.map((o: { method: string }) => o.method)).toEqual(["stripe", "tempo"]);
+    expect(offers[0]).toMatchObject({ amount: "75", currency: "usd", intent: "charge" });
+    expect(offers[1]).toMatchObject({ amount: "750000", intent: "charge" });
+    expect(doc["x-service-info"].docs.llms).toMatch(/\/llms\.txt$/);
     for (const p of ["/", "/health", "/questions", "/llms.txt", "/openapi.json", "/live", "/live/feed"]) {
       expect(doc.paths[p]).toBeDefined();
     }
@@ -75,7 +74,7 @@ describe("GET /openapi.json", () => {
 
   it("defaults the price to 0.60", async () => {
     const doc = await json(await app.request("/openapi.json"));
-    expect(doc.paths["/classify"].post["x-payment-info"].price).toBe("0.60");
+    expect(doc.paths["/classify"].post["x-payment-info"].offers[0].amount).toBe("60");
   });
 });
 
