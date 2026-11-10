@@ -152,7 +152,9 @@ Disclaimer: ${DISCLAIMER}
 `;
 }
 
-function openapi() {
+function openapi(base: string) {
+  const cents = Math.round(Number(priceUsd()) * 100);
+  const what = "EU AI Act tier, articles, obligations by role, GDPR duties, receipt";
   const json = (schema: object) => ({ "application/json": { schema } });
   const error = { type: "object", properties: { error: { type: "string" }, invalid: { type: "array", items: { type: "string" } } } };
   const verdict = {
@@ -197,6 +199,10 @@ function openapi() {
       version: rulesVersion,
       description: "Where an AI use case sits under the EU AI Act: tier, articles, obligations by role, dates, GDPR duties. Not legal advice.",
     },
+    "x-service-info": {
+      categories: ["ai", "compliance", "legal"],
+      docs: { homepage: `${base}/`, apiReference: `${base}/openapi.json`, llms: `${base}/llms.txt` },
+    },
     paths: {
       "/": { get: { summary: "Status page: what it is, price, last 10 paid calls", responses: ok("HTML page", { "text/html": { schema: { type: "string" } } }) } },
       "/health": {
@@ -212,10 +218,10 @@ function openapi() {
         post: {
           summary: "Classify an AI use case under the EU AI Act (paid)",
           "x-payment-info": {
-            price: priceUsd(),
-            currency: "USD",
-            protocol: "mpp",
-            description: "EU AI Act tier, articles, obligations by role, GDPR duties, receipt",
+            offers: [
+              { amount: String(cents), currency: "usd", description: what, intent: "charge", method: "stripe" },
+              { amount: String(cents * 10000), currency: "0x20c0000000000000000000000000000000000000", description: what, intent: "charge", method: "tempo" },
+            ],
           },
           requestBody: {
             required: true,
@@ -260,7 +266,7 @@ app.get("/", (c) => c.html(homePage(new URL(c.req.url).origin)));
 app.get("/health", (c) => c.json({ ok: true, rules_version: rulesVersion }));
 app.get("/questions", (c) => c.body(readFileSync(questionsPath, "utf8"), 200, { "content-type": "application/json; charset=utf-8" }));
 app.get("/llms.txt", (c) => c.text(llmsTxt()));
-app.get("/openapi.json", (c) => c.json(openapi()));
+app.get("/openapi.json", (c) => c.json(openapi(new URL(c.req.url).origin)));
 
 app.post("/classify", async (c) => {
   let body: unknown;
