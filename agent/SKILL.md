@@ -7,16 +7,12 @@ description: Use when the user is building or deploying an AI feature for people
 
 Rule-based EU AI Act + GDPR classification of one AI use case. Discovery is free, the verdict is paid per call over Stripe's Machine Payments Protocol (MPP, Tempo testnet).
 
-Base URL: `$AI_ACT_CHECK_URL`, default `http://localhost:4242`. Below, `$API` means that value:
-
-```bash
-API="${AI_ACT_CHECK_URL:-http://localhost:4242}"
-```
+Base URL: `$AI_ACT_CHECK_URL`, default `http://localhost:4242`. Each command below expands it inline (`${AI_ACT_CHECK_URL:-http://localhost:4242}`), because shell variables don't carry over between separate Bash calls.
 
 ## 1. Get the questions (free)
 
 ```bash
-curl -s "$API/questions"
+curl -s "${AI_ACT_CHECK_URL:-http://localhost:4242}/questions"
 ```
 
 Each question has an `id`, a `type` (`boolean` or `enum` with `options`), `required`, `help` (the article it maps to) and maybe `ask_if` (only relevant when that condition holds).
@@ -31,7 +27,7 @@ Each question has an `id`, a `type` (`boolean` or `enum` with `options`), `requi
 ## 3. Classify and pay
 
 ```bash
-npx mppx@0.17.1 "$API/classify" -i -J '{"use_case":"<a few words>","answers":{...}}' -a demo-agent --network testnet
+npx mppx@0.17.1 "${AI_ACT_CHECK_URL:-http://localhost:4242}/classify" -i -J '{"use_case":"<a few words>","answers":{...}}' -a demo-agent --network testnet
 ```
 
 `mppx` sends the request, gets the HTTP 402 challenge, pays from the `demo-agent` wallet on Tempo testnet and retries. `-i` prints the headers, so you can read the 402 price and the `Payment-Receipt` header of the final 200.
