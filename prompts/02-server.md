@@ -32,7 +32,7 @@ You are building the paid HTTP server for **AI Act Check** in the repo `AIwithDi
    import StripeClient from 'stripe';
    import { Mppx, Store, stripe } from 'mppx/server';
    const key = process.env.STRIPE_SECRET_KEY!;
-   const secretKey = crypto.createHmac('sha256', key).update('mpp-challenge-signing').digest('base64');
+   const secretKey = process.env.MPP_SECRET_KEY || crypto.createHmac('sha256', key).update('mpp-challenge-signing').digest('base64');
    const sm = stripe.create({ client: new StripeClient(key), networkId: process.env.STRIPE_PROFILE_ID!, livemode: !key.includes('_test_'), store: Store.memory() });
    const mppx = Mppx.create({ methods: await sm.defaultMethods(), secretKey });
    // in the route: const r = await mppx.charge({ amount: '0.50' })(c.req.raw); if (r.status === 402) return r.challenge; return r.withReceipt(Response.json(verdict));
@@ -42,10 +42,11 @@ You are building the paid HTTP server for **AI Act Check** in the repo `AIwithDi
 2. Routes exactly as contract section 3. Order inside `POST /classify`: parse JSON (400 on failure) → `validate(answers)` (400 with `invalid` if any) → MPP charge (402 challenge if unpaid) → `classify` → append to `out/receipts.jsonl` (create `out/` if needed; fields from the contract only; never the answers or the use case) → `recordCheck(...)` from `src/live.ts` → return the verdict with the receipt.
 3. `use_case` over 1000 chars → 400.
 4. `GET /llms.txt`: plain text, under 40 lines: what this is, price, the three steps (GET /questions, map your use case, POST /classify and pay over MPP), the response shape, the disclaimer.
-5. `GET /`: one small HTML page linking `/public/tokens.css` and using its classes (no external assets): name, one-line description, price, link to /questions and /llms.txt, and a table of the last 10 receipts (time, tier, amount). Plain, readable, no framework.
+5. `GET /openapi.json` (the hackathon's submission scan reads it): OpenAPI 3.1 describing every route in contract section 3, with `x-payment-info` on `POST /classify` exactly as the contract shows (price from `PRICE_USD`). The 402 must carry `WWW-Authenticate: Payment ...` (mppx does this).
+6. `GET /`: one small HTML page linking `/public/tokens.css` and using its classes (no external assets): name, one-line description, price, link to /questions and /llms.txt, and a table of the last 10 receipts (time, tier, amount). Plain, readable, no framework.
 
 **Done when:**
-- `npm test` passes with tests that use `app.request(...)` (no network, no real Stripe): free routes return 200; bad JSON → 400; invalid answers → 400 and **no** 402; valid body without payment → 402 with a `WWW-Authenticate: Payment ...` header (use a dummy `sk_test_` key and `profile_test_` id in the test env; no mock needed, the challenge is built offline); payments not configured → 503.
+- `npm test` passes with tests that use `app.request(...)` (no network, no real Stripe): free routes return 200; `GET /openapi.json` has `x-payment-info` on `/classify`; bad JSON → 400; invalid answers → 400 and **no** 402; valid body without payment → 402 with a `WWW-Authenticate: Payment ...` header (use a dummy `sk_test_` key and `profile_test_` id in the test env; no mock needed, the challenge is built offline); payments not configured → 503.
 - `npm run dev` starts on 4242 and `curl -i -X POST localhost:4242/classify -H 'content-type: application/json' -d '{"answers":{"role":"deployer"}}'` returns 402 when a sandbox key is set (you won't have one; the reviewer runs this).
 - README gets a "Run" section: `npm install`, copy `.env.example` to `.env`, `npm run dev`, then `npx mppx@0.17.1 validate http://localhost:4242`.
 
