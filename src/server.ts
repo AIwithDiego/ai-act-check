@@ -269,7 +269,7 @@ app.post("/classify", async (c) => {
 app.route("/", live);
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  serve({ fetch: app.fetch, port: PORT }, (info) => {
+  serve({ fetch: app.fetch, port: PORT, hostname: "127.0.0.1" }, (info) => {
     console.log(`AI Act Check on http://localhost:${info.port}`);
   });
 }
