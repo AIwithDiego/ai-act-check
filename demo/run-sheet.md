@@ -16,6 +16,8 @@ cp agent/SKILL.md ~/demo-project/.claude/skills/ai-act-check/SKILL.md
 cd ~/demo-project && export AI_ACT_CHECK_URL=http://localhost:4242 && claude
 ```
 
+Keep a second terminal tab open in the `ai-act-check` repo checkout (with `npm install` done): every fallback below runs there, not in `~/demo-project`.
+
 Screen layout: terminal with Claude Code on the left, `localhost:4242/live` on the projector, a Finder window on `~/demo-project/compliance/` (empty).
 
 Price per check: 0.50 USD. Three checks = 1.50 USD of testnet money.
@@ -36,7 +38,7 @@ Price per check: 0.50 USD. Three checks = 1.50 USD of testnet money.
 
 **Diego says:** "Shortlisting CVs is high-risk under the AI Act; the duties start 2 December 2027, but the GDPR ones, the DPIA and the right to a human decision, apply today."
 
-**Fallback if payment fails:**
+**Fallback if payment fails** (second tab, repo checkout):
 
 ```bash
 curl -i -X POST http://localhost:4242/classify -H 'content-type: application/json' -d @demo/requests/cv-screening.json
@@ -60,7 +62,7 @@ Show the `402 Payment Required` and its `WWW-Authenticate: Payment` header ("thi
 
 **Diego says:** "A chatbot is fine, it just has to say it's an AI from the first message; that's Article 50."
 
-**Fallback if payment fails:**
+**Fallback if payment fails** (second tab, repo checkout):
 
 ```bash
 curl -i -X POST http://localhost:4242/classify -H 'content-type: application/json' -d @demo/requests/website-chatbot.json
@@ -84,7 +86,7 @@ Show the 402, then `✓ fixtures/cases.json > website-chatbot`: `limited` with a
 
 **Diego says:** "Reading your staff's emotions at work has been banned since February 2025; the only way out is a real medical or safety reason."
 
-**Fallback if payment fails:**
+**Fallback if payment fails** (second tab, repo checkout):
 
 ```bash
 curl -i -X POST http://localhost:4242/classify -H 'content-type: application/json' -d @demo/requests/callcentre-emotion.json
