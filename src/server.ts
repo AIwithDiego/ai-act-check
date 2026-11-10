@@ -256,8 +256,12 @@ app.post("/classify", async (c) => {
   } catch {}
   const at = new Date().toISOString();
   const line: ReceiptLine = { at, tier: verdict.tier, rules_version: verdict.rules_version, amount, receipt_id };
-  mkdirSync(outDir, { recursive: true });
-  appendFileSync(receiptsPath, `${JSON.stringify(line)}\n`);
+  try {
+    mkdirSync(outDir, { recursive: true });
+    appendFileSync(receiptsPath, `${JSON.stringify(line)}\n`);
+  } catch (err) {
+    console.error("receipts log write failed:", err);
+  }
   recordCheck({ at, amount, receipt_id, verdict });
   return res;
 });
