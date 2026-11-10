@@ -73,9 +73,9 @@ describe("GET /openapi.json", () => {
     }
   });
 
-  it("defaults the price to 0.50", async () => {
+  it("defaults the price to 0.60", async () => {
     const doc = await json(await app.request("/openapi.json"));
-    expect(doc.paths["/classify"].post["x-payment-info"].price).toBe("0.50");
+    expect(doc.paths["/classify"].post["x-payment-info"].price).toBe("0.60");
   });
 });
 

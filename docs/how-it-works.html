@@ -121,15 +121,15 @@ td small{display:block;color:var(--fg-2);font-size:13.5px;margin-top:4px}
   <header class="hero">
     <p class="eyebrow">MPP Hackathon Dublin · Stripe · Tue 10 Nov 2026</p>
     <h1>AI Act Check</h1>
-    <p class="lede">An API that AI agents <span class="mark">pay 50 cents</span> to ask one question: where does this AI use case sit under the EU AI Act, and what do I have to do?</p>
+    <p class="lede">An API that AI agents <span class="mark">pay 60 cents</span> to ask one question: where does this AI use case sit under the EU AI Act, and what do I have to do?</p>
     <div class="say">
       <p class="eyebrow">Say it in 30 seconds</p>
-      <p>Every team shipping AI in Europe asks the same thing: is this allowed, is it high-risk, or is it fine? Today the answer is a consultant and a week. But agents write the code now. So the agent asks at the moment it matters. It reads our free questionnaire, fills it in, and calls the check. The API says "that's 50 cents", the agent pays over Stripe's machine payments, and gets the verdict: the risk tier, the articles, its duties and the dates. Rule-based, cited, nothing stored. Not legal advice; a first pass for less than a coffee.</p>
+      <p>Every team shipping AI in Europe asks the same thing: is this allowed, is it high-risk, or is it fine? Today the answer is a consultant and a week. But agents write the code now. So the agent asks at the moment it matters. It reads our free questionnaire, fills it in, and calls the check. The API says "that's 60 cents", the agent pays over Stripe's machine payments, and gets the verdict: the risk tier, the articles, its duties and the dates. Rule-based, cited, nothing stored. Not legal advice; a first pass for less than a coffee.</p>
     </div>
     <div class="gloss">
       <div><b>402</b><span>The web's "Payment Required" status. The API answers it with a price instead of the result.</span></div>
       <div><b>MPP</b><span>Stripe's Machine Payments Protocol: a standard way for a program to pay a 402 and retry, no human in the loop.</span></div>
-      <div><b>Tempo testnet</b><span>A test payment network with free test money. Our agent's wallet pays on it. No real money moves.</span></div>
+      <div><b>Test card</b><span>Stripe's sandbox test Visa. The agent pays with it through a Shared Payment Token, and each payment shows in the Stripe dashboard. No real money moves.</span></div>
       <div><b>Receipt</b><span>Proof of payment the API sends back with the verdict. We log its id, never the use case.</span></div>
     </div>
   </header>
@@ -145,8 +145,8 @@ td small{display:block;color:var(--fg-2);font-size:13.5px;margin-top:4px}
       <li>The agent (Claude Code, running headless) asks the API for the questions. <code>GET /questions</code> is free.</li>
       <li>The agent turns the use case into answers: role, data, purpose. 33 short questions, most of them yes or no.</li>
       <li>It sends the answers to <code>POST /classify</code>. Bad answers are rejected here, before any price.</li>
-      <li class="pay">The API answers 402: "pay 0.50 USD".</li>
-      <li class="pay">The wallet <code>demo-agent</code> pays over Stripe MPP on Tempo testnet, via the <code>mppx</code> tool.</li>
+      <li class="pay">The API answers 402: "pay 0.60 USD".</li>
+      <li class="pay">The agent pays with Stripe's test card over MPP, via the <code>mppx</code> tool. The payment lands in the Stripe dashboard.</li>
       <li class="pay">The agent sends the same request again, now with proof of payment.</li>
       <li>The rules engine decides: Hank's 34 rules in <code>data/rules.json</code>. No LLM, same answers give the same verdict.</li>
       <li>The verdict comes back with the receipt: tier, articles, duties for the role, dates, the disclaimer.</li>
@@ -182,14 +182,14 @@ td small{display:block;color:var(--fg-2);font-size:13.5px;margin-top:4px}
       <div class="panel">
         <span class="n">Panel 1</span><h3>Start the API</h3>
         <p>One button starts the server (it writes <code style="background:transparent;border-color:#4A4596;color:#F1EFFA">.env</code> from the Keychain if missing). Four lights tell you it's ready.</p>
-        <div class="lights"><span>API up on 4242</span><span>Payments configured</span><span>Wallet: test money left</span><span>Agent skill installed</span></div>
+        <div class="lights"><span>API up on 4242</span><span>Payments configured</span><span>Payer: Stripe test card</span><span>Agent skill installed</span></div>
       </div>
       <div class="panel">
         <span class="n">Panel 2</span><h3>The box</h3>
         <p>Type what the agent is working on, or pick a preset.</p>
         <div class="fakebox">We use an AI tool to shortlist CVs for our café chain</div>
         <div class="btns"><span class="btn">Run with agent</span><span class="btn ghost">Run without AI</span></div>
-        <div class="run"><span><b>✓</b> Reading the free questions</span><span><b>✓</b> Filling in the answers</span><span><b>✓</b> Asked to pay 0.50 USD</span><span><b>✓</b> Paid, receipt in hand</span><span><b>✓</b> Verdict: High-risk</span><span><b>✓</b> Record saved</span></div>
+        <div class="run"><span><b>✓</b> Reading the free questions</span><span><b>✓</b> Filling in the answers</span><span><b>✓</b> Asked to pay 0.60 USD</span><span><b>✓</b> Paid, receipt in hand</span><span><b>✓</b> Verdict: High-risk</span><span><b>✓</b> Record saved</span></div>
         <p>"Run without AI" uses the preset's saved answers, no Claude. The fallback if the agent is slow.</p>
       </div>
       <div class="panel">
@@ -219,11 +219,11 @@ td small{display:block;color:var(--fg-2);font-size:13.5px;margin-top:4px}
     <p class="eyebrow">Questions people will ask</p>
     <h2>Short answers</h2>
     <div class="faq">
-      <div><h3>Why pay per call?</h3><p>The agent needs the answer once, at the moment it writes the code. No account, no subscription, no human signing up. 50 cents, paid by the agent itself.</p></div>
+      <div><h3>Why pay per call?</h3><p>The agent needs the answer once, at the moment it writes the code. No account, no subscription, no human signing up. 60 cents, paid by the agent itself.</p></div>
       <div><h3>Why no LLM in the verdict?</h3><p>So what you pay for is checkable. Same answers, same verdict, every time, and every line cites its article. The agent does the reading; the rules do the deciding.</p></div>
       <div><h3>What do you store?</h3><p>Nothing about the use case or the answers. The receipts log holds the time, the tier, the amount and the receipt id. That's it.</p></div>
-      <div><h3>Is it real money?</h3><p>No. Test money on Tempo testnet. The Stripe dashboard won't list it, because Crypto payments need Stripe's approval outside the US. The flow is the real one.</p></div>
-      <div><h3>Why not a card?</h3><p>Stripe Link, the card route for agents, isn't available in Ireland yet. Tempo is the other payment method MPP supports.</p></div>
+      <div><h3>Is it real money?</h3><p>No. Stripe's test card in a sandbox. The payment is a real Stripe payment in test mode, so it shows in the dashboard. The flow is the real one.</p></div>
+      <div><h3>Why 60 cents, not 50?</h3><p>Stripe's minimum card charge in euros is €0.50, and 50 US cents is about €0.45. MPP also supports stablecoins on Tempo, which the console can switch to.</p></div>
       <div><h3>What is MPP?</h3><p>Stripe's Machine Payments Protocol. The server answers 402 with a price, the client pays and retries with proof. Payments built into plain HTTP.</p></div>
       <div><h3>Is this legal advice?</h3><p>No. Every verdict carries the disclaimer. It's a first pass; anything using the Art. 6(3) exception or police biometrics needs a lawyer.</p></div>
       <div><h3>What's next?</h3><p>The same check as a paid MCP tool, so Claude or ChatGPT pay inside the chat. Then Chile's new data law, Ley 21.719.</p></div>
@@ -234,7 +234,7 @@ td small{display:block;color:var(--fg-2);font-size:13.5px;margin-top:4px}
     <p class="eyebrow">Today</p>
     <h2>Tue 10 Nov, the 90 minutes</h2>
     <ol class="time">
-      <li><time>Before</time><span>Merge the console branch. Devin can see the repo. Wallet has test money.</span></li>
+      <li><time>Before</time><span>Merge the console branch. Devin can see the repo. Stripe sandbox keys in the Keychain.</span></li>
       <li class="now"><time>13:00</time><span>Open four Devin sessions, paste prompts 01 to 04, one each.</span></li>
       <li><time>13:10</time><span>Devin builds and opens PRs. Smith reviews each one. Diego talks to people.</span></li>
       <li><time>13:45</time><span>Diego says "merge" per PR, then presses Start API in the console.</span></li>
@@ -254,7 +254,7 @@ td small{display:block;color:var(--fg-2);font-size:13.5px;margin-top:4px}
     {x:90,t:'Diego',s:'console :4343'},
     {x:260,t:'Agent',s:'Claude Code'},
     {x:440,t:'AI Act Check',s:'API :4242'},
-    {x:620,t:'Wallet',s:'Stripe MPP · Tempo'},
+    {x:620,t:'Wallet',s:'Stripe MPP · test card'},
     {x:780,t:'Outputs',s:'screen · record'}
   ];
   function el(n,a,txt){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;svg.appendChild(e);return e}
@@ -270,8 +270,8 @@ td small{display:block;color:var(--fg-2);font-size:13.5px;margin-top:4px}
     [1,2,'GET /questions (free)','free'],
     [1,1,'maps use case to answers','self'],
     [1,2,'POST /classify + answers','free'],
-    [2,1,'402: pay 0.50 USD','paid'],
-    [1,3,'demo-agent pays (test money)','paid'],
+    [2,1,'402: pay 0.60 USD','paid'],
+    [1,3,'test card pays (sandbox)','paid'],
     [1,2,'retry with payment proof','paid'],
     [2,2,'34 rules decide, no LLM','self'],
     [2,1,'verdict + receipt','free'],

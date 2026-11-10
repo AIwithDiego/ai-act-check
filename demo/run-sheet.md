@@ -20,7 +20,7 @@ Keep a second terminal tab open in the `ai-act-check` repo checkout (with `npm i
 
 Screen layout: terminal with Claude Code on the left, `localhost:4242/live` on the projector, a Finder window on `~/demo-project/compliance/` (empty).
 
-Price per check: 0.50 USD. Three checks = 1.50 USD of testnet money.
+Price per check: 0.60 USD, paid with Stripe’s test card. Three checks = 1.80 USD of test money, visible in the Stripe dashboard.
 
 ## Case 1: CV screening (High-risk)
 

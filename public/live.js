@@ -216,7 +216,7 @@
     var todo = null;
     if (!list.length) {
       body.appendChild(el("h2", "ac-idle-title", "Waiting for an agent to pay"));
-      body.appendChild(el("p", "ac-why", "It reads the free questions, gets a 402, pays 0.50 USD over Stripe MPP, and the verdict lands here."));
+      body.appendChild(el("p", "ac-why", "It reads the free questions, gets a 402, pays 0.60 USD over Stripe MPP, and the verdict lands here."));
       main.appendChild(body);
       return { node: main, body: body, todo: null };
     }

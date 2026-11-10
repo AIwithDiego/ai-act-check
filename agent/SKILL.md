@@ -1,11 +1,11 @@
 ---
 name: ai-act-check
-description: Use when the user is building or deploying an AI feature for people in the EU and wants to know its EU AI Act risk tier (prohibited, high, limited, minimal) and the GDPR duties that come with it. Calls the paid AI Act Check API (0.50 USD per check over Stripe MPP), shows the verdict and saves a compliance record in the project.
+description: Use when the user is building or deploying an AI feature for people in the EU and wants to know its EU AI Act risk tier (prohibited, high, limited, minimal) and the GDPR duties that come with it. Calls the paid AI Act Check API (0.60 USD per check over Stripe MPP), shows the verdict and saves a compliance record in the project.
 ---
 
 # AI Act Check
 
-Rule-based EU AI Act + GDPR classification of one AI use case. Discovery is free, the verdict is paid per call over Stripe's Machine Payments Protocol (MPP, Tempo testnet).
+Rule-based EU AI Act + GDPR classification of one AI use case. Discovery is free, the verdict is paid per call over Stripe's Machine Payments Protocol (MPP), with a Stripe test card (sandbox).
 
 Base URL: `$AI_ACT_CHECK_URL`, default `http://localhost:4242`. Each command below expands it inline (`${AI_ACT_CHECK_URL:-http://localhost:4242}`), because shell variables don't carry over between separate Bash calls.
 
@@ -27,16 +27,18 @@ Each question has an `id`, a `type` (`boolean` or `enum` with `options`), `requi
 ## 3. Classify and pay
 
 ```bash
-npx mppx@0.17.1 "${AI_ACT_CHECK_URL:-http://localhost:4242}/classify" -i -J '{"use_case":"<a few words>","answers":{...}}' -a demo-agent --network testnet
+npx mppx@0.17.1 "${AI_ACT_CHECK_URL:-http://localhost:4242}/classify" -i -J '{"use_case":"<a few words>","answers":{...}}' --currency usd -M paymentMethod=pm_card_visa
 ```
 
-`mppx` sends the request, gets the HTTP 402 challenge, pays from the `demo-agent` wallet on Tempo testnet and retries. `-i` prints the headers, so you can read the 402 price and the `Payment-Receipt` header of the final 200.
+`mppx` sends the request, gets the HTTP 402 challenge, pays with Stripe's test Visa through a Shared Payment Token and retries. It needs `MPPX_STRIPE_SECRET_KEY` (a Stripe sandbox key) in the environment; never print it. The payment shows in the Stripe dashboard and the receipt reference is a `pi_...` id. `-i` prints the headers, so you can read the 402 price and the `Payment-Receipt` header of the final 200.
+
+No Stripe key in the environment: pay on Tempo testnet instead, with `-a demo-agent --network testnet` in place of the two card flags.
 
 - **400**: the body lists `invalid` answer ids. Nothing was paid. Fix those answers and run again.
 - **200**: the body is the verdict: `tier`, `role`, `matched` (id, title, article, note), `obligations` (law, text, article, role, applies_from), `gdpr_short`, `missing`, `rules_version`, `disclaimer`.
-- `tier: "incomplete"`: `missing` lists required questions you skipped. Tell the user, get the answers, and only re-run (another 0.50 USD) if they agree.
-- Receipt: `Payment-Receipt` is base64url JSON; its `reference` is the receipt id. The amount is the price in the 402 challenge (0.50 USD unless the server says otherwise).
-- If `mppx` fails to pay (wallet empty, network down), stop and tell the user. Do not invent a verdict.
+- `tier: "incomplete"`: `missing` lists required questions you skipped. Tell the user, get the answers, and only re-run (another paid check) if they agree.
+- Receipt: `Payment-Receipt` is base64url JSON; its `reference` is the receipt id. The amount is the price in the 402 challenge (0.60 USD unless the server says otherwise).
+- If `mppx` fails to pay (card declined, wallet empty, network down), stop and tell the user. Do not invent a verdict.
 
 ## 4. Show the user
 

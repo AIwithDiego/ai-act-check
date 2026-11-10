@@ -12,7 +12,7 @@ Every team shipping AI in the EU has the same question: is this prohibited, high
 
 1. The agent reads `GET /questions` (free): the short questionnaire.
 2. It maps the use case it's working on to answers.
-3. It calls `POST /classify`. The server answers HTTP 402 with the price (0.50 USD). The agent pays over MPP and retries.
+3. It calls `POST /classify`. The server answers HTTP 402 with the price (0.60 USD; Stripe’s card minimum is €0.50). The agent pays over MPP and retries.
 4. It gets the AI Act tier, the matched articles, the obligations for its role (provider or deployer) and the dates they apply from, the GDPR duties that overlap when people's data is involved (lawful basis, DPIA, Art. 22 automated decisions), plus a receipt.
 
 The classification is rule-based (`data/rules.json`, checked by Hank). Same answers, same verdict, every time; every line cites its article. Nothing about the use case is stored; the receipts log holds the tier and the amount only.
