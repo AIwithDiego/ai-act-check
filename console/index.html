@@ -30,7 +30,8 @@
   .actions{display:flex;gap:10px;flex-wrap:wrap}
   .btn{border:2px solid var(--rule);background:transparent;border-radius:var(--r-tag);padding:8px 16px;cursor:pointer;font-weight:600;font-size:16px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;min-height:44px}
   .btn:hover{border-color:var(--text-2)}
-  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn:disabled,.btn.off{opacity:.45;cursor:not-allowed}
+  .btn.off{pointer-events:none}
   .btn--go{background:var(--aiwd-hot);border-color:var(--aiwd-hot);color:var(--on-fill)}
   .btn--go:hover{border-color:var(--text)}
   .btn--big{font-size:20px;padding:12px 22px;min-height:54px}
@@ -180,6 +181,9 @@ async function refresh() {
     light('l-pay', s.api.up ? s.payments.ok : null, s.api.up ? (s.payments.ok ? `ready · ${s.payments.price || '0.50 USD'}` : s.payments.error) : 'needs the API');
     light('l-wallet', s.wallet.ok, s.wallet.ok ? `${s.wallet.name} · ${Math.floor(s.wallet.balance).toLocaleString('en')} test USD` : s.wallet.error);
     light('l-kit', s.agentKit ? true : null, s.agentKit ? 'installed' : 'console brief (kit lands ~13:45)');
+    const ll = $('livelink'), liveOk = !!s.api.live;
+    ll.textContent = liveOk ? 'Live screen ↗' : 'Live screen (built ~13:45)';
+    ll.classList.toggle('off', !liveOk); ll.setAttribute('aria-disabled', String(!liveOk));
     $('start').hidden = s.api.up; $('stop').hidden = !(s.api.up && s.api.managed);
     $('apilog').textContent = s.log.length ? s.log.join('\n') : 'Nothing yet.';
   } catch { light('l-api', false, 'console offline'); }

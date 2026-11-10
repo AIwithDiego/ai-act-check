@@ -124,6 +124,7 @@ async function status() {
     const r = await fetchWithTimeout(`${API}/health`, {}, 1500);
     const j = await r.json();
     api = { up: r.ok, rules_version: j.rules_version };
+    api.live = (await fetchWithTimeout(`${API}/live`, {}, 1500)).ok;
   } catch {}
   const [payments, wallet] = await Promise.all([api.up ? paymentsProbe() : { ok: false, error: 'API down' }, walletBalance()]);
   return {
