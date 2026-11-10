@@ -97,6 +97,8 @@
   .gdpr{font-size:16px;color:var(--text-2);margin:0 0 6px}
   .more{font-size:14px;color:var(--text-3);margin:0 0 16px}
   .receipt{display:flex;gap:10px;align-items:center;padding:12px 14px;border:2px solid var(--ok);border-radius:var(--r-tag);font-size:16px;margin-bottom:14px}
+  .receipt .dash{margin-left:auto;font-weight:600;white-space:nowrap}
+  .receipt{flex-wrap:wrap}
   .receipt::before{content:"✓";font-weight:800;color:var(--ok);font-size:22px}
   .alld{margin-bottom:14px}
   .alld summary{cursor:pointer;font-weight:600;font-size:17px}
@@ -140,7 +142,7 @@
       <button class="btn btn--big" id="direct" title="Same API and payment, with the prepared answers. Works for the three prepared cases.">Run without AI</button>
       <button class="btn btn--big" id="cancel" hidden>Stop</button>
     </div>
-    <p class="hint" id="hint">The agent pays 0.50 USD in test money for each check. Nothing real is charged.</p>
+    <p class="hint" id="hint">The agent pays for each check with test money. Nothing real is charged.</p>
     <details class="apilog"><summary>API log</summary><pre id="apilog">Nothing yet.</pre></details>
   </section>
 
@@ -162,7 +164,7 @@ const STEP_TEXT = {
   questions: 'Reads the free questions',
   answers: 'Fills in the answers',
   challenge: 'Asked to pay (402)',
-  pay: 'Pays 0.50 USD',
+  pay: 'Pays for the check',
   verdict: 'Gets the verdict',
   record: 'Saves a record',
 };
@@ -185,7 +187,8 @@ async function refresh() {
     const s = await (await fetch('/api/status')).json();
     light('l-api', s.api.up, s.api.up ? `running · rules ${s.api.rules_version}` : s.api.built ? 'stopped' : 'not built yet');
     light('l-pay', s.api.up ? s.payments.ok : null, s.api.up ? (s.payments.ok ? `ready · ${s.payments.price || '0.50 USD'}` : s.payments.error) : 'needs the API');
-    light('l-wallet', s.wallet.ok, s.wallet.ok ? `${s.wallet.name} · ${Math.floor(s.wallet.balance).toLocaleString('en')} test USD` : s.wallet.error);
+    light('l-wallet', s.wallet.ok, s.wallet.ok ? (s.wallet.card ? 'Stripe test card · Visa' : `${s.wallet.name} · ${Math.floor(s.wallet.balance).toLocaleString('en')} test USD`) : s.wallet.error);
+    if (s.payments.price) { $('hint').textContent = `The agent pays ${s.payments.price} per check with ${s.wallet.card ? "Stripe's test card" : 'testnet money'}. Nothing real is charged.`; const t = document.querySelector('#st-pay .t'); if (t && document.querySelector('#st-pay').dataset.state === 'pending') t.textContent = `Pays ${s.payments.price}`; }
     light('l-kit', s.agentKit ? true : null, s.agentKit ? 'installed' : 'console brief (kit lands ~13:45)');
     const ll = $('livelink'), liveOk = !!s.api.live;
     ll.textContent = liveOk ? 'Live screen ↗' : 'Live screen (built ~13:45)';
@@ -218,7 +221,7 @@ function say(who, text) { const d = el('div', { className: 'say', 'data-who': wh
 
 function shortTitle(t) { return t.split(' (')[0].split(' and ')[0]; }
 
-function renderVerdict(v, receipt, price) {
+function renderVerdict(v, receipt, price, dashboard) {
   const [word, meaning] = TIER[v.tier] || [v.tier, ''];
   const box = el('div', { 'data-tier': v.tier });
   box.append(el('p', { className: 'tierword cond' }, el('span', { text: word })));
@@ -250,7 +253,11 @@ function renderVerdict(v, receipt, price) {
     }
     box.append(all);
   }
-  if (receipt) box.append(el('div', { className: 'receipt', text: `Paid ${price || '0.50 USD'} · ${receipt.method === 'tempo' ? 'Tempo testnet' : receipt.method} · receipt ${(receipt.reference || '').slice(0, 10)}…${(receipt.reference || '').slice(-4)}` }));
+  if (receipt) {
+    const r = el('div', { className: 'receipt' }, el('span', { text: `Paid ${price || ''} · ${receipt.method === 'stripe' ? 'Stripe card' : receipt.method === 'tempo' ? 'Tempo testnet' : receipt.method} · receipt ${(receipt.reference || '').slice(0, 10)}…${(receipt.reference || '').slice(-4)}` }));
+    if (dashboard) r.append(el('a', { href: dashboard, target: '_blank', rel: 'noopener', text: 'See it in Stripe ↗', className: 'dash' }));
+    box.append(r);
+  }
   box.append(el('div', { id: 'recordslot' }));
   box.append(el('p', { className: 'disclaimer', text: `${v.disclaimer} Rules version ${v.rules_version}.` }));
   $('answer').replaceChildren(box);
@@ -280,7 +287,7 @@ function start(mode) {
     if (ev.type === 'step') setStep(ev.id, ev.state, ev.detail);
     else if (ev.type === 'say') say(ev.who, ev.text);
     else if (ev.type === 'log') $('raw').textContent += ev.text + '\n';
-    else if (ev.type === 'verdict') renderVerdict(ev.verdict, ev.receipt, ev.price);
+    else if (ev.type === 'verdict') renderVerdict(ev.verdict, ev.receipt, ev.price, ev.dashboard);
     else if (ev.type === 'record') renderRecord(ev.file, ev.content);
     else if (ev.type === 'end') {
       es.close(); es = null; busy(false); refresh();

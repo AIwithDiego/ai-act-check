@@ -49,7 +49,7 @@ None.
 
 ## Receipt
 
-Receipt: 0x5e1c9a4f0d2b7e83a6c1f49d20b8e7a3c5d9f1e0b2a4c6d8e0f1a3b5c7d9e1f3 · Amount: 0.50 USD · Rules version: 2026-11-10
+Receipt: 0x5e1c9a4f0d2b7e83a6c1f49d20b8e7a3c5d9f1e0b2a4c6d8e0f1a3b5c7d9e1f3 · Amount: 0.60 USD · Rules version: 2026-11-10
 
 ---
 A first-pass classification from your answers, not legal advice.

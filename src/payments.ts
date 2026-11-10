@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import StripeClient from "stripe";
 import { Mppx, Store, stripe } from "mppx/server";
 
-export const DEFAULT_PRICE_USD = "0.50";
+export const DEFAULT_PRICE_USD = "0.60";
 
 export function priceUsd(): string {
   return process.env.PRICE_USD || DEFAULT_PRICE_USD;

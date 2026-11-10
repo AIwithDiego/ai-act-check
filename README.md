@@ -1,13 +1,13 @@
 # AI Act Check
 
 A pay-per-call API that tells an AI agent where an AI use case sits under the EU AI Act: the tier, the articles, the obligations for its role and the dates they apply from, plus the GDPR duties that come with it.
-The agent reads a short questionnaire for free, answers it, and pays 0.50 USD per verdict over Stripe's Machine Payments Protocol (MPP).
+The agent reads a short questionnaire for free, answers it, and pays 0.60 USD per verdict over Stripe's Machine Payments Protocol (MPP).
 The classification is rule-based (`data/rules.json`), with no LLM: same answers, same verdict, every line cited. Nothing about the use case is stored.
 
 ## How an agent pays
 
 1. The agent calls `POST /classify` with its answers and no payment.
-2. The server checks the body (bad input → 400, nothing to pay), then answers HTTP 402 with an MPP challenge: 0.50 USD.
+2. The server checks the body (bad input → 400, nothing to pay), then answers HTTP 402 with an MPP challenge: 0.60 USD.
 3. The agent's wallet pays the challenge on Tempo testnet and retries the same request with the payment credential.
 4. The server verifies the payment and returns the verdict with a `Payment-Receipt` header.
 
@@ -17,7 +17,7 @@ Agent                                  AI Act Check                 Tempo testne
   |---------------------------------------->|                            |
   | POST /classify  {use_case, answers}     |                            |
   |---------------------------------------->|                            |
-  |<-------- 402 Payment Required (0.50) ---|                            |
+  |<-------- 402 Payment Required (0.60) ---|                            |
   | pay the challenge ------------------------------------------------->|
   | POST /classify  + payment credential    |                            |
   |---------------------------------------->|                            |
@@ -41,7 +41,7 @@ For Claude Code, install `agent/SKILL.md` as a skill (`.claude/skills/ai-act-che
 | `GET /questions` | no | `data/questions.json` as is |
 | `GET /llms.txt` | no | Plain text: how an agent uses this API (free questions first, then paid classify) |
 | `GET /openapi.json` | no | OpenAPI 3.1 for every route here. `POST /classify` carries `x-payment-info` (price, currency, protocol `mpp`). |
-| `POST /classify` | **yes, `PRICE_USD` per call** (default 0.50) | `Verdict` JSON + MPP receipt |
+| `POST /classify` | **yes, `PRICE_USD` per call** (default 0.60) | `Verdict` JSON + MPP receipt |
 | `GET /live` | no | The live screen for the room |
 | `GET /live/feed` | no | `{ "checks": LiveCheck[] }`, newest first, max 20 |
 | `GET /public/*` | no | Static files from `public/` |

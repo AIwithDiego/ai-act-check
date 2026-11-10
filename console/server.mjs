@@ -15,6 +15,10 @@ const API = (process.env.AI_ACT_CHECK_URL || 'http://localhost:4242').replace(/\
 const PORT = Number(process.env.CONSOLE_PORT || 4343);
 const WALLET = process.env.DEMO_WALLET || 'demo-agent';
 const AGENT_MODEL = process.env.AGENT_MODEL || 'sonnet';
+// How the agent pays: 'card' (Stripe test Visa via a Shared Payment Token, shows in the Stripe dashboard)
+// or 'tempo' (testnet stablecoin from the demo-agent wallet).
+const PAY_METHOD = process.env.PAY_METHOD === 'tempo' ? 'tempo' : 'card';
+const TEST_CARD = 'pm_card_visa';
 const MPPX = 'mppx@0.17.1';
 const WORKSPACE = path.join(REPO, 'out', 'agent-project'); // the agent's "project"; out/ is gitignored
 const PRESET_IDS = ['cv-screening', 'website-chatbot', 'callcentre-emotion'];
@@ -38,7 +42,7 @@ async function fetchWithTimeout(url, opts = {}, ms = 2000) {
 
 function run(cmd, args, opts = {}) {
   return new Promise((resolve) => {
-    execFile(cmd, args, { cwd: REPO, timeout: opts.timeout || 120000, maxBuffer: 4 * 1024 * 1024 }, (err, stdout, stderr) => {
+    execFile(cmd, args, { cwd: REPO, env: { ...process.env, ...(opts.env || {}) }, timeout: opts.timeout || 120000, maxBuffer: 4 * 1024 * 1024 }, (err, stdout, stderr) => {
       resolve({ code: err ? (err.code ?? 1) : 0, stdout: String(stdout), stderr: String(stderr) });
     });
   });
@@ -88,6 +92,19 @@ function parseMppxOutput(out) {
 }
 
 const TIER_WORD = { prohibited: 'Prohibited', high: 'High-risk', limited: 'Limited', minimal: 'Minimal', incomplete: 'Incomplete' };
+let cardKey = '', accountId = '';
+async function payEnv() {
+  if (PAY_METHOD !== 'card') return {};
+  if (!cardKey) cardKey = await keychain('stripe-sandbox-secret');
+  if (!cardKey) throw new Error('Stripe sandbox key not found in the Keychain');
+  if (!accountId) {
+    try { accountId = (await (await fetch('https://api.stripe.com/v1/account', { headers: { authorization: `Bearer ${cardKey}` } })).json()).id || ''; } catch {}
+  }
+  return { MPPX_STRIPE_SECRET_KEY: cardKey };
+}
+const PAY_FLAGS = PAY_METHOD === 'card' ? `--currency usd -M paymentMethod=${TEST_CARD}` : `-a ${WALLET} --network testnet`;
+const payerLabel = PAY_METHOD === 'card' ? 'Stripe test card (Visa)' : `Wallet ${WALLET} (Tempo testnet)`;
+const methodLabel = (m) => (m === 'stripe' ? 'Stripe card' : m === 'tempo' ? 'Tempo testnet' : m || 'MPP');
 const short = (s, a = 8, b = 4) => (s && s.length > a + b + 1 ? `${s.slice(0, a)}…${s.slice(-b)}` : s || '');
 
 // ---------- status ----------
@@ -126,11 +143,12 @@ async function status() {
     api = { up: r.ok, rules_version: j.rules_version };
     api.live = (await fetchWithTimeout(`${API}/live`, {}, 1500)).ok;
   } catch {}
-  const [payments, wallet] = await Promise.all([api.up ? paymentsProbe() : { ok: false, error: 'API down' }, walletBalance()]);
+  const [payments, wallet] = await Promise.all([api.up ? paymentsProbe() : { ok: false, error: 'API down' }, PAY_METHOD === 'card' ? { ok: true, name: 'Stripe test card', card: true } : walletBalance()]);
   return {
     api: { ...api, url: API, managed: !!apiProc, built: fs.existsSync(path.join(REPO, 'package.json')) },
     payments, wallet,
     agentKit: fs.existsSync(path.join(REPO, 'agent', 'SKILL.md')),
+    payMethod: PAY_METHOD,
     log: apiLog.slice(-12),
   };
 }
@@ -153,7 +171,7 @@ async function ensureEnv() {
   const profile = await keychain('stripe-sandbox-profile');
   const tempo = await keychain('stripe-sandbox-tempo-address');
   if (!key || !profile) throw new Error('Stripe sandbox values not found in the Keychain');
-  fs.writeFileSync(envPath, `STRIPE_SECRET_KEY=${key}\nSTRIPE_PROFILE_ID=${profile}\n${tempo ? `TEMPO_DEPOSIT_ADDRESS=${tempo}\n` : ''}PRICE_USD=0.50\n`, { mode: 0o600 });
+  fs.writeFileSync(envPath, `STRIPE_SECRET_KEY=${key}\nSTRIPE_PROFILE_ID=${profile}\n${tempo ? `TEMPO_DEPOSIT_ADDRESS=${tempo}\n` : ''}PRICE_USD=0.60\n`, { mode: 0o600 });
   return 'written';
 }
 
@@ -209,25 +227,26 @@ async function runDirect(c, send) {
   const unpaid = await fetchWithTimeout(`${API}/classify`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
   await sleep(700);
   if (unpaid.status !== 402) throw new Error(`Expected a 402, got ${unpaid.status}`);
-  send({ type: 'step', id: 'challenge', state: 'done', detail: `POST /classify → 402 Payment Required · ${priceFromChallenge(unpaid.headers.get('www-authenticate')) || '0.50 USD'}` });
+  send({ type: 'step', id: 'challenge', state: 'done', detail: `POST /classify → 402 Payment Required · ${priceFromChallenge(unpaid.headers.get('www-authenticate')) || ''}` });
 
-  send({ type: 'step', id: 'pay', state: 'active', detail: `Wallet ${WALLET} is paying over Stripe MPP (Tempo testnet)…` });
-  const r = await run('npx', ['-y', MPPX, `${API}/classify`, '-i', '-a', WALLET, '--network', 'testnet', '-J', JSON.stringify(body)], { timeout: 90000 });
+  send({ type: 'step', id: 'pay', state: 'active', detail: `${payerLabel} is paying over Stripe MPP…` });
+  const r = await run('npx', ['-y', MPPX, `${API}/classify`, '-i', ...PAY_FLAGS.split(' '), '-J', JSON.stringify(body)], { timeout: 90000, env: await payEnv() });
   handlePaidOutput(r.stdout + (r.code ? `\n${r.stderr}` : ''), send, true);
   send({ type: 'step', id: 'record', state: 'skip', detail: 'Only the agent saves a record' });
 }
 
 function handlePaidOutput(out, send, challengeShown = false) {
   const p = parseMppxOutput(out);
-  if (p.challenge && !challengeShown) send({ type: 'step', id: 'challenge', state: 'done', detail: `402 Payment Required · ${p.price || '0.50 USD'}` });
+  if (p.challenge && !challengeShown) send({ type: 'step', id: 'challenge', state: 'done', detail: `402 Payment Required · ${p.price || ''}` });
   if (!p.final || p.final.status !== 200 || !p.verdict) {
     send({ type: 'step', id: 'pay', state: 'error', detail: p.final ? `The API answered ${p.final.status}: ${p.final.body.slice(0, 160)}` : out.trim().split('\n').slice(-2).join(' ').slice(0, 200) });
     return false;
   }
-  send({ type: 'step', id: 'pay', state: 'done', detail: `Paid ${p.price || '0.50 USD'} · ${p.receipt?.method === 'tempo' ? 'Tempo testnet' : p.receipt?.method || 'MPP'} · receipt ${short(p.receipt?.reference)}` });
+  send({ type: 'step', id: 'pay', state: 'done', detail: `Paid ${p.price || ''} · ${methodLabel(p.receipt?.method)} · receipt ${short(p.receipt?.reference)}` });
   const v = p.verdict;
   send({ type: 'step', id: 'verdict', state: 'done', detail: `${TIER_WORD[v.tier] || v.tier} · ${v.matched.map((m) => m.article).join(', ') || 'no rule matched'}` });
-  send({ type: 'verdict', verdict: v, receipt: p.receipt, price: p.price });
+  const dashboard = p.receipt?.reference?.startsWith('pi_') ? `https://dashboard.stripe.com/${accountId ? accountId + '/' : ''}test/payments/${p.receipt.reference}` : null;
+  send({ type: 'verdict', verdict: v, receipt: p.receipt, price: p.price, dashboard });
   return true;
 }
 
@@ -237,11 +256,12 @@ Before each step, say what you are about to do in one short plain sentence.
 1. Get the free questions: \`curl -s ${api}/questions\`
 2. Map the use case to an answer for every question that applies. Never ask the user anything: infer from the description, assume the business is the deployer unless it builds or sells the AI, and state your main assumptions in one short line.
 3. Pay and classify in one command (it gets the 402, pays and retries; -i shows the 402 and the receipt):
-   \`npx -y ${MPPX} ${api}/classify -i -a ${WALLET} --network testnet -J '<{"use_case": "...", "answers": {...}} as JSON>'\`
+   \`npx -y ${MPPX} ${api}/classify -i ${PAY_FLAGS} -J '<{"use_case": "...", "answers": {...}} as JSON>'\`
+   Use exactly these payment flags (${PAY_METHOD === 'card' ? 'a Stripe test card; the key it needs is already in your environment, never print it' : 'the demo-agent testnet wallet'}).
    If it returns 400, fix the answers it lists and run it again.
 4. Save the record: write compliance/ai-act-<short-slug>.md with: title "AI Act check: <use case in a few words>", today's date, the tier in words, the matched rules with articles, "What you must do" (obligations grouped AI Act then GDPR, each with its article and date), the receipt reference and amount, rules_version, and the disclaimer last.
 5. Finish with 3 to 5 short lines for the user: the tier, why, the top duties, the disclaimer.
-If the ai-act-check skill is available, follow it, but keep -i on the payment command. Do not use any other tool or website.`;
+If the ai-act-check skill is available, follow it, but use the payment command above (with -i) instead of the one in the skill. Do not use any other tool or website.`;
 
 function prepareWorkspace() {
   fs.mkdirSync(path.join(WORKSPACE, 'compliance'), { recursive: true });
@@ -262,7 +282,8 @@ function textOf(content) {
   return '';
 }
 
-function runAgent(text, send, onChild) {
+async function runAgent(text, send, onChild) {
+  const extraEnv = await payEnv();
   return new Promise((resolve) => {
     const withSkill = prepareWorkspace();
     send({ type: 'say', who: 'console', text: withSkill ? 'Agent starts, with the ai-act-check skill installed.' : 'Agent starts (the skill from session 03 is not in yet; it follows the console brief).' });
@@ -271,7 +292,7 @@ function runAgent(text, send, onChild) {
       '--permission-mode', 'acceptEdits',
       '--disallowedTools', 'WebFetch', 'WebSearch', 'Agent', 'Task',
       '--allowedTools', 'Bash(curl:*)', `Bash(npx -y ${MPPX}:*)`, `Bash(npx ${MPPX}:*)`, 'Bash(mkdir:*)', 'Bash(ls:*)', 'Read', 'Write', 'Skill'];
-    const child = spawn('claude', args, { cwd: WORKSPACE, env: { ...process.env, AI_ACT_CHECK_URL: API } });
+    const child = spawn('claude', args, { cwd: WORKSPACE, env: { ...process.env, AI_ACT_CHECK_URL: API, ...extraEnv } });
     onChild(child);
     child.stdin.end(text);
     const tools = new Map(); // tool_use id -> kind
@@ -290,7 +311,7 @@ function runAgent(text, send, onChild) {
             let detail = 'Answers ready';
             try { const body = JSON.parse(m[1]); const a = answerSummary(body.answers || {}); detail = answerDetail(a); send({ type: 'step', id: 'answers', state: 'done', detail, answers: a }); } catch { send({ type: 'step', id: 'answers', state: 'done', detail }); }
             send({ type: 'step', id: 'challenge', state: 'active', detail: 'POST /classify without paying…' });
-            send({ type: 'step', id: 'pay', state: 'active', detail: `Wallet ${WALLET} pays when asked` });
+            send({ type: 'step', id: 'pay', state: 'active', detail: `${payerLabel} pays when asked` });
           } else if (b.name === 'Bash' && /\/questions/.test(cmd)) {
             tools.set(b.id, 'questions');
             send({ type: 'step', id: 'questions', state: 'active', detail: `GET /questions` });
