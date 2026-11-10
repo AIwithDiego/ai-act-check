@@ -3,8 +3,8 @@
 **What:** A pay-per-call API (Stripe Machine Payments Protocol) that tells an AI agent where an AI use case sits under the EU AI Act: tier, articles, obligations by role, dates. Rule-based, no LLM.
 **Who:** Diego (demos it) · built by Devin during the MPP Hackathon Dublin (Stripe, Tue 10 Nov 2026, 13:00 to 14:30) · Smith reviews every PR · Hank owns the legal content.
 **Type:** lab (hackathon)
-**Status:** Prep pack merged (PR #1, #2). Demo console + How it works page merged (PR #3), tested end to end on a stand-in API with real testnet payments.
-**Next:** Build 13:00 with four Devin sessions (Diego gives Devin repo access). From 13:45 Diego runs the demo from the console (`node console/server.mjs`, localhost:4343). Smith stops the morning's stand-in API on 4242 before the real one starts.
+**Status:** Won the MPP Hackathon Dublin, 10 Nov 2026 (1st on the leaderboard, 9 votes). Live at https://ai-act-check-flame.vercel.app, card payments at 0.60 USD visible in the Stripe dashboard. Demo console and live screen run on the Mac.
+**Next:** Merge PR #13 (scan warnings). Then decide: hosted console + live screen (needs a shared store and, for the agent mode, a Claude API budget), the paid MCP tool (AAC-4), and Chile's Ley 21.719.
 
 **Truth lives in:** tickets = `tickets.md` · plan = `docs/run-sheet.md` · how it works = `docs/how-it-works.html` · demo console = `console/` · the fixed spec = `docs/contract.md` · legal content = `data/` (Hank only).
 
