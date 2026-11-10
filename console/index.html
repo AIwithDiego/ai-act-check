@@ -98,6 +98,12 @@
   .more{font-size:14px;color:var(--text-3);margin:0 0 16px}
   .receipt{display:flex;gap:10px;align-items:center;padding:12px 14px;border:2px solid var(--ok);border-radius:var(--r-tag);font-size:16px;margin-bottom:14px}
   .receipt::before{content:"✓";font-weight:800;color:var(--ok);font-size:22px}
+  .alld{margin-bottom:14px}
+  .alld summary{cursor:pointer;font-weight:600;font-size:17px}
+  .alld h4{margin:12px 0 6px;font-size:14px;color:var(--text-3);letter-spacing:var(--ls-wide)}
+  .alld ul{margin:0;padding-left:20px;font-size:16px;max-height:40vh;overflow:auto}
+  .alld li{margin-bottom:6px}
+  .alld li small{color:var(--text-3);font-size:13px;margin-left:6px}
   .record summary{cursor:pointer;font-weight:600}
   .record pre{background:var(--stage-deep);padding:12px;border-radius:var(--r-tag);font-size:13px;max-height:300px;overflow:auto;white-space:pre-wrap}
   .disclaimer{font-size:13px;color:var(--text-3);margin-top:16px}
@@ -225,14 +231,25 @@ function renderVerdict(v, receipt, price) {
   if (v.tier === 'incomplete') {
     duties.append(el('h3', { className: 'wide', text: 'Still to answer' }), el('ul', {}, ...v.missing.slice(0, 5).map((m) => el('li', { text: m.replace(/_/g, ' ') }))));
   } else {
-    let key = v.obligations.filter((o) => o.key).slice(0, 3);
-    if (!key.length) key = v.obligations.filter((o) => o.law === 'AI Act' && o.article !== 'Art. 4').slice(0, 3);
+    // Same pick as the live screen: key AI Act duties first, skipping Art. 4 (staff training).
+    const ai = v.obligations.filter((o) => o.law === 'AI Act');
+    const picks = [ai.filter((o) => o.key && o.article !== 'Art. 4'), ai.filter((o) => o.article !== 'Art. 4'), v.obligations.filter((o) => o.key), ai];
+    const key = (picks.find((l) => l.length) || []).slice(0, 3);
     if (key.length) duties.append(el('h3', { className: 'wide', text: 'What you must do' }), el('ul', {}, ...key.map((o) => el('li', { text: o.text }, el('small', { text: `${o.article} · from ${o.applies_from}` })))));
     if (v.gdpr_short && v.gdpr_short.length && v.tier !== 'prohibited') duties.append(el('p', { className: 'gdpr' }, el('b', { text: 'GDPR too: ' }), document.createTextNode(v.gdpr_short.join(', '))));
     const more = v.obligations.length - key.length;
     if (more > 0) duties.append(el('p', { className: 'more', text: `+${more} more duties in the agent's answer` }));
   }
   box.append(duties);
+  if (v.obligations.length) {
+    const all = el('details', { className: 'alld' }, el('summary', { text: `All ${v.obligations.length} duties for the ${v.role || 'caller'}` }));
+    for (const law of ['AI Act', 'GDPR']) {
+      const list = v.obligations.filter((o) => o.law === law);
+      if (!list.length) continue;
+      all.append(el('h4', { text: law }), el('ul', {}, ...list.map((o) => el('li', { text: o.text }, el('small', { text: `${o.article} · from ${o.applies_from}` })))));
+    }
+    box.append(all);
+  }
   if (receipt) box.append(el('div', { className: 'receipt', text: `Paid ${price || '0.50 USD'} · ${receipt.method === 'tempo' ? 'Tempo testnet' : receipt.method} · receipt ${(receipt.reference || '').slice(0, 10)}…${(receipt.reference || '').slice(-4)}` }));
   box.append(el('div', { id: 'recordslot' }));
   box.append(el('p', { className: 'disclaimer', text: `${v.disclaimer} Rules version ${v.rules_version}.` }));
