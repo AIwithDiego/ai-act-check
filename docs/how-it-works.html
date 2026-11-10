@@ -1,0 +1,306 @@
+<title>AI Act Check, How It Works</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+<style>
+/* Layout: one reading column, diagrams break out to a wider band; project look (AIwithDiego site v5): Archivo width axis, night stage, marker colours as tier/step accents. */
+:root{
+  --bg:#FFFFFF;
+  --panel:#F5F4FB;
+  --fg:#0C0C10;
+  --fg-2:#4D4B5C;
+  --rule:#DCD9EE;
+  --accent:#D93A0B;        /* hot, as text */
+  --hot:#FF4F1A;
+  --mark:#FBE86A;          /* highlighter */
+  --lilac:#D6D1FF;
+  --live:#1E9E4F;
+  --night:#14113A;
+  --on-fill:#0C0C10;
+  --line:#14113A;
+  --free:#1E9E4F;
+  --paid:#D93A0B;
+  --font:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14113A;--panel:#0E0C2B;--fg:#F1EFFA;--fg-2:#C9C5E8;--rule:#2C2860;--accent:#FF7A50;--hot:#FF4F1A;--mark:#FBE86A;--lilac:#D6D1FF;--live:#2BD46A;--night:#0E0C2B;--on-fill:#0C0C10;--line:#C9C5E8;--free:#2BD46A;--paid:#FF7A50;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14113A;--panel:#0E0C2B;--fg:#F1EFFA;--fg-2:#C9C5E8;--rule:#2C2860;--accent:#FF7A50;--hot:#FF4F1A;--mark:#FBE86A;--lilac:#D6D1FF;--live:#2BD46A;--night:#0E0C2B;--on-fill:#0C0C10;--line:#C9C5E8;--free:#2BD46A;--paid:#FF7A50;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:17px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 80px}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:64px}
+.col{max-width:680px}
+h1,h2,h3{text-wrap:balance;margin:0}
+h1{font-stretch:62%;font-weight:800;text-transform:uppercase;font-size:clamp(48px,11vw,104px);line-height:.88;letter-spacing:-.01em}
+h2{font-stretch:88%;font-weight:700;font-size:clamp(28px,5vw,40px);line-height:1.05}
+h3{font-stretch:88%;font-weight:700;font-size:21px;line-height:1.15}
+p{margin:0}
+.eyebrow{font-stretch:125%;font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2)}
+section{display:flex;flex-direction:column;gap:20px}
+.mark{background:linear-gradient(transparent 12%,var(--mark) 12%,var(--mark) 88%,transparent 88%);color:var(--on-fill);padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+code{font-family:var(--mono);font-size:.88em;background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:.05em .35em;overflow-wrap:anywhere}
+
+/* hero */
+.hero{display:flex;flex-direction:column;gap:22px}
+.lede{font-size:clamp(20px,2.6vw,24px);font-stretch:88%;font-weight:500;line-height:1.35;max-width:680px}
+.say{border-left:4px solid var(--hot);padding:4px 0 4px 18px;display:flex;flex-direction:column;gap:8px;max-width:680px}
+.say p{font-size:18px}
+
+/* glossary chips */
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.gloss div{border-top:2px solid var(--fg);padding-top:10px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.gloss b{font-stretch:88%;font-size:17px}
+.gloss span{color:var(--fg-2);font-size:15px;line-height:1.45}
+
+/* diagrams */
+.diagram{overflow-x:auto;border:1px solid var(--rule);border-radius:10px;background:var(--panel);padding:16px}
+.diagram svg{display:block;min-width:820px;width:100%;height:auto}
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px 28px;counter-reset:s}
+.steps li{position:relative;padding-left:40px;font-size:15.5px;min-width:0;overflow-wrap:anywhere}
+.steps li code{white-space:nowrap}
+.steps li::before{counter-increment:s;content:counter(s);font-stretch:62%;font-weight:800;font-size:22px;color:var(--accent);font-variant-numeric:tabular-nums;text-align:right;position:absolute;left:0;top:-3px;width:30px}
+.steps li.pay::before{color:var(--paid)}
+
+/* pieces */
+.pieces{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.piece{border:1px solid var(--rule);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0;background:var(--bg)}
+.piece .tag{align-self:flex-start;font-stretch:125%;font-weight:600;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:3px;color:var(--on-fill)}
+.tag.today{background:var(--mark)}
+.tag.done{background:var(--lilac)}
+.tag.smith{background:var(--hot)}
+.piece p{color:var(--fg-2);font-size:15px}
+.piece .files{font-family:var(--mono);font-size:13px;color:var(--fg);overflow-wrap:anywhere}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;color:var(--fg-2)}
+.legend span{display:inline-flex;gap:8px;align-items:center}
+.legend i{width:14px;height:14px;border-radius:3px;display:inline-block}
+
+/* console mock */
+.console{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.panel{background:var(--night);color:#F1EFFA;border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.panel h3{color:#F1EFFA}
+.panel .n{font-stretch:62%;font-weight:800;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:#9C97C4}
+.panel p{font-size:15px;color:#C9C5E8}
+.lights{display:flex;flex-direction:column;gap:6px;font-size:14.5px;color:#F1EFFA}
+.lights span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:#2BD46A;margin-right:9px}
+.fakebox{border:1.5px solid #4A4596;border-radius:6px;padding:10px;font-size:14px;color:#C9C5E8;font-style:italic}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.btn{font-stretch:88%;font-weight:700;font-size:14px;padding:7px 12px;border-radius:5px;background:#FBE86A;color:#0C0C10}
+.btn.ghost{background:transparent;color:#F1EFFA;border:1.5px solid #4A4596}
+.run{font-size:14px;color:#C9C5E8;display:flex;flex-direction:column;gap:3px;font-variant-numeric:tabular-nums}
+.run b{color:#2BD46A;font-weight:600}
+
+/* table */
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:15.5px}
+th,td{text-align:left;vertical-align:top;padding:12px 14px 12px 0;border-bottom:1px solid var(--rule)}
+th{font-stretch:125%;font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2)}
+.tier{display:inline-block;font-stretch:62%;font-weight:800;text-transform:uppercase;font-size:20px;letter-spacing:.02em;padding:0 8px;color:var(--on-fill);border-radius:2px}
+.t-high{background:#FBE86A}.t-limited{background:#D6D1FF}.t-prohibited{background:#FF4F1A}
+td small{display:block;color:var(--fg-2);font-size:13.5px;margin-top:4px}
+
+/* faq */
+.faq{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px 32px}
+.faq div{display:flex;flex-direction:column;gap:6px;min-width:0}
+.faq h3{font-size:18px}
+.faq p{color:var(--fg-2);font-size:15.5px}
+
+/* timeline */
+.time{list-style:none;padding:0;margin:0;display:flex;flex-direction:column}
+.time li{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--rule);min-width:0}
+.time time{font-stretch:62%;font-weight:800;font-size:22px;font-variant-numeric:tabular-nums}
+.time li.now time{color:var(--accent)}
+.foot{color:var(--fg-2);font-size:14px;border-top:2px solid var(--fg);padding-top:14px}
+@media (max-width:480px){.time li{grid-template-columns:80px 1fr}}
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <p class="eyebrow">MPP Hackathon Dublin · Stripe · Tue 10 Nov 2026</p>
+    <h1>AI Act Check</h1>
+    <p class="lede">An API that AI agents <span class="mark">pay 50 cents</span> to ask one question: where does this AI use case sit under the EU AI Act, and what do I have to do?</p>
+    <div class="say">
+      <p class="eyebrow">Say it in 30 seconds</p>
+      <p>Every team shipping AI in Europe asks the same thing: is this allowed, is it high-risk, or is it fine? Today the answer is a consultant and a week. But agents write the code now. So the agent asks at the moment it matters. It reads our free questionnaire, fills it in, and calls the check. The API says "that's 50 cents", the agent pays over Stripe's machine payments, and gets the verdict: the risk tier, the articles, its duties and the dates. Rule-based, cited, nothing stored. Not legal advice; a first pass for less than a coffee.</p>
+    </div>
+    <div class="gloss">
+      <div><b>402</b><span>The web's "Payment Required" status. The API answers it with a price instead of the result.</span></div>
+      <div><b>MPP</b><span>Stripe's Machine Payments Protocol: a standard way for a program to pay a 402 and retry, no human in the loop.</span></div>
+      <div><b>Tempo testnet</b><span>A test payment network with free test money. Our agent's wallet pays on it. No real money moves.</span></div>
+      <div><b>Receipt</b><span>Proof of payment the API sends back with the verdict. We log its id, never the use case.</span></div>
+    </div>
+  </header>
+
+  <section>
+    <p class="eyebrow">The flow</p>
+    <h2>One paid check, start to finish</h2>
+    <div class="diagram" role="img" aria-label="Sequence diagram of one paid check across five lanes: Diego at the console, the agent, the AI Act Check API, the wallet paying over Stripe MPP, and the outputs (live screen and record file).">
+      <svg id="flow" viewBox="0 0 860 620" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+    <ol class="steps">
+      <li>Diego types a use case in the console box (or picks a preset) and presses Run.</li>
+      <li>The agent (Claude Code, running headless) asks the API for the questions. <code>GET /questions</code> is free.</li>
+      <li>The agent turns the use case into answers: role, data, purpose. 33 short questions, most of them yes or no.</li>
+      <li>It sends the answers to <code>POST /classify</code>. Bad answers are rejected here, before any price.</li>
+      <li class="pay">The API answers 402: "pay 0.50 USD".</li>
+      <li class="pay">The wallet <code>demo-agent</code> pays over Stripe MPP on Tempo testnet, via the <code>mppx</code> tool.</li>
+      <li class="pay">The agent sends the same request again, now with proof of payment.</li>
+      <li>The rules engine decides: Hank's 34 rules in <code>data/rules.json</code>. No LLM, same answers give the same verdict.</li>
+      <li>The verdict comes back with the receipt: tier, articles, duties for the role, dates, the disclaimer.</li>
+      <li>It lands on the live screen, <code>localhost:4242/live</code>, on the projector.</li>
+      <li>The agent saves a record in its own project: <code>compliance/ai-act-*.md</code>.</li>
+    </ol>
+  </section>
+
+  <section>
+    <p class="eyebrow">The pieces</p>
+    <h2>What lives where, and who builds it</h2>
+    <div class="legend">
+      <span><i style="background:var(--mark)"></i>Built today, 13:00 to 13:45, by Devin</span>
+      <span><i style="background:var(--lilac)"></i>Already done</span>
+      <span><i style="background:var(--hot)"></i>Smith, this morning</span>
+    </div>
+    <div class="pieces">
+      <div class="piece"><span class="tag today">Devin 01</span><h3>The engine</h3><p>Takes the answers, applies the rules, returns the verdict. A pure function, no network.</p><span class="files">src/engine.ts</span></div>
+      <div class="piece"><span class="tag today">Devin 02</span><h3>The paid server</h3><p>The API on port 4242. Free routes, the 402, the Stripe MPP charge, the receipts log.</p><span class="files">src/server.ts · src/payments.ts</span></div>
+      <div class="piece"><span class="tag today">Devin 03</span><h3>The agent kit</h3><p>Teaches Claude Code to use and pay for the API, and to save the record. Plus the README.</p><span class="files">agent/SKILL.md · demo/</span></div>
+      <div class="piece"><span class="tag today">Devin 04</span><h3>The live screen</h3><p>The projector view. Each paid check lands as it happens. Keeps the last 20 in memory only.</p><span class="files">src/live.ts · public/</span></div>
+      <div class="piece"><span class="tag done">Hank · read-only</span><h3>The law, as data</h3><p>33 questions, 34 rules (AI Act and GDPR), 14 test cases. Devin never edits these.</p><span class="files">data/ · fixtures/</span></div>
+      <div class="piece"><span class="tag done">Done 9 Nov</span><h3>The spec and the plan</h3><p>The fixed contract every Devin session builds against, the design system, the run sheet, the pitch.</p><span class="files">docs/ · prompts/</span></div>
+      <div class="piece"><span class="tag smith">Smith · port 4343</span><h3>The demo console</h3><p>Diego's control panel: start the API, type a use case, run the agent, watch each step.</p><span class="files">console/</span></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Running it</p>
+    <h2>How Diego runs the demo</h2>
+    <p class="col">In a terminal: <code>node console/server.mjs</code>, then open <code>http://localhost:4343</code>. It ships on the branch <code>feature/demo-console</code>.</p>
+    <div class="console">
+      <div class="panel">
+        <span class="n">Panel 1</span><h3>Start the API</h3>
+        <p>One button starts the server (it writes <code style="background:transparent;border-color:#4A4596;color:#F1EFFA">.env</code> from the Keychain if missing). Four lights tell you it's ready.</p>
+        <div class="lights"><span>API up on 4242</span><span>Payments configured</span><span>Wallet: test money left</span><span>Agent skill installed</span></div>
+      </div>
+      <div class="panel">
+        <span class="n">Panel 2</span><h3>The box</h3>
+        <p>Type what the agent is working on, or pick a preset.</p>
+        <div class="fakebox">We use an AI tool to shortlist CVs for our café chain</div>
+        <div class="btns"><span class="btn">Run with agent</span><span class="btn ghost">Run without AI</span></div>
+        <div class="run"><span><b>✓</b> Reading the free questions</span><span><b>✓</b> Filling in the answers</span><span><b>✓</b> Asked to pay 0.50 USD</span><span><b>✓</b> Paid, receipt in hand</span><span><b>✓</b> Verdict: High-risk</span><span><b>✓</b> Record saved</span></div>
+        <p>"Run without AI" uses the preset's saved answers, no Claude. The fallback if the agent is slow.</p>
+      </div>
+      <div class="panel">
+        <span class="n">Panel 3</span><h3>The projector</h3>
+        <p>Opens the live screen, <code style="background:transparent;border-color:#4A4596;color:#F1EFFA">localhost:4242/live</code>. Put it full screen on the projector; each check you run lands there.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">The demo</p>
+    <h2>Three cases, and the line for each</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Use case, as a small business types it</th><th>Verdict</th><th>Say this</th></tr></thead>
+        <tbody>
+          <tr><td>"We use an AI tool to shortlist CVs for our café chain"</td><td><span class="tier t-high">High-risk</span><small>Annex III, employment. Deployer duties.</small></td><td>The high-risk duties apply from 2 Dec 2027, after this year's AI Omnibus moved them. Delayed is not cancelled. And it's people's data, so the GDPR side comes too: impact assessment, the right to a human decision.</td></tr>
+          <tr><td>"A chatbot answers customer questions on our website"</td><td><span class="tier t-limited">Limited</span><small>Art. 50, transparency.</small></td><td>You just tell people they're talking to an AI. That duty already applies.</td></tr>
+          <tr><td>"Software that reads our call-centre staff's emotions"</td><td><span class="tier t-prohibited">Prohibited</span><small>Art. 5(1)(f).</small></td><td>Banned since Feb 2025, fines up to EUR 35M or 7% of turnover. The only way out is a real medical or safety reason.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="col" style="color:var(--fg-2);font-size:15.5px">Also worth saying: the verdict is only as good as the agent's answers. Say "no profiling" falsely and CV screening comes back minimal. That shows the rules are deterministic.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">Questions people will ask</p>
+    <h2>Short answers</h2>
+    <div class="faq">
+      <div><h3>Why pay per call?</h3><p>The agent needs the answer once, at the moment it writes the code. No account, no subscription, no human signing up. 50 cents, paid by the agent itself.</p></div>
+      <div><h3>Why no LLM in the verdict?</h3><p>So what you pay for is checkable. Same answers, same verdict, every time, and every line cites its article. The agent does the reading; the rules do the deciding.</p></div>
+      <div><h3>What do you store?</h3><p>Nothing about the use case or the answers. The receipts log holds the time, the tier, the amount and the receipt id. That's it.</p></div>
+      <div><h3>Is it real money?</h3><p>No. Test money on Tempo testnet. The Stripe dashboard won't list it, because Crypto payments need Stripe's approval outside the US. The flow is the real one.</p></div>
+      <div><h3>Why not a card?</h3><p>Stripe Link, the card route for agents, isn't available in Ireland yet. Tempo is the other payment method MPP supports.</p></div>
+      <div><h3>What is MPP?</h3><p>Stripe's Machine Payments Protocol. The server answers 402 with a price, the client pays and retries with proof. Payments built into plain HTTP.</p></div>
+      <div><h3>Is this legal advice?</h3><p>No. Every verdict carries the disclaimer. It's a first pass; anything using the Art. 6(3) exception or police biometrics needs a lawyer.</p></div>
+      <div><h3>What's next?</h3><p>The same check as a paid MCP tool, so Claude or ChatGPT pay inside the chat. Then Chile's new data law, Ley 21.719.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Today</p>
+    <h2>Tue 10 Nov, the 90 minutes</h2>
+    <ol class="time">
+      <li><time>Before</time><span>Merge the console branch. Devin can see the repo. Wallet has test money.</span></li>
+      <li class="now"><time>13:00</time><span>Open four Devin sessions, paste prompts 01 to 04, one each.</span></li>
+      <li><time>13:10</time><span>Devin builds and opens PRs. Smith reviews each one. Diego talks to people.</span></li>
+      <li><time>13:45</time><span>Diego says "merge" per PR, then presses Start API in the console.</span></li>
+      <li><time>13:55</time><span>Live screen on the projector. Diego runs the three cases from the console box.</span></li>
+      <li><time>14:05</time><span>Freeze. Rehearse the three cases once. Only copy fixes after this.</span></li>
+      <li class="now"><time>14:15</time><span>Demo.</span></li>
+    </ol>
+  </section>
+
+  <p class="foot">AI Act Check · built at the MPP Hackathon Dublin with Devin · rules by Hank · not legal advice.</p>
+</div>
+
+<script>
+(function(){
+  const svg=document.getElementById('flow');const NS='http://www.w3.org/2000/svg';
+  const lanes=[
+    {x:90,t:'Diego',s:'console :4343'},
+    {x:260,t:'Agent',s:'Claude Code'},
+    {x:440,t:'AI Act Check',s:'API :4242'},
+    {x:620,t:'Wallet',s:'Stripe MPP · Tempo'},
+    {x:780,t:'Outputs',s:'screen · record'}
+  ];
+  function el(n,a,txt){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;svg.appendChild(e);return e}
+  const top=70,bottom=600;
+  lanes.forEach(l=>{
+    el('text',{x:l.x,y:26,'text-anchor':'middle',fill:'var(--fg)','font-size':17,'font-weight':700,'font-stretch':'88%','font-family':'var(--font)'},l.t);
+    el('text',{x:l.x,y:46,'text-anchor':'middle',fill:'var(--fg-2)','font-size':12.5,'font-family':'var(--font)'},l.s);
+    el('line',{x1:l.x,y1:top-10,x2:l.x,y2:bottom,stroke:'var(--rule)','stroke-width':2});
+  });
+  // [from lane, to lane, label, kind]  kind: free | paid | self | out
+  const steps=[
+    [0,1,'use case typed in the box','free'],
+    [1,2,'GET /questions (free)','free'],
+    [1,1,'maps use case to answers','self'],
+    [1,2,'POST /classify + answers','free'],
+    [2,1,'402: pay 0.50 USD','paid'],
+    [1,3,'demo-agent pays (test money)','paid'],
+    [1,2,'retry with payment proof','paid'],
+    [2,2,'34 rules decide, no LLM','self'],
+    [2,1,'verdict + receipt','free'],
+    [2,4,'lands on /live','out'],
+    [1,4,'compliance/ai-act-*.md','out']
+  ];
+  const dy=48;
+  // arrowheads
+  const defs=document.createElementNS(NS,'defs');svg.appendChild(defs);
+  ['free','paid','out'].forEach(k=>{const m=document.createElementNS(NS,'marker');m.setAttribute('id','a-'+k);m.setAttribute('viewBox','0 0 10 10');m.setAttribute('refX','9');m.setAttribute('refY','5');m.setAttribute('markerWidth','7');m.setAttribute('markerHeight','7');m.setAttribute('orient','auto-start-reverse');const p=document.createElementNS(NS,'path');p.setAttribute('d','M0,0 L10,5 L0,10 z');p.setAttribute('fill',k==='paid'?'var(--paid)':k==='out'?'var(--free)':'var(--line)');m.appendChild(p);defs.appendChild(m)});
+  steps.forEach((s,i)=>{
+    const y=top+20+i*dy;const [a,b,label,k]=s;const xa=lanes[a].x,xb=lanes[b].x;
+    const col=k==='paid'?'var(--paid)':k==='out'?'var(--free)':'var(--line)';
+    // number badge
+    el('circle',{cx:22,cy:y-4,r:11,fill:k==='paid'?'var(--hot)':'var(--mark)'});
+    el('text',{x:22,y:y,'text-anchor':'middle',fill:'var(--on-fill)','font-size':12,'font-weight':800,'font-family':'var(--font)'},String(i+1));
+    if(a===b){
+      el('rect',{x:xa-8,y:y-14,width:16,height:22,rx:3,fill:col,opacity:.9});
+      el('text',{x:xa+16,y:y+1,fill:'var(--fg)','font-size':13.5,'font-family':'var(--font)'},label);
+    }else{
+      const dir=xb>xa?1:-1;
+      el('line',{x1:xa+dir*6,y1:y,x2:xb-dir*6,y2:y,stroke:col,'stroke-width':2.2,'stroke-dasharray':k==='out'?'6 4':'none','marker-end':'url(#a-'+k+')'});
+      const mid=(xa+xb)/2;
+      el('text',{x:mid,y:y-8,'text-anchor':'middle',fill:'var(--fg)','font-size':13.5,'font-family':'var(--font)',...(k==='paid'?{'font-weight':700}:{})},label);
+    }
+  });
+  // paid bracket
+  const y1=top+20+4*dy-18,y2=top+20+6*dy+10;
+  el('rect',{x:160,y:y1,width:560,height:y2-y1,rx:8,fill:'none',stroke:'var(--paid)','stroke-width':1.2,'stroke-dasharray':'3 4'});
+  el('text',{x:716,y:y1+16,'text-anchor':'end',fill:'var(--paid)','font-size':11.5,'font-weight':600,'letter-spacing':'.06em','font-family':'var(--font)'},'THE PAYMENT, ABOUT 2 SECONDS');
+})();
+</script>

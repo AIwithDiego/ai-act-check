@@ -3,10 +3,10 @@
 **What:** A pay-per-call API (Stripe Machine Payments Protocol) that tells an AI agent where an AI use case sits under the EU AI Act: tier, articles, obligations by role, dates. Rule-based, no LLM.
 **Who:** Diego (demos it) · built by Devin during the MPP Hackathon Dublin (Stripe, Tue 10 Nov 2026, 13:00 to 14:30) · Smith reviews every PR · Hank owns the legal content.
 **Type:** lab (hackathon)
-**Status:** Prep pack complete 9 Nov on PR #1 (docs/prep-pack), waiting on Diego's merge: brief, contract, three Devin prompts, run sheet, pitch, Hank's 30 questions, 29 rules, 12 cases (all pass). mppx 0.17.1 402 verified offline.
-**Next:** Diego merges PR #1 and sets up the Stripe sandbox (run sheet, Before). Real sandbox payment verified 9 Nov over Tempo testnet (Link not available in Ireland); Diego turns on Crypto in the sandbox so Stripe records it. Build tomorrow 13:00.
+**Status:** Prep pack merged (PR #1, #2). Demo console + How it works page on branch `feature/demo-console` (AAC-5), tested end to end on a stand-in API with real testnet payments, waiting on Diego's merge.
+**Next:** Diego merges `feature/demo-console`. Build 13:00 with four Devin sessions; from 13:45 Diego runs the demo from the console (`node console/server.mjs`, localhost:4343). Smith stops the morning's stand-in API on 4242 before the real one starts.
 
-**Truth lives in:** tickets = `tickets.md` · plan = `docs/run-sheet.md` · the fixed spec = `docs/contract.md` · legal content = `data/` (Hank only).
+**Truth lives in:** tickets = `tickets.md` · plan = `docs/run-sheet.md` · how it works = `docs/how-it-works.html` · demo console = `console/` · the fixed spec = `docs/contract.md` · legal content = `data/` (Hank only).
 
 ## Rules
 - `docs/contract.md` is fixed once the build starts. Changes only before 13:00.

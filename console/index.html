@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo console · AI Act Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/public/tokens.css">
+<style>
+  :root{color-scheme:dark}
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  body{margin:0;background:var(--stage-bg);color:var(--text);font-family:var(--font);font-size:18px;line-height:1.35;min-height:100vh}
+  button,textarea{font:inherit;color:inherit}
+  a{color:var(--text)}
+  .wide{font-stretch:var(--w-wide);font-weight:600;letter-spacing:var(--ls-wide)}
+  .cond{font-stretch:var(--w-cond);font-weight:800;text-transform:uppercase;letter-spacing:var(--ls-cond);line-height:var(--lh-cond)}
+
+  /* top bar */
+  .bar{display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding:14px 28px;border-bottom:2px solid var(--rule)}
+  .bar h1{margin:0;font-size:26px;font-stretch:var(--w-head);font-weight:700;letter-spacing:var(--ls-head)}
+  .bar h1 span{color:var(--text-3);font-weight:500}
+  .lights{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto}
+  .light{display:flex;align-items:center;gap:8px;padding:6px 12px;border:2px solid var(--rule-soft);border-radius:var(--r-tag);font-size:15px;color:var(--text-2)}
+  .light b{color:var(--text);font-weight:600}
+  .dot{width:11px;height:11px;border-radius:50%;background:var(--text-3);flex:none}
+  .light[data-ok="yes"] .dot{background:var(--ok)}
+  .light[data-ok="no"] .dot{background:var(--err)}
+  .actions{display:flex;gap:10px;flex-wrap:wrap}
+  .btn{border:2px solid var(--rule);background:transparent;border-radius:var(--r-tag);padding:8px 16px;cursor:pointer;font-weight:600;font-size:16px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;min-height:44px}
+  .btn:hover{border-color:var(--text-2)}
+  .btn:disabled,.btn.off{opacity:.45;cursor:not-allowed}
+  .btn.off{pointer-events:none}
+  .btn--go{background:var(--aiwd-hot);border-color:var(--aiwd-hot);color:var(--on-fill)}
+  .btn--go:hover{border-color:var(--text)}
+  .btn--big{font-size:20px;padding:12px 22px;min-height:54px}
+  :focus-visible{outline:3px solid var(--aiwd-hot);outline-offset:3px}
+
+  /* three columns */
+  main{display:grid;grid-template-columns:minmax(300px,1fr) minmax(340px,1.15fr) minmax(340px,1.25fr);gap:0;min-height:calc(100vh - 76px)}
+  section.col{padding:26px 28px;border-right:2px solid var(--rule-soft);min-width:0}
+  section.col:last-child{border-right:0}
+  .col h2{margin:0 0 18px;font-size:15px;color:var(--text-3)}
+  .col h2 b{color:var(--aiwd-hot);margin-right:6px}
+
+  /* 1: the box */
+  label.q{display:block;font-size:26px;font-weight:700;font-stretch:var(--w-head);letter-spacing:var(--ls-head);margin-bottom:12px}
+  textarea{width:100%;min-height:190px;resize:vertical;background:var(--stage-deep);border:2px solid var(--rule);border-radius:var(--r-tag);padding:14px 16px;font-size:20px;line-height:1.4}
+  textarea::placeholder{color:var(--text-3)}
+  .presets{display:flex;flex-direction:column;gap:8px;margin:14px 0 20px}
+  .presets p{margin:0 0 2px;font-size:14px;color:var(--text-3)}
+  .preset{text-align:left;border:2px solid var(--rule-soft);background:transparent;border-radius:var(--r-tag);padding:9px 12px;cursor:pointer;display:flex;justify-content:space-between;gap:10px;align-items:center;min-height:44px}
+  .preset:hover,.preset[aria-pressed="true"]{border-color:var(--text-2)}
+  .preset small{font-size:13px;padding:2px 8px;border-radius:var(--r-chip);background:var(--tier);color:var(--on-fill);font-weight:600;white-space:nowrap}
+  .runrow{display:flex;gap:10px;flex-wrap:wrap}
+  .hint{font-size:14px;color:var(--text-3);margin:12px 0 0}
+  .apilog{margin-top:26px}
+  .apilog summary{cursor:pointer;color:var(--text-3);font-size:14px}
+  .apilog pre{background:var(--stage-deep);padding:10px;border-radius:var(--r-tag);font-size:12px;max-height:180px;overflow:auto;white-space:pre-wrap;color:var(--text-2)}
+
+  /* 2: steps */
+  ol.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+  .step{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;padding:10px 12px;border-radius:var(--r-tag);border:2px solid transparent;transition:border-color var(--t-fast),background var(--t-fast)}
+  .step .n{width:40px;height:40px;border-radius:50%;border:2px solid var(--rule);display:grid;place-items:center;font-weight:700;color:var(--text-3)}
+  .step .t{font-size:21px;font-weight:700;font-stretch:var(--w-head);color:var(--text-3)}
+  .step .d{font-size:15px;color:var(--text-2);margin-top:2px;overflow-wrap:anywhere}
+  .step.pay-step .t::after{content:" · money moves here";font-size:14px;font-weight:500;color:var(--aiwd-hot)}
+  .step[data-state="active"]{border-color:var(--aiwd-mark-yellow);background:var(--stage-deep)}
+  .step[data-state="active"] .n{border-color:var(--aiwd-mark-yellow);color:var(--aiwd-mark-yellow);animation:spin 1.1s linear infinite;border-right-color:transparent}
+  .step[data-state="active"] .t,.step[data-state="done"] .t{color:var(--text)}
+  .step[data-state="done"] .n{background:var(--ok);border-color:var(--ok);color:var(--on-fill)}
+  .step[data-state="error"] .n{background:var(--err);border-color:var(--err);color:var(--on-fill)}
+  .step[data-state="error"] .t{color:var(--err)}
+  .step[data-state="skip"]{opacity:.45}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.step[data-state="active"] .n{animation:none;border-right-color:var(--aiwd-mark-yellow)}}
+
+  .says{margin-top:22px;display:flex;flex-direction:column;gap:8px;max-height:34vh;overflow:auto}
+  .say{font-size:16px;padding:9px 13px;border-radius:var(--r-tag);background:var(--stage-deep);border-left:4px solid var(--aiwd-mark-lilac);white-space:pre-wrap}
+  .say[data-who="console"]{border-left-color:var(--text-3);color:var(--text-2);font-size:14px}
+  .say[data-who="agent"]::before{content:"Agent";display:block;font-size:12px;color:var(--aiwd-mark-lilac);font-weight:700;margin-bottom:2px}
+  .rawlog summary{cursor:pointer;color:var(--text-3);font-size:14px;margin-top:14px}
+  .rawlog pre{background:var(--stage-deep);padding:10px;border-radius:var(--r-tag);font-size:12px;max-height:200px;overflow:auto;white-space:pre-wrap;color:var(--text-2)}
+
+  /* 3: the answer */
+  .empty{color:var(--text-3);font-size:20px}
+  .tierword{font-size:clamp(64px,7.4vw,128px);margin:4px 0 10px}
+  .tierword span{background:var(--tier);color:var(--on-fill);padding:.04em .14em;border-radius:var(--r-mark);display:inline-block;transform:rotate(var(--mark-tilt))}
+  [data-tier="incomplete"] .tierword span{background:transparent;color:var(--text);border:4px dashed var(--tier)}
+  .meaning{font-size:26px;font-weight:700;font-stretch:var(--w-head);margin:0 0 6px}
+  .why{font-size:17px;color:var(--text-2);margin:0 0 18px}
+  .duties h3{font-size:14px;color:var(--text-3);margin:0 0 8px}
+  .duties ul{margin:0 0 12px;padding-left:20px;font-size:18px}
+  .duties li{margin-bottom:6px}
+  .duties li small{color:var(--text-3);font-size:14px;margin-left:6px}
+  .gdpr{font-size:16px;color:var(--text-2);margin:0 0 6px}
+  .more{font-size:14px;color:var(--text-3);margin:0 0 16px}
+  .receipt{display:flex;gap:10px;align-items:center;padding:12px 14px;border:2px solid var(--ok);border-radius:var(--r-tag);font-size:16px;margin-bottom:14px}
+  .receipt::before{content:"✓";font-weight:800;color:var(--ok);font-size:22px}
+  .record summary{cursor:pointer;font-weight:600}
+  .record pre{background:var(--stage-deep);padding:12px;border-radius:var(--r-tag);font-size:13px;max-height:300px;overflow:auto;white-space:pre-wrap}
+  .disclaimer{font-size:13px;color:var(--text-3);margin-top:16px}
+
+  @media (max-width:1100px){main{grid-template-columns:1fr}section.col{border-right:0;border-bottom:2px solid var(--rule-soft)}.lights{margin-left:0}}
+  @media (max-width:520px){.bar,section.col{padding-left:16px;padding-right:16px}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <h1>AI Act Check <span>· demo console</span></h1>
+  <div class="lights" aria-live="polite">
+    <div class="light" id="l-api" data-ok="wait"><span class="dot"></span><span>API <b>checking…</b></span></div>
+    <div class="light" id="l-pay" data-ok="wait"><span class="dot"></span><span>Payments <b>…</b></span></div>
+    <div class="light" id="l-wallet" data-ok="wait"><span class="dot"></span><span>Agent wallet <b>…</b></span></div>
+    <div class="light" id="l-kit" data-ok="wait"><span class="dot"></span><span>Agent skill <b>…</b></span></div>
+  </div>
+  <div class="actions">
+    <button class="btn" id="start">Start API</button>
+    <button class="btn" id="stop" hidden>Stop API</button>
+    <a class="btn" id="livelink" href="#" target="_blank" rel="noopener">Live screen ↗</a>
+    <a class="btn" href="/how" target="_blank" rel="noopener">How it works ↗</a>
+  </div>
+</header>
+
+<main>
+  <section class="col" aria-labelledby="h1">
+    <h2 id="h1" class="wide"><b>1</b>Ask the agent</h2>
+    <label class="q" for="usecase">What is the agent working on?</label>
+    <textarea id="usecase" maxlength="1000" placeholder="Describe an AI feature a business wants to use, in plain words. E.g. We want an AI tool that reads every CV and shortlists the top 10 applicants."></textarea>
+    <div class="presets" id="presets"><p>Or pick a prepared case:</p></div>
+    <div class="runrow">
+      <button class="btn btn--go btn--big" id="run">Run with agent</button>
+      <button class="btn btn--big" id="direct" title="Same API and payment, with the prepared answers. Works for the three prepared cases.">Run without AI</button>
+      <button class="btn btn--big" id="cancel" hidden>Stop</button>
+    </div>
+    <p class="hint" id="hint">The agent pays 0.50 USD in test money for each check. Nothing real is charged.</p>
+    <details class="apilog"><summary>API log</summary><pre id="apilog">Nothing yet.</pre></details>
+  </section>
+
+  <section class="col" aria-labelledby="h2">
+    <h2 id="h2" class="wide"><b>2</b>The agent at work</h2>
+    <ol class="steps" id="steps"></ol>
+    <div class="says" id="says" aria-live="polite"></div>
+    <details class="rawlog"><summary>Everything the agent ran</summary><pre id="raw"></pre></details>
+  </section>
+
+  <section class="col" aria-labelledby="h3" id="answercol">
+    <h2 id="h3" class="wide"><b>3</b>The answer</h2>
+    <div id="answer"><p class="empty">The verdict lands here once the agent has paid.</p></div>
+  </section>
+</main>
+
+<script>
+const STEP_TEXT = {
+  questions: 'Reads the free questions',
+  answers: 'Fills in the answers',
+  challenge: 'Asked to pay (402)',
+  pay: 'Pays 0.50 USD',
+  verdict: 'Gets the verdict',
+  record: 'Saves a record',
+};
+const TIER = {
+  prohibited: ['Prohibited', 'Banned in the EU.'],
+  high: ['High-risk', 'Allowed, with strict duties.'],
+  limited: ['Limited', "Allowed if people know it's AI."],
+  minimal: ['Minimal', 'Allowed. Few AI Act duties.'],
+  incomplete: ['Incomplete', 'Not enough answers to decide.'],
+};
+const $ = (id) => document.getElementById(id);
+const el = (tag, props = {}, ...kids) => { const n = document.createElement(tag); for (const [k, v] of Object.entries(props)) { if (k === 'text') n.textContent = v; else if (k.startsWith('data-') || k === 'aria-pressed') n.setAttribute(k, v); else n[k] = v; } for (const c of kids) if (c) n.append(c); return n; };
+
+let presets = [], chosen = null, es = null;
+
+function light(id, ok, text) { const l = $(id); l.dataset.ok = ok === null ? 'wait' : ok ? 'yes' : 'no'; l.querySelector('b').textContent = text; }
+
+async function refresh() {
+  try {
+    const s = await (await fetch('/api/status')).json();
+    light('l-api', s.api.up, s.api.up ? `running · rules ${s.api.rules_version}` : s.api.built ? 'stopped' : 'not built yet');
+    light('l-pay', s.api.up ? s.payments.ok : null, s.api.up ? (s.payments.ok ? `ready · ${s.payments.price || '0.50 USD'}` : s.payments.error) : 'needs the API');
+    light('l-wallet', s.wallet.ok, s.wallet.ok ? `${s.wallet.name} · ${Math.floor(s.wallet.balance).toLocaleString('en')} test USD` : s.wallet.error);
+    light('l-kit', s.agentKit ? true : null, s.agentKit ? 'installed' : 'console brief (kit lands ~13:45)');
+    const ll = $('livelink'), liveOk = !!s.api.live;
+    ll.textContent = liveOk ? 'Live screen ↗' : 'Live screen (built ~13:45)';
+    ll.classList.toggle('off', !liveOk); ll.setAttribute('aria-disabled', String(!liveOk));
+    $('start').hidden = s.api.up; $('stop').hidden = !(s.api.up && s.api.managed);
+    $('apilog').textContent = s.log.length ? s.log.join('\n') : 'Nothing yet.';
+  } catch { light('l-api', false, 'console offline'); }
+}
+
+function resetSteps(withRecord) {
+  const ol = $('steps'); ol.replaceChildren();
+  Object.entries(STEP_TEXT).forEach(([id, t], i) => {
+    const li = el('li', { className: 'step' + (id === 'pay' ? ' pay-step' : ''), id: 'st-' + id, 'data-state': 'pending' },
+      el('span', { className: 'n', text: String(i + 1) }),
+      el('div', {}, el('div', { className: 't', text: t }), el('div', { className: 'd', text: '' })));
+    ol.append(li);
+  });
+  $('says').replaceChildren(); $('raw').textContent = '';
+}
+
+function setStep(id, state, detail) {
+  const li = $('st-' + id); if (!li) return;
+  li.dataset.state = state;
+  if (detail !== undefined) li.querySelector('.d').textContent = detail;
+  if (state === 'done') li.querySelector('.n').textContent = '✓';
+  if (state === 'error') li.querySelector('.n').textContent = '!';
+}
+
+function say(who, text) { const d = el('div', { className: 'say', 'data-who': who, text }); $('says').append(d); d.scrollIntoView({ block: 'nearest' }); }
+
+function shortTitle(t) { return t.split(' (')[0].split(' and ')[0]; }
+
+function renderVerdict(v, receipt, price) {
+  const [word, meaning] = TIER[v.tier] || [v.tier, ''];
+  const box = el('div', { 'data-tier': v.tier });
+  box.append(el('p', { className: 'tierword cond' }, el('span', { text: word })));
+  box.append(el('p', { className: 'meaning', text: meaning }));
+  const main = v.matched.find((m) => m.tier === v.tier);
+  const why = v.tier === 'incomplete' ? `${v.missing.length} questions unanswered` : main ? `${shortTitle(main.title)} · ${main.article}` : 'No rule matched';
+  box.append(el('p', { className: 'why', text: why }));
+
+  const duties = el('div', { className: 'duties' });
+  if (v.tier === 'incomplete') {
+    duties.append(el('h3', { className: 'wide', text: 'Still to answer' }), el('ul', {}, ...v.missing.slice(0, 5).map((m) => el('li', { text: m.replace(/_/g, ' ') }))));
+  } else {
+    let key = v.obligations.filter((o) => o.key).slice(0, 3);
+    if (!key.length) key = v.obligations.filter((o) => o.law === 'AI Act' && o.article !== 'Art. 4').slice(0, 3);
+    if (key.length) duties.append(el('h3', { className: 'wide', text: 'What you must do' }), el('ul', {}, ...key.map((o) => el('li', { text: o.text }, el('small', { text: `${o.article} · from ${o.applies_from}` })))));
+    if (v.gdpr_short && v.gdpr_short.length && v.tier !== 'prohibited') duties.append(el('p', { className: 'gdpr' }, el('b', { text: 'GDPR too: ' }), document.createTextNode(v.gdpr_short.join(', '))));
+    const more = v.obligations.length - key.length;
+    if (more > 0) duties.append(el('p', { className: 'more', text: `+${more} more duties in the agent's answer` }));
+  }
+  box.append(duties);
+  if (receipt) box.append(el('div', { className: 'receipt', text: `Paid ${price || '0.50 USD'} · ${receipt.method === 'tempo' ? 'Tempo testnet' : receipt.method} · receipt ${(receipt.reference || '').slice(0, 10)}…${(receipt.reference || '').slice(-4)}` }));
+  box.append(el('div', { id: 'recordslot' }));
+  box.append(el('p', { className: 'disclaimer', text: `${v.disclaimer} Rules version ${v.rules_version}.` }));
+  $('answer').replaceChildren(box);
+}
+
+function renderRecord(file, content) {
+  const slot = $('recordslot'); if (!slot) return;
+  const open = el('button', { className: 'btn', text: 'Open the folder' }); open.onclick = () => fetch('/api/open-records', { method: 'POST' });
+  slot.replaceChildren(el('details', { className: 'record' }, el('summary', { text: `Record saved: ${file}` }), el('pre', { text: content }), open));
+}
+
+function busy(on) {
+  $('run').disabled = on; $('direct').disabled = on || !chosen || $('usecase').value.trim() !== chosen.text;
+  $('cancel').hidden = !on;
+  document.querySelectorAll('.preset').forEach((b) => (b.disabled = on));
+}
+
+function start(mode) {
+  const text = $('usecase').value.trim();
+  if (mode === 'agent' && !text) { $('usecase').focus(); return; }
+  resetSteps(); $('answer').replaceChildren(el('p', { className: 'empty', text: 'Waiting for the agent…' }));
+  const q = new URLSearchParams({ mode, text, case: chosen ? chosen.id : '' });
+  es = new EventSource('/api/run?' + q);
+  busy(true);
+  es.onmessage = (m) => {
+    const ev = JSON.parse(m.data);
+    if (ev.type === 'step') setStep(ev.id, ev.state, ev.detail);
+    else if (ev.type === 'say') say(ev.who, ev.text);
+    else if (ev.type === 'log') $('raw').textContent += ev.text + '\n';
+    else if (ev.type === 'verdict') renderVerdict(ev.verdict, ev.receipt, ev.price);
+    else if (ev.type === 'record') renderRecord(ev.file, ev.content);
+    else if (ev.type === 'end') {
+      es.close(); es = null; busy(false); refresh();
+      document.querySelectorAll('.step[data-state="active"]').forEach((s) => setStep(s.id.slice(3), ev.ok ? 'skip' : 'error'));
+      if (!ev.ok && $('answer').querySelector('.empty')) $('answer').replaceChildren(el('p', { className: 'empty', text: 'No verdict this time. See the messages in column 2.' }));
+    }
+  };
+  es.onerror = () => { if (es) { es.close(); es = null; busy(false); } };
+}
+
+$('run').onclick = () => start('agent');
+$('direct').onclick = () => start('direct');
+$('cancel').onclick = () => { if (es) { es.close(); es = null; } busy(false); say('console', 'Stopped.'); };
+$('usecase').oninput = () => { if (chosen && $('usecase').value.trim() !== chosen.text) { chosen = null; document.querySelectorAll('.preset').forEach((b) => b.setAttribute('aria-pressed', 'false')); } busy(!!es); };
+$('start').onclick = async () => { $('start').disabled = true; $('start').textContent = 'Starting…'; const r = await (await fetch('/api/start', { method: 'POST' })).json(); if (!r.ok) alert(r.error); $('start').disabled = false; $('start').textContent = 'Start API'; refresh(); };
+$('stop').onclick = async () => { const r = await (await fetch('/api/stop', { method: 'POST' })).json(); if (!r.ok) alert(r.error); setTimeout(refresh, 800); };
+
+(async () => {
+  const p = await (await fetch('/api/presets')).json();
+  presets = p.presets; $('livelink').href = p.api + '/live';
+  for (const c of presets) {
+    const b = el('button', { className: 'preset', 'aria-pressed': 'false' }, el('span', { text: c.label }), el('small', { 'data-tier': c.expect, text: (TIER[c.expect] || [c.expect])[0] }));
+    b.querySelector('small').setAttribute('data-tier', c.expect);
+    b.onclick = () => { chosen = c; $('usecase').value = c.text; document.querySelectorAll('.preset').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); busy(false); };
+    $('presets').append(b);
+  }
+  resetSteps(); busy(false); refresh(); setInterval(refresh, 4000);
+})();
+</script>
+</body>
+</html>
