@@ -6,7 +6,7 @@
 1. ~~Stripe sandbox, profile, secret key in the Keychain~~ (done 9 Nov).
 2. ~~Link login~~ dropped: Link's agent connection is not available in Ireland. The agent pays with a Tempo testnet wallet instead (`mppx`, free test money).
 3. ~~Crypto in the dashboard~~ skipped (needs Stripe approval outside the US; not needed for a demo). The agent pays on Tempo testnet and gets the verdict with a receipt; the Stripe dashboard won't list the payment, and that's fine.
-4. ~~Merge PR #1~~ (done). Merge the `demo-console` branch (the demo console and the How it works page).
+4. ~~Merge PR #1~~ (done). Merge the `feature/demo-console` branch (the demo console and the How it works page).
 5. Devin: make sure the Devin GitHub app can see `AIwithDiego/ai-act-check` (Devin → Settings → Integrations → GitHub → repository access).
 
 **Smith**
