@@ -1,0 +1,33 @@
+{
+  "use_case": "Our call centre wants software that listens to our agents' calls and flags when they sound stressed, frustrated or bored, so team leads can coach them and track mood scores.",
+  "answers": {
+    "role": "deployer",
+    "gpai_model": "no",
+    "manipulative_techniques": false,
+    "exploits_vulnerabilities": false,
+    "social_scoring": false,
+    "crime_prediction_profiling": false,
+    "facial_scraping": false,
+    "intimate_or_csam_generation": false,
+    "emotion_recognition": true,
+    "biometric_remote_id": false,
+    "biometric_categorisation": false,
+    "annex1_safety_component": false,
+    "critical_infrastructure": false,
+    "education": false,
+    "employment": false,
+    "essential_services": "none",
+    "law_enforcement": false,
+    "migration_border": false,
+    "justice_democracy": false,
+    "interacts_with_people": false,
+    "generates_synthetic_content": false,
+    "personal_data": true,
+    "emotion_recognition_workplace": true,
+    "emotion_medical_or_safety": false,
+    "annex3_derogation": "none",
+    "profiling": true,
+    "solely_automated_decision": false,
+    "special_category_data": false
+  }
+}
