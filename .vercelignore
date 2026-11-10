@@ -1,0 +1,9 @@
+out
+console
+docs
+prompts
+demo
+fixtures
+tests
+.env
+.env.local

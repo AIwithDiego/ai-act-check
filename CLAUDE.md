@@ -14,5 +14,5 @@
 - No secrets in the repo, chat or Devin. Stripe sandbox key, profile and Tempo deposit address live in the Keychain (`stripe-sandbox-secret`, `stripe-sandbox-profile`, `stripe-sandbox-tempo-address`); the paying wallet is the `mppx` account `demo-agent`; `.env` is gitignored and written on the Mac only.
 - The API never stores the use case or the answers. Receipts log = time, tier, amount, receipt id.
 - Pinned versions: `mppx` 0.17.1, paying client = `mppx` 0.17.1 CLI. No `latest`.
-- Merging to main is Diego's word. Nothing deploys from main (localhost only).
+- Merging to main is Diego's word. The API runs on Vercel (project `ai-act-check`, Diego's projects): Smith deploys production with `vercel deploy --prod` from main, only after Diego's merge. Git is disconnected from Vercel and `vercel.json` sets `git.deploymentEnabled: false`, so a push never deploys. Secrets live in Vercel env vars (sandbox only), never in the repo. The live screen and console stay on the Mac.
 - Not legal advice; the disclaimer ships in every verdict.
