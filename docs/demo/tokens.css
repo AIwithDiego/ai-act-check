@@ -1,0 +1,329 @@
+/* AI Act Check · stage theme
+   Tokens + every component class. Read-only for the build (prompt 04).
+   Source: aiwithdiego.com site v5 (app/(public)/site-v5.css). One family (Archivo),
+   contrast from its width axis; the night section is the stage; tiers use the
+   site's own marker, hot and live colours. Documented in docs/design-system.html.
+
+   Sizes are design pixels on a 1920x1080 canvas, multiplied by --u.
+   --u is 1px by default; .ac-screen scales it to the viewport so the live
+   screen is the same picture at 1920x1080, 1280x720 or any projector. */
+
+/* Venue wifi insurance: if public/fonts/archivo.woff2 exists (Archivo variable, wdth 62-125, wght 100-900,
+   SIL OFL), it is used; if not, the Google Fonts link in the page; then Helvetica Neue. */
+@font-face{font-family:"Archivo Local";src:url("fonts/archivo.woff2") format("woff2");font-weight:100 900;font-stretch:62% 125%;font-display:block}
+
+:root{
+  /* ---------- Brand primitives, verbatim from site-v5.css ---------- */
+  --aiwd-white:#FFFFFF;
+  --aiwd-ink:#0C0C10;
+  --aiwd-grey:#76757E;
+  --aiwd-night:#14113A;
+  --aiwd-night-ink:#F1EFFA;
+  --aiwd-night-grey:#9C97C4;
+  --aiwd-hot:#FF4F1A;
+  --aiwd-hot-t:#D93A0B;          /* hot as text on white */
+  --aiwd-live:#2BD46A;           /* the site's "online" dot */
+  --aiwd-mark-peach:#FFC2AA;     /* hero marker colours */
+  --aiwd-mark-yellow:#FBE86A;
+  --aiwd-mark-lilac:#D6D1FF;
+
+  /* ---------- Projector extensions (new, see design-system.html §01) ---------- */
+  --stage-bg:var(--aiwd-night);  /* 15.77:1 with text */
+  --stage-deep:#0E0C2B;          /* feed band, one step below night */
+  --text:var(--aiwd-night-ink);  /* body, 15.77:1 on night */
+  --text-2:#C9C5E8;              /* secondary, 10.79:1 (site night-grey is 6.52, misses AAA) */
+  --text-3:var(--aiwd-night-grey);/* large labels only, 6.52:1 */
+  --rule:#4A4596;                /* 2px rules; decorative, 2.21:1 */
+  --rule-soft:#2C2860;           /* site footer line; hairlines inside groups */
+  --on-fill:var(--aiwd-ink);     /* text on any tier fill */
+  --ok:var(--aiwd-live);         /* paid tick, live dot */
+  --err:#FF6B5E;                 /* offline dot only, always with a word */
+
+  /* ---------- Tier colours: one colour, one meaning ---------- */
+  --tier-prohibited:var(--aiwd-hot);          /* ink on it 5.94:1, on night 5.45:1 */
+  --tier-high:var(--aiwd-mark-yellow);        /* ink 15.67:1, on night 14.39:1 */
+  --tier-limited:var(--aiwd-mark-lilac);      /* ink 13.41:1, on night 12.32:1 */
+  --tier-minimal:var(--aiwd-live);            /* ink 9.97:1,  on night 9.16:1 */
+  --tier-incomplete:var(--aiwd-night-grey);   /* dashed outline, never a fill; 6.52:1 */
+
+  /* ---------- Law labels: told apart by form, not hue ---------- */
+  --law-aiact:var(--text);       /* solid rule */
+  --law-gdpr:var(--text-2);      /* dashed rule */
+
+  /* ---------- Type ---------- */
+  --font:"Archivo Local","Archivo","Helvetica Neue",Arial,sans-serif;
+  --w-cond:62%;   /* display: uppercase, 800 */
+  --w-head:88%;   /* headings: 700 */
+  --w-body:100%;
+  --w-wide:125%;  /* small labels: sentence case, 600 */
+  /* ---------- Shadow (screen uses none; float is the site's .browser) ---------- */
+  --shadow-none:none;
+  --shadow-float:0 40px 90px rgba(0,0,0,.5);
+
+  /* ---------- Motion ---------- */
+  --e:cubic-bezier(.2,.8,.2,1);        /* site --e */
+  --e-mark:linear;                     /* site .hmark */
+  --t-fast:200ms;
+  --t-base:400ms;
+  --t-slow:550ms;                      /* site .detail */
+  --mark-per-char:34ms;                /* site MARK_MS_PER_CHAR */
+  --mark-tilt:-.9deg;                  /* site tilt */
+  --arrive-mark:120ms;                 /* the only arrival motion: the marker stroke */
+
+  --u:1px;
+}
+
+/* Size tokens depend on --u. Custom properties inherit as computed values, so they are
+   declared again on every scope that sets its own --u (screen, plain page, .ac-scale demos). */
+:root,.ac-screen,.ac-page,.ac-scale{
+  --fs-verdict:calc(150 * var(--u));  /* the answer */
+  --fs-hero:calc(104 * var(--u));     /* idle headline */
+  --fs-law:calc(56 * var(--u));       /* AI ACT / GDPR */
+  --fs-feed:calc(44 * var(--u));      /* feed tier word */
+  --fs-lead:calc(38 * var(--u));      /* tier sentence, paid amount */
+  --fs-title:calc(30 * var(--u));     /* matched rule title, product name */
+  --fs-body:calc(24 * var(--u));      /* obligation text; 24 is the floor for running text at 1080 */
+  --fs-meta:calc(22 * var(--u));      /* articles, dates, receipt */
+  --fs-min:calc(20 * var(--u));       /* smallest text on stage: disclaimer */
+  /* keynote screen */
+  --fs-stage:calc(230 * var(--u));    /* the tier word on the live screen */
+  --fs-idle:calc(180 * var(--u));     /* idle headline */
+  --fs-meaning:calc(56 * var(--u));   /* "Allowed, with strict duties." */
+  --fs-why:calc(36 * var(--u));       /* why / when line */
+  --fs-duty:calc(32 * var(--u));      /* key duties */
+  --fs-strip:calc(24 * var(--u));     /* bottom strip */
+  --lh-cond:.86; --lh-head:1.05; --lh-body:1.28;
+  --ls-cond:-.01em; --ls-head:-.025em; --ls-wide:.02em;
+
+  /* ---------- Space (4-pt, design px) ---------- */
+  --s-1:calc(4 * var(--u));  --s-2:calc(8 * var(--u));  --s-3:calc(12 * var(--u));
+  --s-4:calc(16 * var(--u)); --s-5:calc(24 * var(--u)); --s-6:calc(32 * var(--u));
+  --s-7:calc(48 * var(--u)); --s-8:calc(64 * var(--u)); --s-9:calc(96 * var(--u));
+  --rule-w:calc(2 * var(--u));         /* 1px vanishes on projectors */
+  --rule-law:calc(6 * var(--u));
+
+  /* ---------- Radii (the site is near-square) ---------- */
+  --r-0:0;
+  --r-chip:calc(3 * var(--u));         /* site .dgrid .pic is 2px */
+  --r-tag:calc(6 * var(--u));          /* site .tab, .chat-x */
+  --r-mark:.06em .14em .08em .16em;    /* site .hmark, hand-drawn */
+  --r-dot:50%;
+
+}
+
+@media (prefers-reduced-motion:reduce){
+  :root{ --t-fast:1ms; --t-base:1ms; --t-slow:1ms; --mark-per-char:0ms; --arrive-mark:0ms; }
+}
+
+/* ======================= Base ======================= */
+.ac-stage{
+  background:var(--stage-bg); color:var(--text);
+  font-family:var(--font); font-stretch:var(--w-body); font-size:var(--fs-body); line-height:var(--lh-body);
+  -webkit-font-smoothing:antialiased; color-scheme:dark; font-variant-numeric:tabular-nums;
+}
+.ac-stage *,.ac-stage *::before,.ac-stage *::after{box-sizing:border-box}
+.ac-stage :where(h1,h2,h3,h4,p,ol,ul,dl,dd,figure){margin:0}
+.ac-stage :where(ol,ul){padding:0;list-style:none}
+.ac-stage :focus-visible{outline:calc(3 * var(--u)) solid var(--aiwd-hot);outline-offset:calc(3 * var(--u))}
+.ac-sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ac-cond{font-stretch:var(--w-cond);font-weight:800;text-transform:uppercase;letter-spacing:var(--ls-cond);line-height:var(--lh-cond)}
+.ac-wide{font-stretch:var(--w-wide);font-weight:600;letter-spacing:var(--ls-wide)}
+
+/* ======================= Tier glyphs (CSS masks, no markup) ======================= */
+[data-tier="prohibited"]{--tier:var(--tier-prohibited);--glyph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3'%3E%3Ccircle cx='12' cy='12' r='9.5'/%3E%3Cpath d='M5.3 18.7 18.7 5.3'/%3E%3C/svg%3E")}
+[data-tier="high"]{--tier:var(--tier-high);--glyph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M12 2.8 22.2 20.6H1.8Z'/%3E%3Cpath d='M12 9.5v5M12 17.6v.2'/%3E%3C/svg%3E")}
+[data-tier="limited"]{--tier:var(--tier-limited);--glyph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9.5'/%3E%3Cpath d='M12 11v6M12 7.3v.2'/%3E%3C/svg%3E")}
+[data-tier="minimal"]{--tier:var(--tier-minimal);--glyph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3'%3E%3Ccircle cx='12' cy='12' r='9.5'/%3E%3C/svg%3E")}
+[data-tier="incomplete"]{--tier:var(--tier-incomplete);--glyph:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9.5' stroke-dasharray='3.2 3'/%3E%3Cpath d='M9.6 9.4a2.5 2.5 0 1 1 3.6 2.3c-.8.4-1.2.9-1.2 1.7v.4M12 17.2v.2'/%3E%3C/svg%3E")}
+.ac-glyph{display:inline-block;flex:0 0 auto;width:1em;height:1em;background:currentColor;
+  -webkit-mask:var(--glyph) center/contain no-repeat;mask:var(--glyph) center/contain no-repeat}
+
+/* ======================= Tier badge (small: feed, tables, GET /) ======================= */
+.ac-tier{display:inline-flex;align-items:center;gap:.28em;color:var(--tier);
+  font-stretch:var(--w-cond);font-weight:800;text-transform:uppercase;letter-spacing:var(--ls-cond);line-height:1;font-size:var(--fs-feed)}
+.ac-tier .ac-glyph{width:.78em;height:.78em}
+.ac-tier--s{font-size:var(--fs-title)}
+
+/* ======================= Verdict word (big: the answer) ======================= */
+.ac-answer{font-size:var(--fs-verdict);font-stretch:var(--w-cond);font-weight:800;text-transform:uppercase;
+  letter-spacing:var(--ls-cond);line-height:var(--lh-cond);color:var(--on-fill);isolation:isolate;white-space:nowrap;
+  --chars:9;font-size:min(var(--fs-verdict), calc(540 * var(--u) / (var(--chars) * .43)))}   /* fits PROHIBITED / INCOMPLETE in the column */
+.ac-mark{position:relative;display:inline-block;padding:.08em .09em .02em}
+.ac-mark::before{content:"";position:absolute;z-index:-1;inset:0 -.02em;background:var(--tier);border-radius:var(--r-mark);
+  transform:rotate(var(--mark-tilt));transform-origin:left center}
+[data-tier="incomplete"] .ac-mark{color:var(--text)}
+[data-tier="incomplete"] .ac-mark::before{background:transparent;border:calc(5 * var(--u)) dashed var(--tier-incomplete)}
+.ac-answer-line{display:flex;align-items:center;gap:var(--s-4);margin-top:var(--s-5);font-size:var(--fs-lead);font-weight:700;
+  font-stretch:var(--w-head);letter-spacing:var(--ls-head);line-height:var(--lh-head)}
+.ac-answer-line .ac-glyph{color:var(--tier);width:.9em;height:.9em}
+
+/* ======================= Article chip ======================= */
+.ac-chips{display:flex;flex-wrap:wrap;gap:var(--s-2)}
+.ac-chip{display:inline-flex;align-items:center;padding:calc(5 * var(--u)) calc(12 * var(--u));border:var(--rule-w) solid var(--rule);
+  border-radius:var(--r-chip);font-size:var(--fs-meta);font-weight:600;line-height:1.1;color:var(--text);white-space:nowrap}
+
+/* ======================= Date tag ======================= */
+.ac-date{display:inline-flex;align-items:center;gap:.45em;padding:calc(5 * var(--u)) calc(12 * var(--u));border-radius:var(--r-tag);
+  font-size:var(--fs-meta);font-weight:700;line-height:1.1;white-space:nowrap;border:var(--rule-w) solid var(--text-2)}
+.ac-date::before{content:"";width:.6em;height:.6em;border-radius:var(--r-dot);border:var(--rule-w) solid currentColor}
+.ac-date.is-now{background:var(--text);color:var(--aiwd-night);border-color:var(--text)}
+.ac-date.is-now::before{background:currentColor}
+.ac-date.is-later{color:var(--text)}
+
+/* ======================= Paid / receipt ======================= */
+.ac-paid{display:grid;grid-template-columns:auto 1fr;column-gap:var(--s-4);align-items:center}
+.ac-paid__tick{grid-row:span 2;width:calc(44 * var(--u));height:calc(44 * var(--u));border-radius:var(--r-dot);background:var(--ok);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm-1.6 17.2-5-5 2-2 3 3 6.4-6.4 2 2Z'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm-1.6 17.2-5-5 2-2 3 3 6.4-6.4 2 2Z'/%3E%3C/svg%3E") center/contain no-repeat}
+.ac-paid__amount{font-size:var(--fs-title);font-weight:700;font-stretch:var(--w-head);letter-spacing:var(--ls-head);line-height:1.1}
+.ac-paid__amount span{font-weight:500;color:var(--text-2)}
+.ac-paid__meta{display:flex;flex-wrap:wrap;gap:0 var(--s-4);font-size:var(--fs-meta);color:var(--text-2);line-height:1.3}
+.ac-paid__id{color:var(--text);font-weight:600}
+
+/* ======================= Matched rule (verdict header) ======================= */
+.ac-rule{display:grid;gap:var(--s-3)}
+.ac-rule__title{font-size:var(--fs-title);font-weight:700;font-stretch:var(--w-head);letter-spacing:var(--ls-head);line-height:1.12}
+
+/* ======================= Law group ======================= */
+.ac-law{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s-4);padding-top:var(--s-3);border-top:var(--rule-law) solid var(--law-aiact)}
+.ac-law[data-law="gdpr"]{border-top-style:dashed;border-top-color:var(--law-gdpr)}
+.ac-law__name{font-size:var(--fs-law);font-stretch:var(--w-cond);font-weight:800;text-transform:uppercase;letter-spacing:var(--ls-cond);line-height:var(--lh-cond)}
+.ac-law__count{font-size:var(--fs-meta);font-weight:600;font-stretch:var(--w-wide);color:var(--text-2);white-space:nowrap}
+
+/* when-header inside a group: obligations sharing one date */
+.ac-when{display:flex;align-items:center;gap:var(--s-3);margin:var(--s-4) 0 var(--s-1)}
+.ac-when__n{font-size:var(--fs-meta);color:var(--text-2);font-weight:600}
+
+/* ======================= Obligation row ======================= */
+.ac-obs{display:grid}
+.ac-ob{display:grid;grid-template-columns:calc(140 * var(--u)) 1fr;column-gap:var(--s-5);align-items:baseline;
+  padding:calc(7 * var(--u)) 0;border-bottom:var(--rule-w) solid var(--rule-soft)}
+.ac-ob:last-child{border-bottom:0}
+.ac-ob__art{font-size:var(--fs-meta);font-weight:700;color:var(--text-2);line-height:1.2}
+.ac-ob__text{font-size:var(--fs-body);line-height:var(--lh-body);text-wrap:pretty}
+.ac-ob__role{display:block;margin-top:var(--s-1);font-size:var(--fs-min);font-stretch:var(--w-wide);font-weight:600;color:var(--text-3)}   /* under the article, only when the caller is "both" */
+.ac-ob__date{grid-column:2;margin-top:var(--s-2)}            /* only when not grouped by date */
+.ac-ob--rule .ac-ob__text{font-weight:600}                    /* summary row: a matched rule, not a duty */
+.ac-ob--stack{grid-template-columns:1fr;row-gap:var(--s-1)}   /* narrow column: article above text */
+.ac-ob[hidden]{display:none}
+.ac-more{margin-top:var(--s-4);font-size:var(--fs-meta);color:var(--text-2)}
+
+/* ======================= Status / connection ======================= */
+.ac-status{display:inline-flex;align-items:center;gap:var(--s-3);font-size:var(--fs-meta);font-weight:700;white-space:nowrap}
+.ac-status::before{content:"";width:calc(14 * var(--u));height:calc(14 * var(--u));border-radius:var(--r-dot);background:var(--ok);
+  box-shadow:0 0 0 calc(5 * var(--u)) rgba(43,212,106,.22)}   /* the site's .top .cta i, scaled */
+.ac-status.is-offline::before{background:transparent;border:calc(3 * var(--u)) solid var(--err);box-shadow:none}
+.ac-status.is-offline{color:var(--text)}
+
+/* ======================= Header / brand bar ======================= */
+.ac-bar{display:flex;align-items:center;gap:var(--s-6);height:calc(84 * var(--u));padding-inline:var(--s-8);border-bottom:var(--rule-w) solid var(--rule)}
+.ac-bar__logo{display:block;height:calc(30 * var(--u));aspect-ratio:640 / 83;background:var(--logo) left center / contain no-repeat}  /* --logo: the site's logo.png as a data URI, set once per page */
+.ac-bar__product{white-space:nowrap;font-size:var(--fs-title);font-weight:700;font-stretch:var(--w-head);letter-spacing:var(--ls-head);
+  padding-left:var(--s-6);border-left:var(--rule-w) solid var(--rule);line-height:1}
+.ac-bar__end{margin-left:auto;display:flex;align-items:center;gap:var(--s-7);font-size:var(--fs-meta);color:var(--text-2);white-space:nowrap}
+.ac-bar__end b{color:var(--text);font-weight:700}
+
+/* ======================= Banner (error / offline) ======================= */
+.ac-banner{display:flex;align-items:center;gap:var(--s-4);padding:var(--s-3) var(--s-5);border:var(--rule-w) solid var(--text-3);
+  border-radius:var(--r-tag);font-size:var(--fs-meta);font-weight:600;color:var(--text)}
+.ac-banner .ac-status{font-size:inherit}
+
+/* ======================= Disclaimer ======================= */
+.ac-disclaimer{font-size:var(--fs-min);color:var(--text-2);line-height:1.35;max-width:34em}
+
+/* ======================= Feed ======================= */
+.ac-feed{display:grid;grid-template-columns:calc(170 * var(--u)) repeat(4,1fr);background:var(--stage-deep);border-top:var(--rule-w) solid var(--rule)}
+.ac-feed__label{padding:var(--s-5) var(--s-5) var(--s-5) var(--s-8);font-size:var(--fs-meta);font-weight:600;color:var(--text-2);line-height:1.25}
+.ac-feed__item{display:grid;align-content:center;gap:var(--s-2);padding:var(--s-4) var(--s-6);border-left:var(--rule-w) solid var(--rule-soft);min-width:0}
+.ac-feed__meta{display:flex;gap:var(--s-4);font-size:var(--fs-meta);color:var(--text-2);white-space:nowrap}
+.ac-feed__meta b{color:var(--text);font-weight:600}
+.ac-feed__empty{grid-column:2 / -1;align-self:center;padding-inline:var(--s-6);font-size:var(--fs-meta);color:var(--text-2)}
+
+/* ======================= Screen: keynote layout (the live page) ======================= */
+/* Sizes scale with the smaller axis (--u); the grid fills the whole viewport, any ratio:
+   extra height goes to the hero row, extra width to the gutters. Embedded copies (design
+   system) keep a fixed 16:9 box from their own --u. */
+html:has(body > .ac-screen){background:var(--stage-bg);height:100%}
+body:has(> .ac-screen){margin:0;height:100%;background:var(--stage-bg);overflow:hidden}
+.ac-screen{width:calc(1920 * var(--u));height:calc(1080 * var(--u));display:grid;grid-template-rows:auto minmax(0,1fr) auto;
+  overflow:hidden;position:relative;background:var(--stage-bg)}
+body > .ac-screen{--u:min(calc(100vw / 1920), calc(100vh / 1080));width:100vw;height:100vh;height:100dvh}
+
+.ac-slide{display:grid;grid-template-rows:minmax(0,1fr) auto;padding:var(--s-7) var(--s-8) var(--s-5);min-height:0}
+.ac-slide__body{display:flex;flex-direction:column;justify-content:safe center;min-height:0;overflow:hidden}
+.ac-slide .ac-disclaimer{max-width:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* hero */
+.ac-hero .ac-answer{font-size:min(var(--fs-stage), calc(1700 * var(--u) / (var(--chars) * .43)))}
+.ac-meaning{display:flex;align-items:center;gap:.3em;margin-top:var(--s-5);font-size:var(--fs-meaning);font-weight:700;
+  font-stretch:var(--w-head);letter-spacing:var(--ls-head);line-height:1.05}
+.ac-meaning .ac-glyph{color:var(--tier);width:.8em;height:.8em}
+.ac-why{margin-top:var(--s-4);font-size:var(--fs-why);font-weight:500;color:var(--text-2);line-height:1.2}
+
+/* what you must do: at most 3 key duties */
+.ac-todo{margin-top:var(--s-7)}
+.ac-todo__head{margin-bottom:var(--s-4);font-size:var(--fs-meta);font-stretch:var(--w-wide);font-weight:600;color:var(--text-2)}
+.ac-todo__list{display:grid;gap:var(--s-3)}
+.ac-todo__list li{display:grid;grid-template-columns:calc(44 * var(--u)) 1fr;font-size:var(--fs-duty);line-height:1.22;text-wrap:pretty}
+.ac-todo__list li::before{content:"";width:calc(22 * var(--u));height:calc(6 * var(--u));margin-top:.55em;background:var(--tier);border-radius:var(--r-chip)}
+.ac-gdpr{margin-top:var(--s-4);padding-left:calc(44 * var(--u));font-size:var(--fs-title);color:var(--text-2);line-height:1.25}
+.ac-gdpr b{color:var(--text);font-weight:700}
+.ac-todo .ac-more{margin-top:var(--s-2);padding-left:calc(44 * var(--u));font-size:var(--fs-body)}
+
+/* idle */
+.ac-idle-title{font-size:var(--fs-idle);font-stretch:var(--w-cond);font-weight:800;text-transform:uppercase;letter-spacing:var(--ls-cond);
+  line-height:.88;text-wrap:balance;max-width:calc(1500 * var(--u))}
+
+/* bottom strip: payment left, earlier checks right */
+.ac-strip{display:flex;align-items:center;justify-content:space-between;gap:var(--s-6);min-height:calc(76 * var(--u));padding:var(--s-3) var(--s-8);
+  background:var(--stage-deep);border-top:var(--rule-w) solid var(--rule);font-size:var(--fs-strip);color:var(--text-2);white-space:nowrap}
+.ac-strip__paid{display:flex;align-items:center;gap:var(--s-3);min-width:0}
+.ac-strip__paid b{color:var(--text);font-weight:700}
+.ac-strip .ac-paid__tick{grid-row:auto;width:calc(28 * var(--u));height:calc(28 * var(--u))}
+.ac-strip__earlier,.ac-strip__pills{display:flex;align-items:center;gap:var(--s-3)}
+.ac-pill{display:inline-flex;align-items:center;gap:.4em;padding:calc(6 * var(--u)) calc(12 * var(--u));border:var(--rule-w) solid var(--tier);
+  border-radius:var(--r-tag);font-size:var(--fs-strip);line-height:1;color:var(--text-2)}
+.ac-pill[data-tier="incomplete"]{border-style:dashed}
+.ac-pill .ac-glyph{color:var(--tier);width:.9em;height:.9em}
+.ac-pill b{color:var(--tier);font-size:1.1em;font-stretch:var(--w-cond);font-weight:800;text-transform:uppercase;letter-spacing:var(--ls-cond)}
+
+/* Library layout (v1 three-column verdict). Not used by the screen; kept for reference and the plain page. */
+.ac-main{display:grid;grid-template-columns:calc(560 * var(--u)) calc(820 * var(--u)) 1fr;column-gap:var(--s-7);
+  padding:calc(28 * var(--u)) var(--s-8) var(--s-4);min-height:0}
+.ac-verdict{display:flex;flex-direction:column;align-items:flex-start;gap:var(--s-6);min-height:0}
+.ac-verdict .ac-disclaimer{margin-top:auto}
+.ac-col{min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.ac-main--wide{grid-template-columns:calc(560 * var(--u)) 1fr}
+.ac-steps{counter-reset:s;display:grid;gap:0;border-top:var(--rule-w) solid var(--rule)}
+.ac-steps li{counter-increment:s;display:grid;grid-template-columns:calc(64 * var(--u)) 1fr;gap:var(--s-4);align-items:baseline;
+  padding:var(--s-4) 0;border-bottom:var(--rule-w) solid var(--rule-soft);font-size:var(--fs-body)}
+.ac-steps li::before{content:counter(s);font-size:var(--fs-lead);font-stretch:var(--w-cond);font-weight:800;color:var(--text-3);line-height:1}
+.ac-steps b{font-weight:700}
+.ac-steps span{color:var(--text-2)}
+.ac-missing{columns:2;column-gap:var(--s-7);margin-top:var(--s-5)}
+.ac-missing li{break-inside:avoid;padding:calc(7 * var(--u)) 0;border-bottom:var(--rule-w) solid var(--rule-soft);font-size:var(--fs-body)}
+
+/* ======================= Arrival: the highlighter stroke, nothing else ======================= */
+/* Add .is-new to .ac-screen for one paint when a new receipt arrives. */
+@keyframes ac-mark{from{transform:rotate(var(--mark-tilt)) scaleX(0)}to{transform:rotate(var(--mark-tilt)) scaleX(1)}}
+.is-new .ac-mark::before{animation:ac-mark calc(var(--chars) * var(--mark-per-char)) var(--e-mark) var(--arrive-mark) both}
+@media (prefers-reduced-motion:reduce){
+  .is-new .ac-mark::before{animation:none!important}
+}
+
+/* ======================= Plain page (GET /) ======================= */
+.ac-page{--u:.8px;max-width:calc(1100 * var(--u));margin:0 auto;padding:var(--s-8) var(--s-6);min-height:100vh}
+.ac-page h1{font-size:var(--fs-law);font-stretch:var(--w-cond);font-weight:800;text-transform:uppercase;line-height:var(--lh-cond)}
+.ac-page p{margin-top:var(--s-4);color:var(--text-2);max-width:40em}
+.ac-page a{color:var(--text);text-underline-offset:.2em}
+.ac-table{width:100%;border-collapse:collapse;margin-top:var(--s-6);font-size:var(--fs-meta)}
+.ac-table th{text-align:left;font-weight:600;font-stretch:var(--w-wide);color:var(--text-2);padding:var(--s-3) var(--s-4) var(--s-3) 0;border-bottom:var(--rule-w) solid var(--rule)}
+.ac-table td{padding:var(--s-3) var(--s-4) var(--s-3) 0;border-bottom:var(--rule-w) solid var(--rule-soft)}
+.ac-table .ac-tier{font-size:var(--fs-title)}
+
+/* ======================= Forced colours ======================= */
+@media (forced-colors:active){
+  .ac-mark::before{background:Highlight;forced-color-adjust:none}
+  .ac-answer{color:HighlightText;forced-color-adjust:none}
+  .ac-glyph,.ac-paid__tick,.ac-status::before{background:CanvasText;forced-color-adjust:none}
+}
