@@ -1,6 +1,6 @@
 # 03 · Agent kit and demo script
 
-Paste everything below the line into a Devin session. Runs **at the same time** as 01 and 02.
+Paste everything below the line into a Devin session. Runs **at the same time** as 01, 02 and 04.
 
 ---
 
@@ -16,7 +16,7 @@ You are writing the agent-facing kit for **AI Act Check** in the repo `AIwithDie
 - `demo/run-sheet.md`: the live demo, three cases (the CV screening, website chatbot and call-centre emotion cases from `fixtures/cases.json`). For each: the exact sentence Diego types to Claude Code, what should happen on screen (402, payment, verdict, the record file appears in `compliance/`), and the one line Diego says about it. Plus a fallback per case if the payment step fails (show the 402 with `curl -i`, then the verdict from `npm test` output).
 - `agent/example-record.md`: the example record (see above).
 - `demo/requests/*.json`: one request body per demo case (`{ use_case, answers }`, copied from the fixtures), so the fallback can `curl -d @demo/requests/cv-screening.json`.
-- `README.md`: rewrite it (keep any "Run" section another session added, merge, don't drop it). Sections: what it is (3 lines), how an agent pays (the 402 flow in 4 lines and a small text diagram), the API table from the contract, example response (use a real case from fixtures, write the verdict by hand following the rules), disclaimer, "Built at the MPP Hackathon Dublin, 10 Nov 2026, with Devin". No badges, no emoji.
+- `README.md`: rewrite it (keep the "Demo" section and any "Run" section another session added, merge, don't drop them). Sections: what it is (3 lines), how an agent pays (the 402 flow in 4 lines and a small text diagram), the API table from the contract, example response (use a real case from fixtures, write the verdict by hand following the rules), disclaimer, "Built at the MPP Hackathon Dublin, 10 Nov 2026, with Devin". No badges, no emoji.
 
 **Done when:** every file above exists; the three request bodies are valid JSON and match the fixtures; SKILL.md has valid frontmatter; the README example response matches what the rules give for that case (check by reading `data/rules.json`).
 

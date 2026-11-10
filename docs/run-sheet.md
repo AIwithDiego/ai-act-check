@@ -6,7 +6,7 @@
 1. ~~Stripe sandbox, profile, secret key in the Keychain~~ (done 9 Nov).
 2. ~~Link login~~ dropped: Link's agent connection is not available in Ireland. The agent pays with a Tempo testnet wallet instead (`mppx`, free test money).
 3. ~~Crypto in the dashboard~~ skipped (needs Stripe approval outside the US; not needed for a demo). The agent pays on Tempo testnet and gets the verdict with a receipt; the Stripe dashboard won't list the payment, and that's fine.
-4. Merge PR #1.
+4. ~~Merge PR #1~~ (done). Merge the `demo-console` branch (the demo console and the How it works page).
 5. Devin: make sure the Devin GitHub app can see `AIwithDiego/ai-act-check` (Devin → Settings → Integrations → GitHub → repository access).
 
 **Smith**
@@ -20,8 +20,8 @@
 |---|---|---|---|
 | 13:00 | Open four Devin sessions, paste `prompts/01` to `04` (one each) | Read and start | Watch the sessions, answer Devin's questions with Diego |
 | 13:10 to 13:45 | Talk to people, follow along | Build, open PRs | Review each PR as it lands: read the diff, run `npm test`, check it against the contract. Say "merge" or what to fix |
-| 13:45 | Say "merge" for each PR Smith passes | Fix what review found | Swap the engine stub for the real engine, wire `.env` from the Keychain, `npm run dev` |
-| 13:55 | Put `localhost:4242/live` on the projector | | `npx mppx@0.17.1 validate http://localhost:4242`, then the three demo cases with Claude Code paying; each one lands on the live screen |
+| 13:45 | Say "merge" for each PR Smith passes | Fix what review found | Swap the engine stub for the real engine, stop the morning's stand-in API on 4242. Diego: `node console/server.mjs`, open `localhost:4343`, press **Start API** (writes `.env` from the Keychain, runs `npm run dev`) |
+| 13:55 | Console on the laptop, **Live screen** button → projector | | `npx mppx@0.17.1 validate http://localhost:4242`. Diego runs the three prepared cases from the console with **Run with agent**; each one lands on the live screen |
 | 14:05 | Rehearse the three cases once | (stretch: paid MCP tool, only if all green) | Fix anything that broke |
 | 14:15 | Demo | | Drive the second screen if needed |
 
@@ -38,6 +38,8 @@
 - If asked: Annex I products are simplified to one conservative question.
 
 ## If something fails
+
+- **The agent is slow or goes off script:** press **Run without AI** on the same prepared case. Same API, same 402, same real payment, prepared answers instead of Claude.
 
 - **Machine payments not approved yet:** the sandbox still returns the 402 challenge. Demo the 402, then show the verdict from the fixture run. Say so plainly: "Stripe's approval is pending; this is the exact challenge an agent pays."
 - **A Devin session stalls:** Smith takes that file over locally; the contract keeps the pieces independent.
