@@ -22,6 +22,7 @@
 | 13:10 to 13:45 | Talk to people, follow along | Build, open PRs | Review each PR as it lands: read the diff, run `npm test`, check it against the contract. Say "merge" or what to fix |
 | 13:45 | Say "merge" for each PR Smith passes | Fix what review found | Swap the engine stub for the real engine, stop the morning's stand-in API on 4242. Diego: `node console/server.mjs`, open `localhost:4343`, press **Start API** (writes `.env` from the Keychain, runs `npm run dev`) |
 | 13:55 | Console on the laptop, **Live screen** button → projector | | `npx mppx@0.17.1 validate http://localhost:4242`. Diego runs the three prepared cases from the console with **Run with agent**; each one lands on the live screen |
+| 14:00 | | | **Submit:** `ngrok http 4242` (already set up on the Mac, free), `npx mppx@0.17.1 validate <public url>`, check `<public url>/openapi.json`, then submit at https://mpp-hackathon.vercel.app/submit (name: AI Act Check · builder: Diego Bauer, with Devin · the agent buys: an EU AI Act classification of its use case, with obligations and a receipt). Keep the Mac awake and the tunnel up until the reviewer passes it |
 | 14:05 | Rehearse the three cases once | (stretch: paid MCP tool, only if all green) | Fix anything that broke |
 | 14:15 | Demo | | Drive the second screen if needed |
 
@@ -38,6 +39,8 @@
 - If asked: Annex I products are simplified to one conservative question.
 
 ## If something fails
+
+- **Submission scan fails:** read what it names (usually `/openapi.json` or the 402 header), fix on a branch, rerun validate on the public URL, resubmit. The leaderboard records the day, so there is time today.
 
 - **The agent is slow or goes off script:** press **Run without AI** on the same prepared case. Same API, same 402, same real payment, prepared answers instead of Claude.
 

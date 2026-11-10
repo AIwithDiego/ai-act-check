@@ -8,7 +8,7 @@ Fixed before the build. Every Devin session codes against this file. Changes hap
 - HTTP: Hono + `@hono/node-server`, port `4242`.
 - Payments: `mppx` + `stripe` (Stripe Machine Payments Protocol). Docs: https://docs.stripe.com/payments/machine/mpp.md?lang=node and https://mpp.dev/docs
 - Tests: `vitest`. `npm test` runs everything, no network.
-- Env (never committed; `.env.example` lists names only): `STRIPE_SECRET_KEY` (sandbox `sk_test_...`), `STRIPE_PROFILE_ID` (`profile_test_...`), `TEMPO_DEPOSIT_ADDRESS` (optional), `PRICE_USD` (default `0.50`).
+- Env (never committed; `.env.example` lists names only): `STRIPE_SECRET_KEY` (sandbox `sk_test_...`), `STRIPE_PROFILE_ID` (`profile_test_...`), `TEMPO_DEPOSIT_ADDRESS` (optional), `PRICE_USD` (default `0.50`), `MPP_SECRET_KEY` (optional; signs challenges and receipts; when unset, derived from `STRIPE_SECRET_KEY`).
 
 ## 1. Data files (written before the build, read-only for the build)
 
@@ -116,6 +116,7 @@ export function classify(answers: Answers, rules?: Rules, questions?: Questions)
 | `GET /health` | no | `{ "ok": true, "rules_version": "..." }` |
 | `GET /questions` | no | `data/questions.json` as is |
 | `GET /llms.txt` | no | Plain text: how an agent uses this API (free questions first, then paid classify) |
+| `GET /openapi.json` | no | OpenAPI 3.1 for every route here. `POST /classify` carries `"x-payment-info": { "price": "<PRICE_USD>", "currency": "USD", "protocol": "mpp", "description": "EU AI Act tier, articles, obligations by role, GDPR duties, receipt" }`. Required by the hackathon submission scan. |
 | `POST /classify` | **yes, `PRICE_USD` per call** | `Verdict` JSON + MPP receipt |
 | `GET /live` | no | The live screen for the room (`public/live.html`, built to `docs/design-spec.md`) |
 | `GET /live/feed` | no | `{ "checks": LiveCheck[] }`, newest first, max 20 |
