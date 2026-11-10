@@ -1,0 +1,30 @@
+{
+ "questions": 33,
+ "cases": [
+  {
+   "id": "cv-screening",
+   "label": "CV shortlisting",
+   "tier": "high"
+  },
+  {
+   "id": "website-chatbot",
+   "label": "Website chatbot",
+   "tier": "limited"
+  },
+  {
+   "id": "callcentre-emotion",
+   "label": "Call-centre emotions",
+   "tier": "prohibited"
+  },
+  {
+   "id": "credit-scoring",
+   "label": "Loan scoring",
+   "tier": "high"
+  },
+  {
+   "id": "driver-safety-emotion",
+   "label": "Driver drowsiness camera",
+   "tier": "high"
+  }
+ ]
+}

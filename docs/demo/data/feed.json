@@ -1,0 +1,660 @@
+{
+ "checks": [
+  {
+   "at": "2026-11-10T14:12:00.000Z",
+   "amount": "0.60",
+   "receipt_id": "pi_3SampleDemo0010",
+   "verdict": {
+    "role": "deployer",
+    "missing": [],
+    "invalid": [],
+    "rules_version": "2026-11-10",
+    "disclaimer": "A first-pass classification from your answers, not legal advice.",
+    "tier": "high",
+    "matched": [
+     {
+      "id": "annex3-employment",
+      "tier": "high",
+      "title": "Employment and workers management",
+      "article": "Art. 6(2), Annex III point 4",
+      "note": "Annex III high-risk obligations apply from 2 Dec 2027 (moved from 2 Aug 2026 by Reg. (EU) 2026/1744, fixed date)."
+     },
+     {
+      "id": "art4-ai-literacy",
+      "tier": "minimal",
+      "title": "AI literacy",
+      "article": "Art. 4",
+      "note": "Applies to every provider and deployer. Wording softened by Reg. (EU) 2026/1744; no specific literacy level is required."
+     },
+     {
+      "id": "gdpr-basics",
+      "tier": "minimal",
+      "title": "GDPR: lawful basis, transparency and security",
+      "article": "GDPR Arts. 5, 6, 13, 14, 32",
+      "note": "GDPR applies alongside the AI Act (AI Act Art. 2(7)). The GDPR changes in the Digital Omnibus proposal COM(2025) 837 are not adopted; this follows the GDPR in force. Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+     },
+     {
+      "id": "gdpr-processor",
+      "tier": "minimal",
+      "title": "GDPR: AI vendors as processors",
+      "article": "GDPR Arts. 28, 44-46",
+      "note": "A provider that uses customer data beyond the customer's instructions becomes a controller for that processing (Art. 28(10)). Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+     },
+     {
+      "id": "gdpr-dpia",
+      "tier": "minimal",
+      "title": "GDPR: data protection impact assessment",
+      "article": "GDPR Art. 35",
+      "note": "Conservative: triggered by any AI Act high-risk area, profiling, solely automated significant decisions, or special-category data (Art. 35(3) and the DPC's list of high-risk processing). A FRIA can reuse the DPIA (AI Act Art. 27(4)). Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+     },
+     {
+      "id": "gdpr-automated-decisions",
+      "tier": "minimal",
+      "title": "GDPR: solely automated decisions with significant effects",
+      "article": "GDPR Art. 22",
+      "note": "Easiest fix is often real human review of each decision, which takes it out of Art. 22. Special-category data in these decisions needs explicit consent or substantial public interest (Art. 22(4)). Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+     }
+    ],
+    "obligations": [
+     {
+      "law": "AI Act",
+      "text": "Train staff who run or use the AI, and keep a record.",
+      "article": "Art. 4",
+      "role": "all",
+      "applies_from": "2025-02-02",
+      "key": true
+     },
+     {
+      "law": "AI Act",
+      "text": "Use it according to the provider's instructions.",
+      "article": "Art. 26(1)",
+      "role": "deployer",
+      "applies_from": "2027-12-02"
+     },
+     {
+      "law": "AI Act",
+      "text": "Assign trained, competent people to oversee it.",
+      "article": "Art. 26(2)",
+      "role": "deployer",
+      "applies_from": "2027-12-02",
+      "key": true
+     },
+     {
+      "law": "AI Act",
+      "text": "Make sure the input data you control is relevant to the purpose.",
+      "article": "Art. 26(4)",
+      "role": "deployer",
+      "applies_from": "2027-12-02"
+     },
+     {
+      "law": "AI Act",
+      "text": "Monitor it, and suspend it and tell the provider if it poses a risk.",
+      "article": "Art. 26(5)",
+      "role": "deployer",
+      "applies_from": "2027-12-02"
+     },
+     {
+      "law": "AI Act",
+      "text": "Keep the logs it generates for at least six months.",
+      "article": "Art. 26(6)",
+      "role": "deployer",
+      "applies_from": "2027-12-02"
+     },
+     {
+      "law": "AI Act",
+      "text": "Tell people when AI helps make decisions about them.",
+      "article": "Art. 26(11)",
+      "role": "deployer",
+      "applies_from": "2027-12-02",
+      "key": true
+     },
+     {
+      "law": "AI Act",
+      "text": "Explain the decision to an affected person who asks.",
+      "article": "Art. 86",
+      "role": "deployer",
+      "applies_from": "2027-12-02"
+     },
+     {
+      "law": "AI Act",
+      "text": "If you are a public body or provide a public service, do a fundamental rights impact assessment before first use.",
+      "article": "Art. 27",
+      "role": "deployer",
+      "applies_from": "2027-12-02"
+     },
+     {
+      "law": "AI Act",
+      "text": "Before using it at work, inform workers' representatives and the affected workers.",
+      "article": "Art. 26(7)",
+      "role": "deployer",
+      "applies_from": "2027-12-02"
+     },
+     {
+      "law": "GDPR",
+      "text": "Pick and record a lawful basis for using the personal data.",
+      "article": "GDPR Art. 6",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Tell people what data you use, why, for how long, and that AI is involved.",
+      "article": "GDPR Arts. 13, 14",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Use only the personal data you need, and keep it no longer than needed.",
+      "article": "GDPR Art. 5(1)(c), (e)",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Let people access, correct and delete their data, and object.",
+      "article": "GDPR Arts. 15-21",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Keep the personal data secure (access control, encryption, logging).",
+      "article": "GDPR Art. 32",
+      "role": "all",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Have a data processing agreement with every AI vendor that handles the personal data for you.",
+      "article": "GDPR Art. 28(3)",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "If the data leaves the EEA (e.g. a US model API), use a transfer tool such as the EU-US Data Privacy Framework or SCCs.",
+      "article": "GDPR Arts. 44-46",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Do a data protection impact assessment before you start, and review it when the system changes.",
+      "article": "GDPR Art. 35",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "If high risk remains after mitigation, consult the data protection authority before starting.",
+      "article": "GDPR Art. 36",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Only make these decisions if needed for a contract, allowed by law, or with explicit consent.",
+      "article": "GDPR Art. 22(2)",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Let people get a human to review the decision, give their view and contest it.",
+      "article": "GDPR Art. 22(3)",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Explain the logic involved and the likely consequences to the people affected.",
+      "article": "GDPR Arts. 13(2)(f), 15(1)(h)",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     }
+    ],
+    "gdpr_short": [
+     "lawful basis and notice",
+     "vendor contracts and transfers",
+     "impact assessment",
+     "right to a human decision"
+    ]
+   }
+  },
+  {
+   "at": "2026-11-10T14:08:00.000Z",
+   "amount": "0.60",
+   "receipt_id": "pi_3SampleDemo0011",
+   "verdict": {
+    "role": "both",
+    "missing": [],
+    "invalid": [],
+    "rules_version": "2026-11-10",
+    "disclaimer": "A first-pass classification from your answers, not legal advice.",
+    "tier": "limited",
+    "matched": [
+     {
+      "id": "art50-interaction",
+      "tier": "limited",
+      "title": "AI that interacts with people",
+      "article": "Art. 50(1)"
+     },
+     {
+      "id": "art50-synthetic-marking",
+      "tier": "limited",
+      "title": "AI-generated or manipulated content",
+      "article": "Art. 50(2)",
+      "note": "Generative systems already on the market before 2 Aug 2026 have until 2 Dec 2026 (Art. 111(4) as amended)."
+     },
+     {
+      "id": "art4-ai-literacy",
+      "tier": "minimal",
+      "title": "AI literacy",
+      "article": "Art. 4",
+      "note": "Applies to every provider and deployer. Wording softened by Reg. (EU) 2026/1744; no specific literacy level is required."
+     },
+     {
+      "id": "gdpr-basics",
+      "tier": "minimal",
+      "title": "GDPR: lawful basis, transparency and security",
+      "article": "GDPR Arts. 5, 6, 13, 14, 32",
+      "note": "GDPR applies alongside the AI Act (AI Act Art. 2(7)). The GDPR changes in the Digital Omnibus proposal COM(2025) 837 are not adopted; this follows the GDPR in force. Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+     },
+     {
+      "id": "gdpr-processor",
+      "tier": "minimal",
+      "title": "GDPR: AI vendors as processors",
+      "article": "GDPR Arts. 28, 44-46",
+      "note": "A provider that uses customer data beyond the customer's instructions becomes a controller for that processing (Art. 28(10)). Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+     }
+    ],
+    "obligations": [
+     {
+      "law": "AI Act",
+      "text": "Train staff who run or use the AI, and keep a record.",
+      "article": "Art. 4",
+      "role": "all",
+      "applies_from": "2025-02-02",
+      "key": true
+     },
+     {
+      "law": "AI Act",
+      "text": "Tell people they are talking to an AI, from the first message.",
+      "article": "Art. 50(1), 50(5)",
+      "role": "provider",
+      "applies_from": "2026-08-02",
+      "key": true
+     },
+     {
+      "law": "AI Act",
+      "text": "Under your own brand, you must show the AI notice yourself.",
+      "article": "Art. 3(3), Art. 50(1)",
+      "role": "deployer",
+      "applies_from": "2026-08-02",
+      "key": true
+     },
+     {
+      "law": "AI Act",
+      "text": "Mark outputs as AI-generated in a machine-readable way.",
+      "article": "Art. 50(2)",
+      "role": "provider",
+      "applies_from": "2026-08-02",
+      "key": true
+     },
+     {
+      "law": "GDPR",
+      "text": "Pick and record a lawful basis for using the personal data.",
+      "article": "GDPR Art. 6",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Tell people what data you use, why, for how long, and that AI is involved.",
+      "article": "GDPR Arts. 13, 14",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Use only the personal data you need, and keep it no longer than needed.",
+      "article": "GDPR Art. 5(1)(c), (e)",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Let people access, correct and delete their data, and object.",
+      "article": "GDPR Arts. 15-21",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Keep the personal data secure (access control, encryption, logging).",
+      "article": "GDPR Art. 32",
+      "role": "all",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "If you use the data for your own purposes, such as training or improving the model, you are a controller for that and need your own lawful basis and notice.",
+      "article": "GDPR Arts. 4(7), 6, 13, 14",
+      "role": "provider",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Have a data processing agreement with every AI vendor that handles the personal data for you.",
+      "article": "GDPR Art. 28(3)",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "If the data leaves the EEA (e.g. a US model API), use a transfer tool such as the EU-US Data Privacy Framework or SCCs.",
+      "article": "GDPR Arts. 44-46",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "When you run the system on a customer's personal data, act only on their documented instructions under a data processing agreement.",
+      "article": "GDPR Art. 28(3)(a)",
+      "role": "provider",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Get the customer's approval for sub-processors (e.g. your model API) and flow the same terms down.",
+      "article": "GDPR Art. 28(2), (4)",
+      "role": "provider",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Help the customer with data subject requests, breaches and DPIAs, and delete or return the data at the end.",
+      "article": "GDPR Art. 28(3)(e)-(g)",
+      "role": "provider",
+      "applies_from": "2018-05-25"
+     }
+    ],
+    "gdpr_short": [
+     "lawful basis and notice",
+     "vendor contracts and transfers"
+    ]
+   }
+  },
+  {
+   "at": "2026-11-10T14:04:00.000Z",
+   "amount": "0.60",
+   "receipt_id": "pi_3SampleDemo0012",
+   "verdict": {
+    "role": "deployer",
+    "missing": [],
+    "invalid": [],
+    "rules_version": "2026-11-10",
+    "disclaimer": "A first-pass classification from your answers, not legal advice.",
+    "tier": "prohibited",
+    "matched": [
+     {
+      "id": "art5-emotion-workplace",
+      "tier": "prohibited",
+      "title": "Emotion recognition at work or in education",
+      "article": "Art. 5(1)(f)",
+      "note": "Exception for medical or safety reasons only."
+     },
+     {
+      "id": "annex3-biometrics",
+      "tier": "high",
+      "title": "Biometrics (remote identification, categorisation, emotion recognition)",
+      "article": "Art. 6(2), Annex III point 1",
+      "note": "Annex III high-risk obligations apply from 2 Dec 2027 (moved from 2 Aug 2026 by Reg. (EU) 2026/1744, fixed date). Conservative: any emotion inference from biometric data is treated as Annex III 1(c). Biometrics often needs a notified body (Art. 43(1))."
+     },
+     {
+      "id": "art4-ai-literacy",
+      "tier": "minimal",
+      "title": "AI literacy",
+      "article": "Art. 4",
+      "note": "Applies to every provider and deployer. Wording softened by Reg. (EU) 2026/1744; no specific literacy level is required."
+     }
+    ],
+    "obligations": [
+     {
+      "law": "AI Act",
+      "text": "Do not sell, deploy or use this in the EU.",
+      "article": "Art. 5",
+      "role": "all",
+      "applies_from": "2025-02-02",
+      "key": true
+     },
+     {
+      "law": "AI Act",
+      "text": "Train staff who run or use the AI, and keep a record.",
+      "article": "Art. 4",
+      "role": "all",
+      "applies_from": "2025-02-02",
+      "key": true
+     }
+    ],
+    "gdpr_short": []
+   }
+  },
+  {
+   "at": "2026-11-10T14:00:00.000Z",
+   "amount": "0.60",
+   "receipt_id": "pi_3SampleDemo0013",
+   "verdict": {
+    "role": "deployer",
+    "missing": [],
+    "invalid": [],
+    "rules_version": "2026-11-10",
+    "disclaimer": "A first-pass classification from your answers, not legal advice.",
+    "tier": "high",
+    "matched": [
+     {
+      "id": "annex3-credit-insurance",
+      "tier": "high",
+      "title": "Credit scoring and life or health insurance pricing",
+      "article": "Art. 6(2), Annex III point 5(b)-(c)",
+      "note": "Annex III high-risk obligations apply from 2 Dec 2027 (moved from 2 Aug 2026 by Reg. (EU) 2026/1744, fixed date). Every deployer must do a FRIA here, not just public bodies (Art. 27(1)). AI used only to detect financial fraud is excluded from 5(b)."
+     },
+     {
+      "id": "art4-ai-literacy",
+      "tier": "minimal",
+      "title": "AI literacy",
+      "article": "Art. 4",
+      "note": "Applies to every provider and deployer. Wording softened by Reg. (EU) 2026/1744; no specific literacy level is required."
+     },
+     {
+      "id": "gdpr-basics",
+      "tier": "minimal",
+      "title": "GDPR: lawful basis, transparency and security",
+      "article": "GDPR Arts. 5, 6, 13, 14, 32",
+      "note": "GDPR applies alongside the AI Act (AI Act Art. 2(7)). The GDPR changes in the Digital Omnibus proposal COM(2025) 837 are not adopted; this follows the GDPR in force. Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+     },
+     {
+      "id": "gdpr-processor",
+      "tier": "minimal",
+      "title": "GDPR: AI vendors as processors",
+      "article": "GDPR Arts. 28, 44-46",
+      "note": "A provider that uses customer data beyond the customer's instructions becomes a controller for that processing (Art. 28(10)). Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+     },
+     {
+      "id": "gdpr-dpia",
+      "tier": "minimal",
+      "title": "GDPR: data protection impact assessment",
+      "article": "GDPR Art. 35",
+      "note": "Conservative: triggered by any AI Act high-risk area, profiling, solely automated significant decisions, or special-category data (Art. 35(3) and the DPC's list of high-risk processing). A FRIA can reuse the DPIA (AI Act Art. 27(4)). Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+     },
+     {
+      "id": "gdpr-automated-decisions",
+      "tier": "minimal",
+      "title": "GDPR: solely automated decisions with significant effects",
+      "article": "GDPR Art. 22",
+      "note": "Easiest fix is often real human review of each decision, which takes it out of Art. 22. Special-category data in these decisions needs explicit consent or substantial public interest (Art. 22(4)). Mapping: the AI Act deployer is usually the GDPR controller; the AI Act provider is a processor when it runs the system on customers' data, and a controller for anything it does for its own purposes (e.g. training). Not returned when the AI Act prohibits the use."
+     }
+    ],
+    "obligations": [
+     {
+      "law": "AI Act",
+      "text": "Train staff who run or use the AI, and keep a record.",
+      "article": "Art. 4",
+      "role": "all",
+      "applies_from": "2025-02-02",
+      "key": true
+     },
+     {
+      "law": "AI Act",
+      "text": "Use it according to the provider's instructions.",
+      "article": "Art. 26(1)",
+      "role": "deployer",
+      "applies_from": "2027-12-02"
+     },
+     {
+      "law": "AI Act",
+      "text": "Assign trained, competent people to oversee it.",
+      "article": "Art. 26(2)",
+      "role": "deployer",
+      "applies_from": "2027-12-02"
+     },
+     {
+      "law": "AI Act",
+      "text": "Make sure the input data you control is relevant to the purpose.",
+      "article": "Art. 26(4)",
+      "role": "deployer",
+      "applies_from": "2027-12-02"
+     },
+     {
+      "law": "AI Act",
+      "text": "Monitor it, and suspend it and tell the provider if it poses a risk.",
+      "article": "Art. 26(5)",
+      "role": "deployer",
+      "applies_from": "2027-12-02"
+     },
+     {
+      "law": "AI Act",
+      "text": "Keep the logs it generates for at least six months.",
+      "article": "Art. 26(6)",
+      "role": "deployer",
+      "applies_from": "2027-12-02"
+     },
+     {
+      "law": "AI Act",
+      "text": "Tell people when AI helps make decisions about them.",
+      "article": "Art. 26(11)",
+      "role": "deployer",
+      "applies_from": "2027-12-02",
+      "key": true
+     },
+     {
+      "law": "AI Act",
+      "text": "Explain the decision to an affected person who asks.",
+      "article": "Art. 86",
+      "role": "deployer",
+      "applies_from": "2027-12-02"
+     },
+     {
+      "law": "AI Act",
+      "text": "Do a fundamental rights impact assessment before first use.",
+      "article": "Art. 27",
+      "role": "deployer",
+      "applies_from": "2027-12-02",
+      "key": true
+     },
+     {
+      "law": "GDPR",
+      "text": "Pick and record a lawful basis for using the personal data.",
+      "article": "GDPR Art. 6",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Tell people what data you use, why, for how long, and that AI is involved.",
+      "article": "GDPR Arts. 13, 14",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Use only the personal data you need, and keep it no longer than needed.",
+      "article": "GDPR Art. 5(1)(c), (e)",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Let people access, correct and delete their data, and object.",
+      "article": "GDPR Arts. 15-21",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Keep the personal data secure (access control, encryption, logging).",
+      "article": "GDPR Art. 32",
+      "role": "all",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Have a data processing agreement with every AI vendor that handles the personal data for you.",
+      "article": "GDPR Art. 28(3)",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "If the data leaves the EEA (e.g. a US model API), use a transfer tool such as the EU-US Data Privacy Framework or SCCs.",
+      "article": "GDPR Arts. 44-46",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Do a data protection impact assessment before you start, and review it when the system changes.",
+      "article": "GDPR Art. 35",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "If high risk remains after mitigation, consult the data protection authority before starting.",
+      "article": "GDPR Art. 36",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Only make these decisions if needed for a contract, allowed by law, or with explicit consent.",
+      "article": "GDPR Art. 22(2)",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Let people get a human to review the decision, give their view and contest it.",
+      "article": "GDPR Art. 22(3)",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     },
+     {
+      "law": "GDPR",
+      "text": "Explain the logic involved and the likely consequences to the people affected.",
+      "article": "GDPR Arts. 13(2)(f), 15(1)(h)",
+      "role": "deployer",
+      "applies_from": "2018-05-25"
+     }
+    ],
+    "gdpr_short": [
+     "lawful basis and notice",
+     "vendor contracts and transfers",
+     "impact assessment",
+     "right to a human decision"
+    ]
+   }
+  }
+ ]
+}

@@ -95,8 +95,8 @@ const TIER_WORD = { prohibited: 'Prohibited', high: 'High-risk', limited: 'Limit
 let cardKey = '', accountId = '';
 async function payEnv() {
   if (PAY_METHOD !== 'card') return {};
-  if (!cardKey) cardKey = await keychain('stripe-sandbox-secret');
-  if (!cardKey) throw new Error('Stripe sandbox key not found in the Keychain');
+  if (!cardKey) cardKey = process.env.MPPX_STRIPE_SECRET_KEY || dotenv('STRIPE_SECRET_KEY') || (await keychain('stripe-sandbox-secret'));
+  if (!cardKey) throw new Error('No Stripe sandbox key: set STRIPE_SECRET_KEY in .env');
   if (!accountId) {
     try { accountId = (await (await fetch('https://api.stripe.com/v1/account', { headers: { authorization: `Bearer ${cardKey}` } })).json()).id || ''; } catch {}
   }
@@ -159,8 +159,16 @@ let apiProc = null;
 const apiLog = [];
 const logLine = (s) => { for (const l of String(s).split(/\r?\n/)) if (l.trim()) apiLog.push(l.slice(0, 300)); apiLog.splice(0, Math.max(0, apiLog.length - 200)); };
 
+// Secrets come from .env first, then the macOS Keychain (services stripe-sandbox-*, account KEYCHAIN_ACCOUNT).
+function dotenv(name) {
+  try {
+    const m = fs.readFileSync(path.join(REPO, '.env'), 'utf8').match(new RegExp(`^${name}=(.*)$`, 'm'));
+    return m ? m[1].trim() : '';
+  } catch { return ''; }
+}
 async function keychain(service) {
-  const r = await run('security', ['find-generic-password', '-a', 'diego', '-s', service, '-w']);
+  if (process.platform !== 'darwin') return '';
+  const r = await run('security', ['find-generic-password', '-a', process.env.KEYCHAIN_ACCOUNT || 'diego', '-s', service, '-w']);
   return r.code === 0 ? r.stdout.trim() : '';
 }
 
@@ -170,7 +178,7 @@ async function ensureEnv() {
   const key = await keychain('stripe-sandbox-secret');
   const profile = await keychain('stripe-sandbox-profile');
   const tempo = await keychain('stripe-sandbox-tempo-address');
-  if (!key || !profile) throw new Error('Stripe sandbox values not found in the Keychain');
+  if (!key || !profile) throw new Error('No .env and no Stripe sandbox values in the Keychain: copy .env.example to .env and fill it in');
   fs.writeFileSync(envPath, `STRIPE_SECRET_KEY=${key}\nSTRIPE_PROFILE_ID=${profile}\n${tempo ? `TEMPO_DEPOSIT_ADDRESS=${tempo}\n` : ''}PRICE_USD=0.60\n`, { mode: 0o600 });
   return 'written';
 }

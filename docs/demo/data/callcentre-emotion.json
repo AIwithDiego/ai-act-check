@@ -1,0 +1,90 @@
+{
+ "id": "callcentre-emotion",
+ "label": "Call-centre emotions",
+ "use_case": "Our call centre wants software that listens to our agents' calls and flags when they sound stressed, frustrated or bored, so team leads can coach them and track mood scores.",
+ "answers": {
+  "role": "deployer",
+  "gpai_model": "no",
+  "manipulative_techniques": false,
+  "exploits_vulnerabilities": false,
+  "social_scoring": false,
+  "crime_prediction_profiling": false,
+  "facial_scraping": false,
+  "intimate_or_csam_generation": false,
+  "emotion_recognition": true,
+  "biometric_remote_id": false,
+  "biometric_categorisation": false,
+  "annex1_safety_component": false,
+  "critical_infrastructure": false,
+  "education": false,
+  "employment": false,
+  "essential_services": "none",
+  "law_enforcement": false,
+  "migration_border": false,
+  "justice_democracy": false,
+  "interacts_with_people": false,
+  "generates_synthetic_content": false,
+  "personal_data": true,
+  "emotion_recognition_workplace": true,
+  "emotion_medical_or_safety": false,
+  "annex3_derogation": "none",
+  "profiling": true,
+  "solely_automated_decision": false,
+  "special_category_data": false
+ },
+ "price": "0.60 USD",
+ "receipt": {
+  "method": "stripe",
+  "reference": "pi_3SampleDemo0003"
+ },
+ "verdict": {
+  "role": "deployer",
+  "missing": [],
+  "invalid": [],
+  "rules_version": "2026-11-10",
+  "disclaimer": "A first-pass classification from your answers, not legal advice.",
+  "tier": "prohibited",
+  "matched": [
+   {
+    "id": "art5-emotion-workplace",
+    "tier": "prohibited",
+    "title": "Emotion recognition at work or in education",
+    "article": "Art. 5(1)(f)",
+    "note": "Exception for medical or safety reasons only."
+   },
+   {
+    "id": "annex3-biometrics",
+    "tier": "high",
+    "title": "Biometrics (remote identification, categorisation, emotion recognition)",
+    "article": "Art. 6(2), Annex III point 1",
+    "note": "Annex III high-risk obligations apply from 2 Dec 2027 (moved from 2 Aug 2026 by Reg. (EU) 2026/1744, fixed date). Conservative: any emotion inference from biometric data is treated as Annex III 1(c). Biometrics often needs a notified body (Art. 43(1))."
+   },
+   {
+    "id": "art4-ai-literacy",
+    "tier": "minimal",
+    "title": "AI literacy",
+    "article": "Art. 4",
+    "note": "Applies to every provider and deployer. Wording softened by Reg. (EU) 2026/1744; no specific literacy level is required."
+   }
+  ],
+  "obligations": [
+   {
+    "law": "AI Act",
+    "text": "Do not sell, deploy or use this in the EU.",
+    "article": "Art. 5",
+    "role": "all",
+    "applies_from": "2025-02-02",
+    "key": true
+   },
+   {
+    "law": "AI Act",
+    "text": "Train staff who run or use the AI, and keep a record.",
+    "article": "Art. 4",
+    "role": "all",
+    "applies_from": "2025-02-02",
+    "key": true
+   }
+  ],
+  "gdpr_short": []
+ }
+}
