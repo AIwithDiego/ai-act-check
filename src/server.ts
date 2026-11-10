@@ -5,7 +5,7 @@ import { Hono } from "hono";
 import { serve } from "@hono/node-server";
 import { Receipt } from "mppx";
 import { classify, validate } from "./engine.js";
-import { live, recordCheck } from "./live-stub.js";
+import { live, recordCheck } from "./live.js";
 import { getMppx, priceUsd } from "./payments.js";
 import type { Answers } from "./types.js";
 
