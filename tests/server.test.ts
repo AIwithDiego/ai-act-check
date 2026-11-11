@@ -123,7 +123,7 @@ describe("hosted console", () => {
   it("GET /console returns the page and GET /console/cases the three cases without answers", async () => {
     const page = await app.request("/console");
     expect(page.status).toBe(200);
-    expect(await page.text()).toContain("/public/console.js");
+    expect(await page.text()).toContain("demo console");
     const res = await app.request("/console/cases");
     const body = (await res.json()) as { price: string; cases: Record<string, unknown>[] };
     expect(body.cases.map((c) => c.id)).toEqual(["cv-screening", "website-chatbot", "callcentre-emotion"]);
