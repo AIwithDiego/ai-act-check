@@ -5,7 +5,7 @@ import { Hono } from "hono";
 import { Receipt } from "mppx";
 import { Mppx, tempo } from "mppx/client";
 import { privateKeyToAccount } from "viem/accounts";
-import { priceUsd } from "./payments.js";
+import { paymentsConfigured, priceUsd } from "./payments.js";
 import { hasStore, pipeline } from "./store.js";
 import type { Answers } from "./types.js";
 
@@ -17,6 +17,7 @@ interface ConsoleCase {
   id: string;
   label: string;
   use_case: string;
+  expect: string;
   answers: Answers;
 }
 
@@ -65,7 +66,12 @@ export const consoleApp = new Hono();
 consoleApp.get("/console", serveStatic({ root: publicDir, path: "console.html" }));
 
 consoleApp.get("/console/cases", (c) =>
-  c.json({ price: priceUsd(), cases: cases.map(({ id, label, use_case }) => ({ id, label, use_case })) }),
+  c.json({
+    price: priceUsd(),
+    payments: paymentsConfigured(),
+    wallet: getClient() !== null,
+    cases: cases.map(({ id, label, use_case, expect }) => ({ id, label, use_case, expect })),
+  }),
 );
 
 consoleApp.post("/console/run", async (c) => {
@@ -110,6 +116,7 @@ consoleApp.post("/console/run", async (c) => {
       case: chosen.id,
       amount: priceUsd(),
       network: "Tempo testnet",
+      answered: Object.keys(chosen.answers).length,
       receipt_id,
       asked_ms: t1 - t0,
       paid_ms: t2 - t1,

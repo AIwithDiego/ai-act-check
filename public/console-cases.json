@@ -30,7 +30,8 @@
    "profiling": true,
    "solely_automated_decision": true,
    "special_category_data": false
-  }
+  },
+  "expect": "high"
  },
  {
   "id": "website-chatbot",
@@ -63,7 +64,8 @@
    "public_interest_text": false,
    "solely_automated_decision": false,
    "special_category_data": false
-  }
+  },
+  "expect": "limited"
  },
  {
   "id": "callcentre-emotion",
@@ -98,6 +100,7 @@
    "profiling": true,
    "solely_automated_decision": false,
    "special_category_data": false
-  }
+  },
+  "expect": "prohibited"
  }
 ]
