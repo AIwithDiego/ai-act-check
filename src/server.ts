@@ -146,7 +146,7 @@ tier "incomplete" means required answers are missing (listed in "missing"); it i
 
 Other routes: GET /health, GET /openapi.json, GET /live, GET /live/feed.
 
-Nothing about your use case or answers is stored; the receipts log holds time, tier, amount and receipt id only.
+Nothing about your use case or answers is stored; the receipts log holds time, tier, amount and receipt id only. The live screen keeps the last 20 verdicts for 24 hours.
 
 Disclaimer: ${DISCLAIMER}
 `;
@@ -306,7 +306,7 @@ app.post("/classify", async (c) => {
   } catch (err) {
     console.error("receipts log write failed:", err);
   }
-  recordCheck({ at, amount, receipt_id, verdict });
+  await recordCheck({ at, amount, receipt_id, verdict });
   return res;
 });
 

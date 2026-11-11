@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "providers": {
+    "upstash": {
+      "name": "Upstash"
+    },
+    "vercel": {
+      "name": "Vercel"
+    }
+  },
+  "resources": {
+    "hosting": {
+      "livemode": true,
+      "name": "hosting",
+      "providerName": "Vercel",
+      "serviceId": "project"
+    },
+    "receipts": {
+      "livemode": true,
+      "name": "receipts",
+      "providerName": "Upstash",
+      "serviceId": "redis"
+    },
+    "vercel-plan": {
+      "livemode": true,
+      "name": "vercel-plan",
+      "providerName": "Vercel",
+      "serviceId": "hobby"
+    }
+  }
+}
