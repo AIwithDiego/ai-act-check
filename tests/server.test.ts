@@ -118,3 +118,25 @@ describe("POST /classify", () => {
     expect(res.headers.get("www-authenticate")).toMatch(/^Payment /);
   });
 });
+
+describe("hosted console", () => {
+  it("GET /console returns the page and GET /console/cases the three cases without answers", async () => {
+    const page = await app.request("/console");
+    expect(page.status).toBe(200);
+    expect(await page.text()).toContain("/public/console.js");
+    const res = await app.request("/console/cases");
+    const body = (await res.json()) as { price: string; cases: Record<string, unknown>[] };
+    expect(body.cases.map((c) => c.id)).toEqual(["cv-screening", "website-chatbot", "callcentre-emotion"]);
+    expect(body.cases.every((c) => !("answers" in c))).toBe(true);
+  });
+
+  it("POST /console/run refuses unknown cases and says so when the wallet is missing", async () => {
+    const post = (b: unknown) =>
+      app.request("/console/run", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(b) });
+    expect((await post({ case: "nope" })).status).toBe(400);
+    const saved = process.env.CONSOLE_WALLET_KEY;
+    delete process.env.CONSOLE_WALLET_KEY;
+    expect((await post({ case: "cv-screening" })).status).toBe(503);
+    if (saved) process.env.CONSOLE_WALLET_KEY = saved;
+  });
+});

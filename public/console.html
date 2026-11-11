@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Act Check · run a check</title>
+<meta name="description" content="Run a prepared EU AI Act check. A test wallet pays the API and you get the tier, the duties and a receipt.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="/public/tokens.css">
+<link rel="stylesheet" href="/public/console.css">
+</head>
+<body>
+<main class="cn">
+  <header class="cn-head">
+    <p class="cn-label"><a href="/">AI Act Check</a></p>
+    <h1 class="cn-h1">Run a check</h1>
+    <p class="cn-lede">Pick a case. A test wallet pays the API <span id="price">0.60</span> USD, the way an AI agent would, and the answer comes back with a receipt.</p>
+  </header>
+
+  <section aria-labelledby="pick">
+    <h2 class="cn-h2" id="pick">Three prepared cases</h2>
+    <div class="cn-cases" id="cases"><p class="cn-wait">Loading the cases.</p></div>
+  </section>
+
+  <section class="cn-run" id="run" aria-live="polite" hidden>
+    <h2 class="cn-h2">What happened</h2>
+    <ol class="cn-steps" id="steps"></ol>
+    <div id="answer"></div>
+  </section>
+
+  <footer class="cn-foot">
+    <p><a href="/live">Watch the live screen</a>, where every paid check lands.</p>
+    <p>Test money only, nobody is charged. Nothing about a use case or its answers is stored. A first read of the law, not legal advice.</p>
+  </footer>
+</main>
+<script src="/public/console.js"></script>
+</body>
+</html>

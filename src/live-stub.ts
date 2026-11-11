@@ -8,6 +8,6 @@ export interface LiveCheck {
   verdict: Verdict;
 }
 
-export function recordCheck(_c: LiveCheck): void {}
+export async function recordCheck(_c: LiveCheck): Promise<void> {}
 
 export const live = new Hono();

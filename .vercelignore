@@ -7,3 +7,4 @@ fixtures
 tests
 .env
 .env.local
+.projects

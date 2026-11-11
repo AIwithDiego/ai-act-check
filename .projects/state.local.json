@@ -1,0 +1,77 @@
+{
+  "version": 4,
+  "project": {
+    "catalog": "prod",
+    "initializedAt": "2026-11-11T12:24:27.963Z",
+    "merchantDisplayName": null,
+    "merchantId": "acct_1UZuKKEKSAunZfYU",
+    "projectId": "project_61VjyX5noaIzXu2Po16VjIHhNDGC0JRJyNoSaqDyiIAS",
+    "projectName": "ai-act-check"
+  },
+  "providers": {
+    "upstash": {
+      "accountRequestId": "facctrq_61VjyXZFE2k1AZccO16VjIHhNDGC0JRJyNoSaqDyiN6m",
+      "configuration": {},
+      "linkedAt": "2026-11-11T12:24:59.588Z",
+      "providerId": "prvdr_61UVa3kQyvSOEnWgd5Naa",
+      "providerName": "Upstash",
+      "redirectUrl": null,
+      "requestedAt": "2026-11-11T12:24:58.008Z",
+      "status": "complete"
+    },
+    "vercel": {
+      "accountRequestId": "facctrq_61VjyYMC1RvnSpsSS16VjIHhNDGC0JRJyNoSaqDyiQtU",
+      "configuration": {},
+      "linkedAt": "2026-11-11T12:25:50.436Z",
+      "providerId": "prvdr_61ULUAr4zlQgZkvXY5LsG",
+      "providerName": "Vercel",
+      "redirectUrl": null,
+      "requestedAt": "2026-11-11T12:25:46.551Z",
+      "status": "complete"
+    }
+  },
+  "resources": {
+    "hosting": {
+      "configuration": {
+        "name": "ai-act-check-projects"
+      },
+      "createdAt": "2026-11-11T12:25:54.080Z",
+      "lastRevealedAt": "2026-11-11T12:25:54.501Z",
+      "lastStatus": "complete",
+      "livemode": true,
+      "name": "hosting",
+      "providerId": "prvdr_61ULUAr4zlQgZkvXY5LsG",
+      "providerName": "Vercel",
+      "resourceId": "fres_61VjyYT9wW3JGHiqH16VjIHhNDGC0JRJyNoSaqDyiTgG",
+      "serviceId": "project"
+    },
+    "receipts": {
+      "configuration": {
+        "price": "free",
+        "name": "ai-act-check-receipts",
+        "region": "eu-west-1"
+      },
+      "createdAt": "2026-11-11T12:25:01.358Z",
+      "lastRevealedAt": "2026-11-11T12:25:01.746Z",
+      "lastStatus": "complete",
+      "livemode": true,
+      "name": "receipts",
+      "providerId": "prvdr_61UVa3kQyvSOEnWgd5Naa",
+      "providerName": "Upstash",
+      "resourceId": "fres_61VjyXb1Li9J4eAi016VjIHhNDGC0JRJyNoSaqDyiI7E",
+      "serviceId": "redis"
+    },
+    "vercel-plan": {
+      "configuration": {},
+      "createdAt": "2026-11-11T12:25:51.410Z",
+      "lastRevealedAt": "2026-11-11T12:25:51.724Z",
+      "lastStatus": "complete",
+      "livemode": true,
+      "name": "vercel-plan",
+      "providerId": "prvdr_61ULUAr4zlQgZkvXY5LsG",
+      "providerName": "Vercel",
+      "resourceId": "fres_61VjyYQDPwZFLW4Is16VjIHhNDGC0JRJyNoSaqDyiWYK",
+      "serviceId": "hobby"
+    }
+  }
+}
