@@ -1,7 +1,7 @@
 import { fileURLToPath } from "node:url";
-import { serveStatic } from "@hono/node-server/serve-static";
 import { Hono } from "hono";
 import type { Verdict } from "./engine.js";
+import { sendFile, sendFrom } from "./static.js";
 import { hasStore, pipeline } from "./store.js";
 
 export interface LiveCheck {
@@ -13,7 +13,6 @@ export interface LiveCheck {
 
 const MAX_CHECKS = 20;
 const checks: LiveCheck[] = [];
-const repoRoot = fileURLToPath(new URL("..", import.meta.url));
 const publicDir = fileURLToPath(new URL("../public", import.meta.url));
 
 // Serverless instances share nothing in memory, so the hosted live screen
@@ -50,9 +49,9 @@ async function recentChecks(): Promise<LiveCheck[]> {
 
 export const live = new Hono();
 
-live.get("/live", serveStatic({ root: publicDir, path: "live.html" }));
+live.get("/live", (c) => sendFile(c, `${publicDir}/live.html`));
 live.get("/live/feed", async (c) => {
   c.header("Cache-Control", "no-store");
   return c.json({ checks: await recentChecks() });
 });
-live.get("/public/*", serveStatic({ root: repoRoot }));
+live.get("/public/*", sendFrom(publicDir, "/public/"));

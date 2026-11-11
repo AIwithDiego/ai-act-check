@@ -1,11 +1,11 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { serveStatic } from "@hono/node-server/serve-static";
 import { Hono } from "hono";
 import { Receipt } from "mppx";
 import { Mppx, tempo } from "mppx/client";
 import { privateKeyToAccount } from "viem/accounts";
 import { paymentsConfigured, priceUsd } from "./payments.js";
+import { sendFile } from "./static.js";
 import { hasStore, pipeline } from "./store.js";
 import type { Answers } from "./types.js";
 
@@ -63,7 +63,7 @@ async function admit(): Promise<string | null> {
 
 export const consoleApp = new Hono();
 
-consoleApp.get("/console", serveStatic({ root: publicDir, path: "console.html" }));
+consoleApp.get("/console", (c) => sendFile(c, `${publicDir}/console.html`));
 
 consoleApp.get("/console/cases", (c) =>
   c.json({

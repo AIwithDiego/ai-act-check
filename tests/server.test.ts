@@ -140,3 +140,17 @@ describe("hosted console", () => {
     if (saved) process.env.CONSOLE_WALLET_KEY = saved;
   });
 });
+
+describe("static files", () => {
+  it("ignore date checks, answer 304 only to a matching ETag, and stay inside public/", async () => {
+    const stale = await app.request("/console", { headers: { "if-modified-since": "Sat, 20 Oct 2018 01:46:40 GMT" } });
+    expect(stale.status).toBe(200);
+    expect(stale.headers.get("last-modified")).toBeNull();
+    expect(stale.headers.get("cache-control")).toBe("no-cache");
+    const etag = stale.headers.get("etag")!;
+    expect((await app.request("/console", { headers: { "if-none-match": etag } })).status).toBe(304);
+    expect((await app.request("/public/live.js")).headers.get("content-type")).toContain("javascript");
+    expect((await app.request("/public/%2e%2e/package.json")).status).toBe(404);
+    expect((await app.request("/public/nope.css")).status).toBe(404);
+  });
+});
