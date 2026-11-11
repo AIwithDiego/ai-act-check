@@ -1,0 +1,53 @@
+/* Hosted console. Phone first; colours, type and tier fills come from tokens.css. */
+html{background:var(--stage-bg)}
+body{margin:0;background:var(--stage-bg);color:var(--text);font-family:var(--font);font-size:17px;line-height:1.4;-webkit-text-size-adjust:100%}
+.cn{max-width:620px;margin:0 auto;padding:28px 20px 56px}
+.cn a{color:inherit;text-underline-offset:3px}
+.cn-label{margin:0 0 20px;font-stretch:var(--w-wide);font-weight:600;font-size:13px;letter-spacing:var(--ls-wide);color:var(--text-2)}
+.cn-label a{text-decoration:none}
+.cn-h1{margin:0;font-stretch:var(--w-cond);font-weight:800;text-transform:uppercase;font-size:clamp(64px,21vw,120px);line-height:var(--lh-cond);letter-spacing:var(--ls-cond)}
+.cn-lede{margin:18px 0 0;font-size:19px;color:var(--text-2);max-width:32em}
+.cn-h2{margin:44px 0 0;padding-top:12px;border-top:2px solid var(--rule);font-stretch:var(--w-wide);font-weight:600;font-size:13px;letter-spacing:var(--ls-wide);color:var(--text-2)}
+
+.cn-cases{margin-top:4px}
+.cn-case{display:block;width:100%;margin:0;padding:18px 44px 18px 0;border:0;border-bottom:1px solid var(--rule-soft);background:none;color:inherit;font:inherit;text-align:left;cursor:pointer;position:relative;-webkit-tap-highlight-color:transparent}
+.cn-case b{display:block;font-stretch:var(--w-head);font-weight:700;font-size:26px;line-height:var(--lh-head);letter-spacing:var(--ls-head)}
+.cn-case span{display:block;margin-top:6px;font-size:15px;color:var(--text-2)}
+.cn-case::after{content:"Run";position:absolute;right:0;top:22px;font-stretch:var(--w-wide);font-weight:600;font-size:13px;letter-spacing:var(--ls-wide);color:var(--aiwd-hot)}
+.cn-case:hover b,.cn-case:focus-visible b{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.cn-case:focus-visible{outline:2px solid var(--text);outline-offset:4px}
+.cn-case[aria-pressed="true"]::after{content:"Chosen";color:var(--text)}
+.cn-case:disabled{cursor:default;opacity:.45}
+.cn-case[aria-pressed="true"]:disabled{opacity:1}
+.cn-wait{margin:18px 0 0;color:var(--text-2)}
+
+.cn-steps{list-style:none;margin:6px 0 0;padding:0;counter-reset:s}
+.cn-steps li{counter-increment:s;display:grid;grid-template-columns:28px 1fr;gap:0 8px;padding:14px 0;border-bottom:1px solid var(--rule-soft)}
+.cn-steps li::before{content:counter(s);font-stretch:var(--w-cond);font-weight:800;font-size:22px;line-height:1.1;color:var(--text-3)}
+.cn-steps b{font-weight:700}
+.cn-steps small{display:block;grid-column:2;margin-top:2px;font-size:15px;color:var(--text-2);overflow-wrap:anywhere}
+.cn-steps li[data-state="doing"] b::after{content:" …"}
+.cn-steps li[data-state="todo"]{opacity:.4}
+.cn-steps li[data-state="done"]::before{color:var(--ok)}
+.cn-steps li[data-state="fail"]::before{color:var(--err)}
+.cn-error{margin:18px 0 0;padding:14px 16px;border:2px solid var(--err);font-weight:600}
+
+.cn-tier{margin:30px 0 0}
+.cn-tier-word{display:inline-block;padding:.04em .16em .02em;font-stretch:var(--w-cond);font-weight:800;text-transform:uppercase;font-size:clamp(52px,17vw,104px);line-height:.92;letter-spacing:var(--ls-cond);color:var(--on-fill);transform:rotate(var(--mark-tilt));transform-origin:left bottom}
+.cn-tier-word[data-tier="prohibited"]{background:var(--tier-prohibited)}
+.cn-tier-word[data-tier="high"]{background:var(--tier-high)}
+.cn-tier-word[data-tier="limited"]{background:var(--tier-limited)}
+.cn-tier-word[data-tier="minimal"]{background:var(--tier-minimal)}
+.cn-tier-word[data-tier="incomplete"]{color:var(--text);outline:2px dashed var(--tier-incomplete)}
+.cn-meaning{margin:18px 0 0;font-stretch:var(--w-head);font-weight:700;font-size:26px;line-height:var(--lh-head);letter-spacing:var(--ls-head)}
+.cn-why{margin:8px 0 0;color:var(--text-2)}
+.cn-list{list-style:none;margin:4px 0 0;padding:0}
+.cn-list li{padding:14px 0;border-bottom:1px solid var(--rule-soft)}
+.cn-list small{display:block;margin-top:4px;font-size:14px;color:var(--text-2)}
+.cn-law{font-stretch:var(--w-wide);font-weight:600;font-size:12px;letter-spacing:var(--ls-wide);margin-right:8px;padding-bottom:1px;border-bottom:2px solid var(--law-aiact)}
+.cn-law[data-law="GDPR"]{border-bottom-style:dashed;border-bottom-color:var(--law-gdpr)}
+.cn-more{margin:14px 0 0;font-size:15px;color:var(--text-2)}
+
+.cn-foot{margin-top:56px;padding-top:14px;border-top:2px solid var(--rule);font-size:15px;color:var(--text-2)}
+.cn-foot p{margin:0 0 10px}
+.cn-foot a{color:var(--text);font-weight:600}

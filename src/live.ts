@@ -2,6 +2,7 @@ import { fileURLToPath } from "node:url";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { Hono } from "hono";
 import type { Verdict } from "./engine.js";
+import { hasStore, pipeline } from "./store.js";
 
 export interface LiveCheck {
   at: string;
@@ -15,39 +16,15 @@ const checks: LiveCheck[] = [];
 const repoRoot = fileURLToPath(new URL("..", import.meta.url));
 const publicDir = fileURLToPath(new URL("../public", import.meta.url));
 
-// Shared store: Upstash Redis over REST, provisioned with Stripe Projects.
 // Serverless instances share nothing in memory, so the hosted live screen
-// reads the last checks from here. Without the env vars (local dev, tests)
-// the in-memory list is the store.
+// reads the last checks from the shared store when there is one.
 const STORE_KEY = "aac:live:checks";
 const STORE_TTL_S = 60 * 60 * 24;
-const STORE_TIMEOUT_MS = 2500;
-
-function store(): { url: string; token: string } | null {
-  const url = process.env.UPSTASH_REST_URL;
-  const token = process.env.UPSTASH_REST_TOKEN;
-  if (!url || !token) return null;
-  if (process.env.VITEST && !process.env.LIVE_STORE_IN_TESTS) return null;
-  return { url: url.replace(/\/$/, ""), token };
-}
-
-async function pipeline(cmds: (string | number)[][]): Promise<{ result?: unknown; error?: string }[]> {
-  const s = store();
-  if (!s) throw new Error("no store");
-  const res = await fetch(`${s.url}/pipeline`, {
-    method: "POST",
-    headers: { authorization: `Bearer ${s.token}`, "content-type": "application/json" },
-    body: JSON.stringify(cmds),
-    signal: AbortSignal.timeout(STORE_TIMEOUT_MS),
-  });
-  if (!res.ok) throw new Error(`store answered ${res.status}`);
-  return (await res.json()) as { result?: unknown; error?: string }[];
-}
 
 export async function recordCheck(c: LiveCheck): Promise<void> {
   checks.unshift(c);
   if (checks.length > MAX_CHECKS) checks.length = MAX_CHECKS;
-  if (!store()) return;
+  if (!hasStore()) return;
   try {
     await pipeline([
       ["LPUSH", STORE_KEY, JSON.stringify(c)],
@@ -60,7 +37,7 @@ export async function recordCheck(c: LiveCheck): Promise<void> {
 }
 
 async function recentChecks(): Promise<LiveCheck[]> {
-  if (!store()) return checks;
+  if (!hasStore()) return checks;
   try {
     const [r] = await pipeline([["LRANGE", STORE_KEY, 0, MAX_CHECKS - 1]]);
     if (!Array.isArray(r?.result)) throw new Error(r?.error ?? "unexpected store reply");

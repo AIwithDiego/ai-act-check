@@ -5,6 +5,7 @@ import { Hono } from "hono";
 import { serve } from "@hono/node-server";
 import { Receipt } from "mppx";
 import { classify, validate } from "./engine.js";
+import { consoleApp } from "./console.js";
 import { live, recordCheck } from "./live.js";
 import { getMppx, priceUsd } from "./payments.js";
 import type { Answers } from "./types.js";
@@ -91,6 +92,7 @@ code{font-size:.9em;background:var(--stage-deep);padding:1px 6px;border-radius:4
 <h1 class="ac-cond">AI Act Check</h1>
 <p class="lede">Where does an AI use case sit under the EU AI Act? Risk tier, articles, duties for your role, GDPR overlap and dates. ${price} USD per check.</p>
 <p class="note"><b>This is an API for AI agents, not a website.</b> There is no form here. Your coding agent (Claude Code, Cursor, Codex or any agent that can run commands) reads the questions, answers them for your use case, pays over Stripe's Machine Payments Protocol and gets the verdict with a receipt.</p>
+<p class="note">No agent to hand? <a href="/console">Run a prepared case</a> and watch it land on the <a href="/live">live screen</a>.</p>
 
 <h2>TRY IT WITH YOUR AGENT, 2 MINUTES, FREE TEST MONEY</h2>
 <ol>
@@ -144,7 +146,7 @@ Price: ${priceUsd()} USD per POST /classify, paid over MPP (Machine Payments Pro
 
 tier "incomplete" means required answers are missing (listed in "missing"); it is still a paid 200.
 
-Other routes: GET /health, GET /openapi.json, GET /live, GET /live/feed.
+Other routes: GET /health, GET /openapi.json, GET /live, GET /live/feed, GET /console (a page for people: three prepared cases, paid from a test wallet).
 
 Nothing about your use case or answers is stored; the receipts log holds time, tier, amount and receipt id only. The live screen keeps the last 20 verdicts for 24 hours.
 
@@ -311,6 +313,7 @@ app.post("/classify", async (c) => {
 });
 
 app.route("/", live);
+app.route("/", consoleApp);
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   serve({ fetch: app.fetch, port: PORT, hostname: "127.0.0.1" }, (info) => {
